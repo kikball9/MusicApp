@@ -1,0 +1,130 @@
+@import url("https://fonts.googleapis.com/css?family=Inter:700");
+
+.header {
+  align-items: flex-start;
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  min-width: 1440px;
+  width: auto;
+}
+
+.overlap-group6 {
+  height: 106px;
+  position: relative;
+  width: 407px;
+}
+
+.overlap-group7 {
+  background-color: var(--sanguine-brown);
+  border: 2px solid;
+  border-color: var(--theme-colorswhite);
+  height: 106px;
+  margin-top: -1px;
+  position: relative;
+  width: 717px;
+}
+
+.overlap-group8 {
+  height: 106px;
+  margin-top: -1px;
+  position: relative;
+  width: 316px;
+}
+
+.overlap-group-1 {
+  align-items: flex-end;
+  background-color: var(--sanguine-brown);
+  border: 2px solid;
+  border-color: var(--theme-colorswhite);
+  display: flex;
+  height: 106px;
+  justify-content: flex-end;
+  left: 0;
+  min-width: 316px;
+  padding: 31px 37px;
+  position: absolute;
+  top: 0;
+}
+
+.overlap-group1 {
+  align-items: flex-start;
+  background-color: var(--sanguine-brown);
+  border: 2px solid;
+  border-color: var(--theme-colorswhite);
+  display: flex;
+  height: 106px;
+  left: 0;
+  min-width: 407px;
+  padding: 36px 119px;
+  position: absolute;
+  top: 0;
+}
+
+.accueil {
+  letter-spacing: 0;
+  line-height: 31.2px;
+  white-space: nowrap;
+  width: 159px;
+}
+
+.home_icon {
+  height: 46px;
+  left: 30px;
+  position: absolute;
+  top: 31px;
+  width: 38px;
+}
+
+.que-souhaitez-vous-ecouter {
+  color: #b0a7a7;
+  cursor: pointer;
+  font-family: var(--font-family-inter);
+  font-size: var(--font-size-m);
+  font-weight: 700;
+  left: 163px;
+  letter-spacing: 0;
+  line-height: 31.2px;
+  position: absolute;
+  top: 34px;
+  white-space: nowrap;
+  width: 539px;
+}
+
+.rectangle-6 {
+  background-color: var(--alto);
+  border-radius: 50px;
+  height: 58px;
+  left: 100px;
+  position: absolute;
+  top: 22px;
+  width: 532px;
+}
+
+.search_icon {
+  height: 31px;
+  left: 126px;
+  position: absolute;
+  top: 33px;
+  width: 23px;
+}
+
+.profil_icon {
+  height: 53px;
+  width: 46px;
+}
+
+.nav1 {
+  align-items: flex-start;
+  background-color: var(--sanguine-brown);
+  border: 2px solid;
+  border-color: var(--theme-colorswhite);
+  display: flex;
+  height: 106px;
+  left: 302px;
+  min-width: 105px;
+  padding: 25px 29.5px;
+  position: absolute;
+  top: 0;
+}

@@ -1,0 +1,9 @@
+:root {
+    --sanguine-brown: rgba(146,58,58,1);
+    --theme-colorswhite: rgba(255,255,255,1);
+    --alto: rgba(217,217,217,1);
+
+    --font-size-m: 24px;
+
+    --font-family-inter: "Inter";   
+}
