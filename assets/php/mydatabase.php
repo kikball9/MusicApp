@@ -105,7 +105,7 @@
   //Ajoute un utilisateur
   public function addUser($email, $password, $first_name, $name_user, $date_birth, $img_path){
     try{
-      $request = "INSERT INTO users(email, password, first_name, name_user, date_birth, img_path) VALUES(:email, :password, :first_name, :name_user, :date_birth, :img_path)";
+      $request = "INSERT INTO users(email, password, first_name, name_user, date_birth, img_path) VALUES(:email, SHA1(:password), :first_name, :name_user, :date_birth, :img_path)";
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam(":email", $email, PDO::PARAM_STR, 50);
       $statement->bindParam(":password", $password, PDO::PARAM_STR, 50);

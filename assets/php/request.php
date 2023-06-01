@@ -24,6 +24,7 @@ function authenticate($db){
     }
     else {
         header('HTTP/1.1 401 Unauthorized');
+        echo "c";
         exit;
     }
 }
