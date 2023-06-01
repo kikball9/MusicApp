@@ -84,8 +84,25 @@ else if ($requestMethod == "GET" && $requestRessource == "user"){
     }
 }
 else if ($requestMethod == "POST" && $requestRessource == "user"){
-    if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["first_name"]) && isset($_POST["name_user"]) && isset($_POST["date_birth"]) && isset($_POST["img_path"])){
-        $myDbReq = $myDb->addUser($_POST["email"], $_POST["password"], $_POST["first_name"], $_POST["name_user"], $_POST["date_birth"], $_POST["img_path"]);
+    if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["first_name"]) && isset($_POST["name_user"]) && isset($_POST["date_birth"]) && isset($_FILES["imgUser"])){
+        //Upload de l'image de l'utilisateur
+        $extFile = substr($_FILES["myfile"]["name"], strpos($_FILES["myfile"]["name"], "."));
+        if ($ext == ".jpg" || $ext == ".jpeg" || $ext == ".png" || $ext == ".gif"){
+            $src = $_FILES["myfile"]["tmp_name"];
+            $imgPath = '/var/www/projet/html/assets/img/'.explode("@", $email)[0].time().$ext;
+        }
+        else {
+            header('HTTP/1.1 400 Bad Request (only .jpg, .jpeg, .png, .gif extensions)');
+        }
+        if (!move_uploaded_file($src, $imgPath)){
+            header('HTTP/1.1 400 Bad Request');
+
+        }
+        //Verification champs email et date
+        if (!preg_match("^[0-9]{4}-[0-1][0-9]-[0-3][0-9]$", $_POST["date_birth"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
+            header('HTTP/1.1 400 Bad Request');
+        }
+        $myDbReq = $myDb->addUser($_POST["email"], $_POST["password"], $_POST["first_name"], $_POST["name_user"], $_POST["date_birth"], $imgPath);
         if(!$myDbReq){
             header('HTTP/1.1 400 Bad Request');
         }
@@ -107,6 +124,10 @@ else if ($requestMethod == "PUT" && $requestRessource == "user"){
             echo json_encode($myDbReq);
         }
     }
+    else{
+        header('HTTP/1.1 200 OK');
+        echo json_encode($myDbReq);
+    }
 }
 else if ($requestMethod == "DELETE" && $requestRessource == "user"){
     $myDbReq = $myDb->delUser($email);
@@ -120,8 +141,24 @@ else if ($requestMethod == "DELETE" && $requestRessource == "user"){
 }
 else if ($requestMethod == "GET" && $requestRessource == "favorites" && $id == ""){
     $myDbReq = $myDb->requestFavorites($email);
-    if(!$email){
+    if(!$myDbReq){
         header('HTTP/1.1 400 Bad Request');
+    }
+    else{
+        header('HTTP/1.1 200 OK');
+        echo json_encode($myDbReq);
+    }
+}
+else if ($requestMethod == "POST" && $requestRessource == "favorites"){
+    if (isset($_POST["id_tracks"])){
+        $myDbReq = $myDbReq->addFavorite($email, $_POST["id_tracks"]);
+        if(!$myDbReq){
+            header('HTTP/1.1 400 Bad Request');
+        }
+        else{
+            header('HTTP/1.1 200 OK');
+            echo json_encode($myDbReq);
+        }
     }
     else{
         header('HTTP/1.1 200 OK');

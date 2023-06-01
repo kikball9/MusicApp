@@ -217,7 +217,23 @@
       return $favorites;
 
   }
+
+  public function addFavorite($email, $id_tracks){
+    try{
+      $request = "INSERT INTO favorites_tracks(email, id_tracks) VALUES(:email, :id_tracks)";
+      $statement = $this->myPDO->prepare($request);
+      $statement->bindParam(":email", $email, PDO::PARAM_STR, 50);
+      $statement->bindParam(":id_tracks", $id_tracks, PDO::PARAM_STR, 50);
+      $statement->execute();
+      $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+    catch (PDOException $exception)
+    {
+      error_log('Request error: '.$exception->getMessage());
+      return false;
+    }
+    return true;
   }
-  
+  } 
 
 ?>
