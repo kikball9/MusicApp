@@ -1,12 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="bootstrap-5.3.0-dist/css/bootstrap.css">
     <title>MusicApp</title>
 </head>
-<body>
-    
+<body style="background-color: black;">
+
+  <!-- Header -->
+  <header class="mb-5">
+    <nav class="navbar p-2 navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Navbar w/ text</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+        </ul>
+        <span class="navbar-text">
+          Navbar text with an inline element
+        </span>
+      </div>
+      <form class="form-inline d-flex">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </nav>
+  </header>
+
+  <!-- Last Listens -->
+  <div class="container bg-primary text-white text-center p-2 mb-5">Dernière écoutes</div>
+  
+  <ul class="list-group align-items-center flex-column">
+    <li class="list-group-item  w-50 p-0 d-flex p-0 m-0 bg-info">
+        <img class="img-small" src="assets/album.jpeg" alt="album_img">
+        <div class="text-center title text-white">titre - artiste</div>
+        <img src="assets/heart-icon.png" alt="heart_icon" class="icon">
+        <img src="assets/detail-icon.png" alt="detail_icon" class="icon">
+    </li>
+    <li class="list-group-item  w-50 p-0 d-flex p-0 m-0 bg-info">
+      <img class="img-small" src="assets/album.jpeg" alt="album_img">
+      <div class="text-center title text-white">titre - artiste</div>
+      <img src="assets/heart-icon.png" alt="heart_icon" class="icon">
+      <img src="assets/detail-icon.png" alt="detail_icon" class="icon">
+    </li>
+    <li class="list-group-item  w-50 p-0 d-flex p-0 m-0 bg-info">
+      <img class="img-small" src="assets/album.jpeg" alt="album_img">
+      <div class="text-center title text-white">titre - artiste</div>
+      <img src="assets/heart-icon.png" alt="heart_icon" class="icon">
+      <img src="assets/detail-icon.png" alt="detail_icon" class="icon">
+    </li>
+    <li class="list-group-item  w-50 p-0 d-flex p-0 m-0 bg-info">
+      <img class="img-small" src="assets/album.jpeg" alt="album_img">
+      <div class="text-center title text-white">titre - artiste</div>
+      <img src="assets/heart-icon.png" alt="heart_icon" class="icon">
+      <img src="assets/detail-icon.png" alt="detail_icon" class="icon">
+    </li>
+    <li class="list-group-item  w-50 p-0 d-flex p-0 m-0 bg-info">
+      <img class="img-small" src="assets/album.jpeg" alt="album_img">
+      <div class="text-center title text-white">titre - artiste</div>
+      <img src="assets/heart-icon.png" alt="heart_icon" class="icon">
+      <img src="assets/detail-icon.png" alt="detail_icon" class="icon">
+    </li>
+  </ul>
+  
+  <!-- Titre Liked -->
+  <div class="container bg-primary text-white text-center p-2 mt-5 mb-5">Titres aimés</div>
+
+  <!-- Playlist -->
+  <div class="container bg-primary text-white text-center p-2 mt-5 mb-5">Playlists</div>
+
+  <div class="row flex-row flex-nowrap p-0 m-3">
+    <ul class="list-group list-group-horizontal-md d-flex justify-content-center">
+      
+      <li class="list-group-item p-0 d-flex m-2">
+        <div>
+            <img src="assets/album.jpeg" alt="album_img" class="img-large">
+            <div class="text-center">nom_album</div>
+        </div>
+      </li>
+      <li class="list-group-item p-0 d-flex m-2">
+        <div>
+            <img src="assets/album.jpeg" alt="album_img" class="img-large">
+            <div class="text-center">nom_album</div>
+        </div>
+      </li>
+      <li class="list-group-item p-0 d-flex m-2">
+        <div>
+            <img src="assets/album.jpeg" alt="album_img" class="img-large">
+            <div class="text-center">nom_album</div>
+        </div>
+      </li>
+      <li class="list-group-item p-0 d-flex m-2">
+        <div>
+            <img src="assets/album.jpeg" alt="album_img" class="img-large">
+            <div class="text-center">nom_album</div>
+        </div>
+      </li>
+      <li class="list-group-item p-0 d-flex m-2">
+        <div>
+            <img src="assets/album.jpeg" alt="album_img" class="img-large">
+            <div class="text-center">nom_album</div>
+        </div>
+      </li>
+      <li class="list-group-item p-0 d-flex m-2">
+        <div>
+            <img src="assets/album.jpeg" alt="album_img" class="img-large">
+            <div class="text-center">nom_album</div>
+        </div>
+      </li>
+      <li class="list-group-item p-0 d-flex m-2">
+        <div>
+            <img src="assets/album.jpeg" alt="album_img" class="img-large">
+            <div class="text-center">nom_album</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="container bg-primary text-white text-center p-2 mt-5 mb-5 w-25">Ajouter une playlist</div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container-fluid bg-primary text-white text-center p-3">play</div>
+  </footer>
+
 </body>
 </html>
