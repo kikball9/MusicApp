@@ -8,8 +8,8 @@
  */
 
   // Database constants.
-  define('DB_USER', 'root');
-  define('DB_PASSWORD', 'toor');
-  define('DB_NAME', 'projetCIR2');
+  define('DB_USER', 'isen');
+  define('DB_PASSWORD', 'isen29');
+  define('DB_NAME', 'music');
   define('DB_SERVER', 'localhost');
 ?>
