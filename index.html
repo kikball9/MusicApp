@@ -14,30 +14,76 @@
     <title>MusicApp</title>
 </head>
 <body style="background-color: black;">
-
+  
+  <!-- Login -->
   <section id="login_page" class="text-white flex-column" style="display: block;">
-    <div class="container bg-primary text-white text-center p-2 mb-5 align-self-center">
+    <div class="container text-white text-center p-5 align-self-center" style="background-color: #212529; border-radius: 40px;">
+      <h1>Connexion</h1>
       <form id="auth-form">
         <div>
             <div>
-            <span>Login></span>
+              <span>Login></span>
             </div>
             <input type="text" id="login-input" placeholder="Entrez votre login" autofocus required>
         </div>
         <div>
             <div>
-            <span>Mot de passe></span>
+              <span>Mot de passe></span>
             </div>
             <input id="password-input" type="password"placeholder="Entrez votre mot de passe" autofocus required>
         </div>
         <br>
+        <div id="bad_pwd" class="bg-danger w-25 container text-center" style="display: none;">
+          <p>Mot de passe incorrect</p>
+        </div>
+        
         <button type="submit">
-            Envoyer
+            Se connecter
         </button>
       </form>
+      
+      <button class="btn btn-outline-success mt-3" type="submit">Créer un compte</button>
+
     </div>
   </section>
 
+  <!-- Signin -->
+  <section id="signin_page" class="text-white flex-column" style="display: block;">
+    <div class="container text-white text-center p-5 align-self-center" style="background-color: #212529; border-radius: 40px;">
+      <h1>Création de compte</h1>
+      <form id="create-form">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Prénom</label>
+          <input id="prenom-input" type="text" class="form-control"placeholder="Votre prénom">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Nom</label>
+          <input id="nom-input" type="text" class="form-control" placeholder="Votre nom">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Age</label>
+          <input id="age-input" type="date" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input id="mail-input" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Mot de passe</label>
+          <input id="mdp-input" type="password" class="form-control" id="exampleInputPassword1" placeholder="Votre mot de passe">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Confirmer mot de passe</label>
+          <input id="confirm-mdp-input" type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirmer votre mot de passe">
+        </div>
+       
+        <button class="btn btn-outline-success mt-3" type="submit">Créer un compte</button>
+      </form>
+      
+    </div>
+  </section>
+
+  <!-- Home -->
   <section id="home_page" style="display: none;">
     <!-- Header -->
     <header class="mb-5">

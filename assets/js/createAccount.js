@@ -1,12 +1,20 @@
-document.getElementById("auth-form").onsubmit = (event) => {
+document.getElementById("create-form").onsubmit = (event) => {
     var userLogin, userPassword, xhr;
     event.preventDefault();
+
     userLogin = document.getElementById("login-input").value;
     userPassword = document.getElementById("password-input").value;
 
-    Cookies.set("login", userLogin);
+    prenom_user = document.getElementById("prenom-input").value;
+    nom_user = document.getElementById("nom-input").value;
+    age_user = document.getElementById("age-input").value;
+    mail_user = document.getElementById("mail-input").value;
+    mdp_user = document.getElementById("mdp-input").value;
+    confirm_mdp_user = document.getElementById("confirm-mdp-input").value;
+
+    // Cookies.set("login", userLogin);
     xhr = new XMLHttpRequest();
-    xhr.open("GET", "assets/php/request.php/authenticate");
+    xhr.open("POST", "assets/php/request.php/user"); // TODO
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.setRequestHeader("Authorization", "Basic "+btoa(userLogin+":"+userPassword));
     xhr.onload = () => {
@@ -33,21 +41,7 @@ document.getElementById("auth-form").onsubmit = (event) => {
         //Récupérer les données du site
     };
     xhr.send();
-    document.getElementById("login-input").value = userLogin;
+    document.getElementById("login-input").value = "";
     document.getElementById("password-input").value = "";
     
-}
-
-if (typeof Cookies.get("token") !== 'undefined'){
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "assets/php/request.php");
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.setRequestHeader("Authorization", "Bearer " + Cookies.get("token"));
-    xhr.onloadend = () => {
-        if (xhr.status == 200){
-            //Cacher l'auth et afficher le reste
-    
-        }
-    }
-    xhr.send();
 }
