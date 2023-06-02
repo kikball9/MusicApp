@@ -59,8 +59,16 @@ $request = substr($_SERVER['PATH_INFO'], 1);
 $request = explode('/', $request);
 $requestRessource = array_shift($request);
 $id = array_shift($request);
-if ($id == '')
+$id2 = array_shift($request);
+if ($id == ''){
   $id = NULL;
+  $id2 = NULL;
+}
+else {
+    if($id2 == ""){
+        $id2 = NULL;
+    }
+}
 
 //Verification du token et acquisition de l'idendité de l'utilisateur pour chaque requête sauf si l'utilisateur s'authentifie
 if ($requestRessource == "authenticate"){
@@ -78,7 +86,7 @@ else {
 }
 
 //Variables utilisées pour le contrôle des requêtes
-//$nbTracks = sizeof($myDb->requestTracks());
+$idTracksMax = $myDb->requestTracks()[sizeof($myDb->requestTracks())-1]["id_tracks"];
 
 /*
 Gestion de la base de données en fonction des requêtes de l'utilisateur:
@@ -105,12 +113,53 @@ else if ($requestMethod == "GET" && $requestRessource == "user"){
 
 //Création d'un utilisateur
 else if ($requestMethod == "POST" && $requestRessource == "user"){
-    if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["first_name"]) && isset($_POST["name_user"]) && isset($_POST["date_birth"]) && isset($_FILES["imgUser"])){
+    if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["first_name"]) && isset($_POST["name_user"]) && isset($_POST["date_birth"]) && isset($_FILES["myFile"])){
         //Upload de l'image de l'utilisateur
-        $extFile = substr($_FILES["myfile"]["name"], strpos($_FILES["myfile"]["name"], "."));
+        $extFile = substr($_FILES["myFile"]["name"], strpos($_FILES["myFile"]["name"], "."));
+        $imgPath;
         if ($ext == ".jpg" || $ext == ".jpeg" || $ext == ".png" || $ext == ".gif"){
-            $src = $_FILES["myfile"]["tmp_name"];
+            $src = $_FILES["myFile"]["tmp_name"];
             $imgPath = '/var/www/projet/html/assets/img/'.explode("@", $email)[0].time().$ext;
+        }
+        else {
+            echo "b";
+            header('HTTP/1.1 400 Bad Request (only .jpg, .jpeg, .png, .gif extensions)');
+        }
+        if (!move_uploaded_file($src, $imgPath)){
+            echo "c";
+            header('HTTP/1.1 400 Bad Request');
+
+        }
+        //Verification champs email et date
+        if (!preg_match("^[0-9]{4}-[0-1][0-9]-[0-3][0-9]$", $_POST["date_birth"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
+            echo "d";
+            header('HTTP/1.1 400 Bad Request');
+        }
+        $myDbReq = $myDb->addUser($_POST["email"], $_POST["password"], $_POST["first_name"], $_POST["name_user"], $_POST["date_birth"], $imgPath);
+        if(!$myDbReq){
+            header('HTTP/1.1 400 Bad Request');
+            echo "e";
+        }
+        else{
+            header('HTTP/1.1 201 Created');
+            echo json_encode($myDbReq);
+        }
+    }
+    else{
+        header('HTTP/1.1 400 Bad Request');
+        echo "f";
+    }
+}
+//Mofification d'un utilisateur
+else if ($requestMethod == "PUT" && $requestRessource == "user"){
+    parse_str(file_get_contents('php://input'), $_PUT);
+    if (isset($_PUT["password"]) && isset($_PUT["first_name"]) && isset($_PUT["name_user"]) && isset($_PUT["date_birth"]) && isset($_PUT["img"])){
+        //Upload de l'image de l'utilisateur
+        $extFile = substr($_FILES["myFile"]["name"], strpos($_FILES["myFile"]["name"], "."));
+        $imgPath;
+        if ($ext == ".jpg" || $ext == ".jpeg" || $ext == ".png" || $ext == ".gif"){
+            $src = $_FILES["myFile"]["tmp_name"];
+            $imgPath = '/var/www/projet/html/assets/imgInDb/'.explode("@", $email)[0].time().$ext;
         }
         else {
             header('HTTP/1.1 400 Bad Request (only .jpg, .jpeg, .png, .gif extensions)');
@@ -120,27 +169,10 @@ else if ($requestMethod == "POST" && $requestRessource == "user"){
 
         }
         //Verification champs email et date
-        if (!preg_match("^[0-9]{4}-[0-1][0-9]-[0-3][0-9]$", $_POST["date_birth"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
+        if (!preg_match("^[0-9]{4}-[0-1][0-9]-[0-3][0-9]$", $_PUT["date_birth"]) || !filter_var($_PUT["email"], FILTER_VALIDATE_EMAIL)){
             header('HTTP/1.1 400 Bad Request');
         }
-        $myDbReq = $myDb->addUser($_POST["email"], $_POST["password"], $_POST["first_name"], $_POST["name_user"], $_POST["date_birth"], $imgPath);
-        if(!$myDbReq){
-            header('HTTP/1.1 400 Bad Request');
-        }
-        else{
-            header('HTTP/1.1 201 Created');
-            echo json_encode($myDbReq);
-        }
-    }
-    else{
-        header('HTTP/1.1 400 Bad Request');
-    }
-}
-//Mofification d'un utilisateur
-else if ($requestMethod == "PUT" && $requestRessource == "user"){
-    parse_str(file_get_contents('php://input'), $_PUT);
-    if (isset($_PUT["password"]) && isset($_PUT["first_name"]) && isset($_PUT["name_user"]) && isset($_PUT["date_birth"]) && isset($_PUT["img"])){
-        $myDbReq = $myDb->modifyUser($email, $_PUT["password"], $_PUT["first_name"], $_PUT["name_user"], $_PUT["date_birth"], $_PUT["img"]);
+        $myDbReq = $myDb->modifyUser($email, $_PUT["password"], $_PUT["first_name"], $_PUT["name_user"], $_PUT["date_birth"], $imgPath);
         if(!$myDbReq){
             header('HTTP/1.1 400 Bad Request');
         }
@@ -196,7 +228,8 @@ else if ($requestMethod == "POST" && $requestRessource == "favorites"){
         echo json_encode($myDbReq);
     }
 }
-else if ($requestMethod == "DELETE" && $requestRessource == "favorites" && intval($id) > 0 && intval($id)){
+//Supprime une musique des favories d'un utilisateur
+else if ($requestMethod == "DELETE" && $requestRessource == "favorites" && intval($id) > 0 && intval($id) <= $idTracksMax){
     $myDbReq = $myDb->delFavorite($email, $id);
     if (!$myDbReq){
         header('HTTP/1.1 400 Bad Request');
@@ -207,11 +240,169 @@ else if ($requestMethod == "DELETE" && $requestRessource == "favorites" && intva
         echo json_encode($myDbReq);
     }
 }
+else if ($requestMethod == "GET" && $requestRessource == "track"){
+    //Envoie une track en fonction de l'id utilisé
+    if (isset($_GET["id_tracks"])){
+        $myDbReq = $myDb->requestTrack($_GET["id_tracks"]);
+        if (!$myDbReq){
+            header('HTTP/1.1 400 Bad Request');
+        }
+        else{
+            header('HTTP/1.1 200 OK');
+            echo json_encode($myDbReq);
+        }
+    }
+    //Envoie toutes les tracks
+    else{
+        $myDbReq = $myDb->requestTracks();
+        if (!$myDbReq){
+            header('HTTP/1.1 400 Bad Request');
+        }
+        else{
+            header('HTTP/1.1 200 OK');
+            echo json_encode($myDbReq);
+        }
+    }
+}
+else if ($requestMethod == "POST" && $requestRessource == "playlist"){
+    //Ajout d'une playlist
+    if (isset($_POST["img"]) && isset($_POST["name_playlist"]) && isset($_FILES["myFile"])){
+        //Upload de l'image pour la playlist
+        $extFile = substr($_FILES["myFile"]["name"], strpos($_FILES["myFile"]["name"], "."));
+        $imgPath;
+        if ($ext == ".jpg" || $ext == ".jpeg" || $ext == ".png" || $ext == ".gif"){
+            $src = $_FILES["myFile"]["tmp_name"];
+            $imgPath = '/var/www/projet/html/assets/imgInDb/'.$_POST["name_playlist"].$ext;
+        }
+        else {
+            header('HTTP/1.1 400 Bad Request (only .jpg, .jpeg, .png, .gif extensions)');
+        }
+        if (!move_uploaded_file($src, $imgPath)){
+            header('HTTP/1.1 400 Bad Request');
+
+        }
+        
+        $myDbReq = $myDb->addPlaylist($email, $_POST["name_playlist"], $imgPath);
+        if (!$myDbReq){
+            header('HTTP/1.1 400 Bad Request');
+        }
+        else{
+            header('HTTP/1.1 200 OK');
+            echo json_encode($myDbReq);
+        }
+    }
+    //Ajout d'un morceau à une playlist
+    else if(isset($_POST["id_tracks"]) && isset($_POST["id_playlist"])){
+        $myDbReq = $myDb->addTrack2Playlist($_POST["id_playlist"], $_POST["id_tracks"]);
+        if (!$myDbReq){
+            header('HTTP/1.1 400 Bad Request');
+            echo "a";
+        }
+        else{
+            header('HTTP/1.1 200 OK');
+            echo json_encode($myDbReq);
+        }
+    }
+    else{
+        header('HTTP/1.1 400 Bad Request');
+
+    }
+}
+//Récupere une playlist
+else if ($requestMethod == "GET" && $requestRessource == "playlist"){
+    if(isset($_GET["id_playlist"])){
+        $myDbReq = $myDb->requestPlaylist($email, $_GET["id_playlist"]);
+        if (!$myDbReq){
+            header('HTTP/1.1 400 Bad Request');
+        }
+        else{
+            header('HTTP/1.1 200 OK');
+            echo json_encode($myDbReq);
+        }
+    }
+    else{
+        $myDbReq = $myDb->requestPlaylists($email);
+        if (!$myDbReq){
+            header('HTTP/1.1 400 Bad Request');
+        }
+        else{
+            header('HTTP/1.1 200 OK');
+            echo json_encode($myDbReq);
+        }
+    }
+}
+//Supprime une playlist d'un utilisateur
+else if ($requestMethod == "DELETE" && $requestRessource == "playlist" && $id != ""){
+    if ($id2 == ""){
+        $myDbReq = $myDb->delPlaylist($email, $id);
+        if (!$myDbReq){
+            header('HTTP/1.1 400 Bad Request');
+        }
+        else{
+            header('HTTP/1.1 200 OK');
+            echo json_encode($myDbReq);
+        }
+    }
+    else  {
+        $myDbReq = $myDb->delTrackFromPlaylist($id, $id2);
+        if (!$myDbReq){
+            header('HTTP/1.1 400 Bad Request');
+        }
+        else{
+            header('HTTP/1.1 200 OK');
+            echo json_encode($myDbReq);
+        }
+    }
+
+}
+else if($requestMethod == "GET" && $requestRessource == "artist"){
+    if (isset($_GET["id_artist"])){
+        $myDbReq = $myDb->requestArtist($_GET["id_artist"]);
+        if (!$myDbReq){
+            header('HTTP/1.1 400 Bad Request');
+        }
+        else{
+            header('HTTP/1.1 200 OK');
+            echo json_encode($myDbReq);
+        }
+    }
+    else {
+        $myDbReq = $myDb->requestArtists();
+        if (!$myDbReq){
+            header('HTTP/1.1 400 Bad Request');
+        }
+        else{
+            header('HTTP/1.1 200 OK');
+            echo json_encode($myDbReq);
+        }
+    }
+}
+else if($requestMethod == "GET" && $requestRessource == "album"){
+    if (isset($_GET["id_album"])){
+        $myDbReq = $myDb->requestAlbum($_GET["id_album"]);
+        if (!$myDbReq){
+            header('HTTP/1.1 400 Bad Request');
+        }
+        else{
+            header('HTTP/1.1 200 OK');
+            echo json_encode($myDbReq);
+        }
+    }
+    else {
+        $myDbReq = $myDb->requestAlbums();
+        if (!$myDbReq){
+            header('HTTP/1.1 400 Bad Request');
+        }
+        else{
+            header('HTTP/1.1 200 OK');
+            echo json_encode($myDbReq);
+        }
+    }
+}
 //Si la requête ne correspond à aucun cas traité
 else{
     header('HTTP/1.1 400 Bad Request');
 }
-
 
 header('Content-Type: text/x-json; charset=utf-8');
 header('Cache-control: no-store, no-cache, must-revalidate');
