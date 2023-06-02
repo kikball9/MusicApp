@@ -212,6 +212,21 @@
 
   //Supprime une musique des favories d'un utilisateur
   public function delFavorite($email, $id_tracks){
+    $favs = $this->requestFavorites($email);
+    $myBool = false;
+    if (!$favs){
+      return false;
+    }
+    else{
+      for ($i=0;$i<sizeof($favs);$i++){
+        if ($favs[$i]["id_tracks"] == $id_tracks){
+          $myBool = true;
+        }
+      }
+      if (!$myBool){
+        return false;
+      }
+    }
     try
     {
       $request = 'DELETE FROM favorites_tracks WHERE id_tracks=:id_tracks AND email=:email';
@@ -219,19 +234,13 @@
       $statement->bindParam (':email', $email, PDO::PARAM_STR, 50);
       $statement->bindParam (':id_tracks', $id_tracks, PDO::PARAM_INT, 50);
       $statement->execute();
-      $result = $statement->fetch(PDO::FETCH_ASSOC);
-      echo $result;
+      $statement->fetch(PDO::FETCH_ASSOC);
     }
     catch (PDOException $exception)
     {
       error_log('Request error: '.$exception->getMessage());
-      echo var_dump($result)."a";
       return false;
     }
-    if (!$result)
-      echo "b";
-      return false;
-    echo var_dump($result)."c";
     return true;
   }
 
