@@ -1,18 +1,11 @@
 <?php
-/**
- * @Author: Thibault Napoléon <Imothep>
- * @Company: ISEN Yncréa Ouest
- * @Email: thibault.napoleon@isen-ouest.yncrea.fr
- * @Created Date: 22-Jan-2018 - 13:57:23
- * @Last Modified: 12-Dec-2019 - 14:35:38
- */
-
   require_once('constants.php');
 
   class myDatabase{
-
+    //Attribut
     private $myPDO;
     
+    //Constructeur
     public function __construct(){
       try
     {
@@ -82,7 +75,7 @@
     }
     if (!$result)
       return false;
-    return $result['login'];
+    return $result['email'];
   }
   
   //Récupere les informations d'un utilisateur
@@ -123,7 +116,7 @@
     return true;
   }
 
-  //Modifie un utilisateur
+  //Modifier un utilisateur (sauf l'email)
   public function modifyUser($email, $password, $first_name, $name_user, $date_birth, $img){
     try{
       $request = "UPDATE users SET password=:password, first_naem=:first_name, name_user=:name_user, date_birth=:date_birth, img_path=:img_path WHERE email=:email";
@@ -144,6 +137,7 @@
     return true;
   }
 
+  //supprimer un utilisateur
   public function delUser($email){
     try
     {
@@ -174,11 +168,10 @@
       error_log('Request error: '.$exception->getMessage());
       return false;
     }
-    if (!$result)
-      return false;
     return true;
   }
 
+  //Récupérer les musiques favorites d"un utilisateur
   public function requestFavorites($email){
       try
       {
@@ -193,8 +186,9 @@
         error_log('Request error: '.$exception->getMessage());
         return false;
       }
-      if (!$result)
-        return false;
+      if( $result == ""){
+        return $result;
+      }
       $favorites = array();
       for ($i=0;$i<sizeof($result);$i++){         
         try
@@ -218,6 +212,7 @@
 
   }
 
+  //Ajouter une musique aux favoris d'un utilisateur
   public function addFavorite($email, $id_tracks){
     try{
       $request = "INSERT INTO favorites_tracks(email, id_tracks) VALUES(:email, :id_tracks)";

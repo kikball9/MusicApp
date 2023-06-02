@@ -4,15 +4,18 @@ use function PHPSTORM_META\type;
 
 require "mydatabase.php";
 
+//Authentification via l'email et le mot de passe
 function authenticate($db){
     if (isset($_SERVER["PHP_AUTH_USER"]) && isset($_SERVER["PHP_AUTH_PW"])){
-        if (!$db->checkUser($_SERVER["PHP_AUTH_USER"], $_SERVER["PHP_AUTH_PW"])){
+        $username = $_SERVER["PHP_AUTH_USER"];
+        $password = $_SERVER["PHP_AUTH_PW"];
+        if (!$db->checkUser($username, $password)){
             header('HTTP/1.1 401 Unauthorized');
             exit;
         }
         else {
             $token = base64_encode(openssl_random_pseudo_bytes(12));
-            $db->addToken($_SERVER["PHP_AUTH_USER"], $token);
+            $db->addToken($username, $token);
             header('Content-Type: text/html; charset=utf-8');
             header('Cache-control: no-store, no-cache, must-revalidate');
             header('Pragma: no-cache');
@@ -29,6 +32,7 @@ function authenticate($db){
     }
 }
 
+//Verification du Token
 function verifyToken($db){
     $headers = getallheaders();
     $token = $headers["Authorization"];
@@ -47,16 +51,17 @@ function verifyToken($db){
     }
 }
 
+//Création de l'objet représentant la base de données
 $myDb = new myDatabase;
+//Acquisition des informations de la requête contenuent dans son URL
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 $request = substr($_SERVER['PATH_INFO'], 1);
 $request = explode('/', $request);
 $requestRessource = array_shift($request);
-// Check id.
 $id = array_shift($request);
 if ($id == '')
   $id = NULL;
-
+//Verification du token et acquisition de l'idendité de l'utilisateur pour chaque requête sauf si l'utilisateur s'authentifie
 if ($requestRessource == "authenticate"){
     authenticate($myDb);
 }
@@ -65,6 +70,7 @@ else {
     if (isset($_COOKIE["email"])){
         if($email != $_COOKIE["email"]){
             header('HTTP/1.1 401 Unauthorized');
+            echo json_encode($email);
             exit;
         }
     }
@@ -72,10 +78,19 @@ else {
 if($requestMethod == "GET" && $requestRessource == ""){
     header("HTTP/1.1 200 OK");
 }
-//Récupérer les utilisateurs
+
+/*
+Gestion de la base de données en fonction des requêtes de l'utilisateur:
+*/
+
+//Envoie des données d'un utilisateurs
 else if ($requestMethod == "GET" && $requestRessource == "user"){
     $myDbReq = $myDb->requestUsers($email);
-    if (!$myDbReq){
+    if ($myDbReq == ""){
+        header('HTTP/1.1 200 OK');
+        echo json_encode("");
+    }
+    else if (!$myDbReq){
         header('HTTP/1.1 400 Bad Request');
     }
     else{
@@ -83,6 +98,8 @@ else if ($requestMethod == "GET" && $requestRessource == "user"){
         echo json_encode($myDbReq);
     }
 }
+
+//Création d'un utilisateur
 else if ($requestMethod == "POST" && $requestRessource == "user"){
     if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["first_name"]) && isset($_POST["name_user"]) && isset($_POST["date_birth"]) && isset($_FILES["imgUser"])){
         //Upload de l'image de l'utilisateur
@@ -111,7 +128,11 @@ else if ($requestMethod == "POST" && $requestRessource == "user"){
             echo json_encode($myDbReq);
         }
     }
+    else{
+        header('HTTP/1.1 400 Bad Request');
+    }
 }
+//Mofification d'un utilisateur
 else if ($requestMethod == "PUT" && $requestRessource == "user"){
     parse_str(file_get_contents('php://input'), $_PUT);
     if (isset($_PUT["password"]) && isset($_PUT["first_name"]) && isset($_PUT["name_user"]) && isset($_PUT["date_birth"]) && isset($_PUT["img"])){
@@ -125,22 +146,12 @@ else if ($requestMethod == "PUT" && $requestRessource == "user"){
         }
     }
     else{
-        header('HTTP/1.1 200 OK');
-        echo json_encode($myDbReq);
-    }
-}
-else if ($requestMethod == "DELETE" && $requestRessource == "user"){
-    $myDbReq = $myDb->delUser($email);
-    if(!$email){
         header('HTTP/1.1 400 Bad Request');
     }
-    else{
-        header('HTTP/1.1 200 OK');
-        echo json_encode($myDbReq);
-    }
 }
-else if ($requestMethod == "GET" && $requestRessource == "favorites" && $id == ""){
-    $myDbReq = $myDb->requestFavorites($email);
+//Suppression d'un utilisateur
+else if ($requestMethod == "DELETE" && $requestRessource == "user"){
+    $myDbReq = $myDb->delUser($email);
     if(!$myDbReq){
         header('HTTP/1.1 400 Bad Request');
     }
@@ -149,6 +160,22 @@ else if ($requestMethod == "GET" && $requestRessource == "favorites" && $id == "
         echo json_encode($myDbReq);
     }
 }
+//Envoie des musiques favories d'un utilisateur
+else if ($requestMethod == "GET" && $requestRessource == "favorites"){
+    $myDbReq = $myDb->requestFavorites($email);
+    if ($myDbReq == ""){
+        header('HTTP/1.1 200 OK');
+        echo json_encode("");
+    }
+    if(!$myDbReq){
+        header('HTTP/1.1 400 Bad Request');
+    }
+    else{
+        header('HTTP/1.1 200 OK');
+        echo json_encode($myDbReq);
+    }
+}
+//Ajout d'une musique favorie d'un utilisateur
 else if ($requestMethod == "POST" && $requestRessource == "favorites"){
     if (isset($_POST["id_tracks"])){
         $myDbReq = $myDbReq->addFavorite($email, $_POST["id_tracks"]);
@@ -165,6 +192,7 @@ else if ($requestMethod == "POST" && $requestRessource == "favorites"){
         echo json_encode($myDbReq);
     }
 }
+//Si la requête ne correspond à aucun cas traité
 else{
     header('HTTP/1.1 400 Bad Request');
 }

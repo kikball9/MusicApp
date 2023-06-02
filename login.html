@@ -11,24 +11,26 @@
         <title>Authentification</title>
     </head>
     <body>
-        <h4>Authentification</h4>
-        <form id="auth-form">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                <span class="input-group-text">Login></span>
+        <section id="authentication">
+            <h4>Authentification</h4>
+            <form id="auth-form">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text">Login></span>
+                    </div>
+                    <input type="text" class="form-control" id="login-input" placeholder="Entrez votre login" autofocus required>
                 </div>
-                <input type="text" class="form-control" id="login-input" placeholder="Entrez votre login" autofocus required>
-            </div>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                <span class="input-group-text">Mot de passe></span>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text">Mot de passe></span>
+                    </div>
+                    <input type="password" class="form-control" id="password-input" placeholder="Entrez votre mot de passe" autofocus required>
                 </div>
-                <input type="password" class="form-control" id="password-input" placeholder="Entrez votre mot de passe" autofocus required>
-            </div>
-            <br>
-            <button type="submit" class="btn btn-success float-right">
-                <i class="fa fa-check"></i> Envoyer
-            </button>
-        </form>
+                <br>
+                <button type="submit" class="btn btn-success float-right">
+                    <i class="fa fa-check"></i> Envoyer
+                </button>
+            </form>
+        </section>
     </body>
 </html>

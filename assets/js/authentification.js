@@ -23,8 +23,7 @@ document.getElementById("auth-form").onsubmit = (event) => {
         }
     };
     xhr.onloadend = () => {
-        login = Cookies.get("login");
-        //ajaxRequest("GET", "assets/php/request.php/photos/", loadPhotos);
+        //Récupérer les données du site
     };
     xhr.send();
     document.getElementById("login-input").value = "";
