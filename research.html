@@ -14,35 +14,30 @@
   <!-- Header -->
   <header class="mb-5">
     <nav class="navbar p-2 navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Accueil</a>
+      <a class="navbar-brand" href="#">Navbar w/ text</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Favoris</a>
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Playlist</a>
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
           </li>
         </ul>
+        <span class="navbar-text">
+          Navbar text with an inline element
+        </span>
       </div>
-      <form class="d-flex">
-        <input class="form-control mr-sm-2 m-2" type="search" placeholder="Search" aria-label="Search">
-        <select id="filter" class="form-control m-2" name="Filtre">
-          <option>Filtre</option>
-          <option>Titre</option>
-          <option>Artiste</option>
-          <option>Album</option>
-        </select>
-        <button class="btn btn-outline-success my-2 my-sm-0 m-2" type="submit">Search</button>
+      <form class="form-inline d-flex">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
-      <ul class="navbar-nav mr-auto" style="margin-left: 2rem;">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Compte</a>
-        </li>
-      </ul>
     </nav>
   </header>
 
@@ -136,11 +131,10 @@
     </ul>
   </div>
 
-
-  <div class="w-25 container bg-primary text-white text-center p-2 mb-5">Dernière écoutes</div>
+  <div class="btn btn-outline-success my-2 my-sm-0 text-center p-2 mt-5 mb-5 w-25 flex-row">Ajouter une playlist</div>
 
   <!-- Footer -->
-  <footer class="mt-5">
+  <footer>
     <div class="container-fluid bg-primary text-white text-center p-3">play</div>
   </footer>
 
