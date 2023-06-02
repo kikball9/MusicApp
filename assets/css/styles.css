@@ -1,0 +1,67 @@
+body{
+    overflow-x: hidden;
+}
+
+.row.flex-row.flex-nowrap {
+    overflow-x: scroll;
+}
+/* SrollBar */
+/* width */
+::-webkit-scrollbar {
+    width: 20px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px rgb(250, 250, 250); 
+    border-radius: 10px;
+}  
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(91, 129, 199); 
+    border-radius: 10px;
+} 
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #3150b8; 
+}
+
+/* IMAGE */
+.img-small {
+    max-height: 40px;
+    max-width: 40px;
+}
+.img-large {
+    height: 225px;
+    width: 225px;
+}
+.icon {
+    height: 30px;
+    width: 30px;
+    margin: 5px;
+}
+
+.title {
+    width: 100%;
+}
+
+.color {
+    /* --bs-bg-opacity: 1   ; */
+    /* background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity)) !important; */
+    background-color: rgb(119,168,106) !important;
+}
+
+select option {
+    color: green;
+    background-color: black;
+}
+
+#filter {
+    width: 100px;
+    border: none;
+    text-align: center;
+}
+
+#filter:hover{
+    background-color: green;
+    color: white;
+}

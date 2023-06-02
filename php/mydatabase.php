@@ -106,11 +106,12 @@
       $statement->bindParam(":name_user", $name_user, PDO::PARAM_STR, 50);
       $statement->bindParam(":date_birth", $date_birth, PDO::PARAM_STR, 50);
       $statement->bindParam(":img_path", $img_path, PDO::PARAM_STR, 50);
-      $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+      $statement->execute();
     }
     catch (PDOException $exception)
     {
       error_log('Request error: '.$exception->getMessage());
+      echo $exception->getMessage();
       return false;
     }
     return true;

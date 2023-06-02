@@ -51,6 +51,22 @@ function verifyToken($db){
     }
 }
 
+//Upload un fichier
+function uploadImg($srcName, $destName){
+    $ext= substr($_FILES[$srcName]["name"], strpos($_FILES[$srcName]["name"], "."));
+    if ($ext == ".jpg" || $ext == ".jpeg" || $ext == ".png" || $ext == ".gif"){
+        $src = $_FILES[$srcName]["tmp_name"];
+        $imgPath = '/var/www/projet/html/assets/img/'.$destName.$ext;
+    }
+    else {
+        return false;
+    }
+    if (move_uploaded_file($src, $imgPath)){
+        return true;
+    }
+    return false;
+}
+
 //Création de l'objet représentant la base de données
 $myDb = new myDatabase;
 //Acquisition des informations de la requête contenuent dans son URL
@@ -76,33 +92,37 @@ if ($requestRessource == "authenticate"){
 }
 //Création d'un utilisateur
 else if ($requestMethod == "POST" && $requestRessource == "user"){
-    if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["first_name"]) && isset($_POST["name_user"]) && isset($_POST["date_birth"]) && isset($_FILES["myFile"])){
-        //Upload de l'image de l'utilisateur
-        $extFile = substr($_FILES["myFile"]["name"], strpos($_FILES["myFile"]["name"], "."));
-        $imgPath;
-        if ($ext == ".jpg" || $ext == ".jpeg" || $ext == ".png" || $ext == ".gif"){
-            $src = $_FILES["myFile"]["tmp_name"];
-            $imgPath = '/var/www/projet/html/assets/img/'.explode("@", $email)[0].time().$ext;
+    if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["first_name"]) && isset($_POST["name_user"]) && isset($_POST["date_birth"])){ //&& isset($_FILES["myFile"])){
+        $imgPath = "none";
+        /*
+        $img_path = uploadImg("myFile", explode("@", $email)[0].time());
+        if (!$img_path){
+            header('HTTP/1.1 400 Bad Request');
+        }*/
+        //Verification champs email et date
+        if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST["date_birth"])){
+            $dateArray = explode("-", $_POST["date_birth"]);
+            if (!checkdate(intval($dateArray[1]), intval($dateArray[2]), intval($dateArray[0])) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
+                header('HTTP/1.1 400 Bad Request');
+            }
+            else {
+                $myDbReq = $myDb->addUser($_POST["email"], $_POST["password"], $_POST["first_name"], $_POST["name_user"], $_POST["date_birth"], $imgPath);
+                if(!$myDbReq){
+                    header('HTTP/1.1 400 Bad Request');
+                }
+                else{
+                    header('HTTP/1.1 201 Created');
+                    $token = base64_encode(openssl_random_pseudo_bytes(12));
+                    $db->addToken($username, $token);
+                    echo json_encode($token);
+                    exit;
+                }
+            }
         }
         else {
-            header('HTTP/1.1 400 Bad Request (only .jpg, .jpeg, .png, .gif extensions)');
-        }
-        if (!move_uploaded_file($src, $imgPath)){
-            header('HTTP/1.1 400 Bad Request');
-
-        }
-        //Verification champs email et date
-        if (!preg_match("^[0-9]{4}-[0-1][0-9]-[0-3][0-9]$", $_POST["date_birth"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
             header('HTTP/1.1 400 Bad Request');
         }
-        $myDbReq = $myDb->addUser($_POST["email"], $_POST["password"], $_POST["first_name"], $_POST["name_user"], $_POST["date_birth"], $imgPath);
-        if(!$myDbReq){
-            header('HTTP/1.1 400 Bad Request');
-        }
-        else{
-            header('HTTP/1.1 201 Created');
-            echo json_encode($myDbReq);
-        }
+        
     }
     else{
         header('HTTP/1.1 400 Bad Request');
@@ -145,21 +165,13 @@ else if ($requestMethod == "GET" && $requestRessource == "user"){
 //Mofification d'un utilisateur
 else if ($requestMethod == "PUT" && $requestRessource == "user"){
     parse_str(file_get_contents('php://input'), $_PUT);
-    if (isset($_PUT["password"]) && isset($_PUT["first_name"]) && isset($_PUT["name_user"]) && isset($_PUT["date_birth"]) && isset($_PUT["img"])){
-        //Upload de l'image de l'utilisateur
-        $extFile = substr($_FILES["myFile"]["name"], strpos($_FILES["myFile"]["name"], "."));
-        $imgPath;
-        if ($ext == ".jpg" || $ext == ".jpeg" || $ext == ".png" || $ext == ".gif"){
-            $src = $_FILES["myFile"]["tmp_name"];
-            $imgPath = '/var/www/projet/html/assets/imgInDb/'.explode("@", $email)[0].time().$ext;
-        }
-        else {
-            header('HTTP/1.1 400 Bad Request (only .jpg, .jpeg, .png, .gif extensions)');
-        }
-        if (!move_uploaded_file($src, $imgPath)){
+    if (isset($_PUT["password"]) && isset($_PUT["first_name"]) && isset($_PUT["name_user"]) && isset($_PUT["date_birth"]) ){//&& isset($_FILES["myFile"])){
+        /*
+        $img_path = uploadImg("fileName", explode("@", $email)[0].time());
+        if (!$img_path){
             header('HTTP/1.1 400 Bad Request');
-
-        }
+        }*/
+        $imgPath = "none";
         //Verification champs email et date
         if (!preg_match("^[0-9]{4}-[0-1][0-9]-[0-3][0-9]$", $_PUT["date_birth"]) || !filter_var($_PUT["email"], FILTER_VALIDATE_EMAIL)){
             header('HTTP/1.1 400 Bad Request');
@@ -225,7 +237,6 @@ else if ($requestMethod == "DELETE" && $requestRessource == "favorites" && intva
     $myDbReq = $myDb->delFavorite($email, $id);
     if (!$myDbReq){
         header('HTTP/1.1 400 Bad Request');
-        echo "e";
     }
     else{
         header('HTTP/1.1 200 OK');
@@ -259,21 +270,13 @@ else if ($requestMethod == "GET" && $requestRessource == "track"){
 else if ($requestMethod == "POST" && $requestRessource == "playlist"){
     //Ajout d'une playlist
     if (isset($_POST["img"]) && isset($_POST["name_playlist"]) && isset($_FILES["myFile"])){
-        //Upload de l'image pour la playlist
-        $extFile = substr($_FILES["myFile"]["name"], strpos($_FILES["myFile"]["name"], "."));
-        $imgPath;
-        if ($ext == ".jpg" || $ext == ".jpeg" || $ext == ".png" || $ext == ".gif"){
-            $src = $_FILES["myFile"]["tmp_name"];
-            $imgPath = '/var/www/projet/html/assets/imgInDb/'.$_POST["name_playlist"].$ext;
-        }
-        else {
-            header('HTTP/1.1 400 Bad Request (only .jpg, .jpeg, .png, .gif extensions)');
-        }
-        if (!move_uploaded_file($src, $imgPath)){
+        /*
+        $img_path = uploadImg("myFile", $_POST["name_playlist"]);;
+        if(!$img_path){
             header('HTTP/1.1 400 Bad Request');
-
         }
-        
+        */
+        $imgPath = "none";
         $myDbReq = $myDb->addPlaylist($email, $_POST["name_playlist"], $imgPath);
         if (!$myDbReq){
             header('HTTP/1.1 400 Bad Request');
