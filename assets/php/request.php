@@ -61,6 +61,7 @@ $requestRessource = array_shift($request);
 $id = array_shift($request);
 if ($id == '')
   $id = NULL;
+
 //Verification du token et acquisition de l'idendité de l'utilisateur pour chaque requête sauf si l'utilisateur s'authentifie
 if ($requestRessource == "authenticate"){
     authenticate($myDb);
@@ -75,14 +76,17 @@ else {
         }
     }
 }
-if($requestMethod == "GET" && $requestRessource == ""){
-    header("HTTP/1.1 200 OK");
-}
+
+//Variables utilisées pour le contrôle des requêtes
+//$nbTracks = sizeof($myDb->requestTracks());
 
 /*
 Gestion de la base de données en fonction des requêtes de l'utilisateur:
 */
 
+if($requestMethod == "GET" && $requestRessource == ""){
+    header("HTTP/1.1 200 OK");
+}
 //Envoie des données d'un utilisateurs
 else if ($requestMethod == "GET" && $requestRessource == "user"){
     $myDbReq = $myDb->requestUsers($email);
@@ -124,7 +128,7 @@ else if ($requestMethod == "POST" && $requestRessource == "user"){
             header('HTTP/1.1 400 Bad Request');
         }
         else{
-            header('HTTP/1.1 200 OK');
+            header('HTTP/1.1 201 Created');
             echo json_encode($myDbReq);
         }
     }
@@ -167,7 +171,7 @@ else if ($requestMethod == "GET" && $requestRessource == "favorites"){
         header('HTTP/1.1 200 OK');
         echo json_encode("");
     }
-    if(!$myDbReq){
+    else if(!$myDbReq){
         header('HTTP/1.1 400 Bad Request');
     }
     else{
@@ -178,7 +182,7 @@ else if ($requestMethod == "GET" && $requestRessource == "favorites"){
 //Ajout d'une musique favorie d'un utilisateur
 else if ($requestMethod == "POST" && $requestRessource == "favorites"){
     if (isset($_POST["id_tracks"])){
-        $myDbReq = $myDbReq->addFavorite($email, $_POST["id_tracks"]);
+        $myDbReq = $myDb->addFavorite($email, $_POST["id_tracks"]);
         if(!$myDbReq){
             header('HTTP/1.1 400 Bad Request');
         }
@@ -186,6 +190,17 @@ else if ($requestMethod == "POST" && $requestRessource == "favorites"){
             header('HTTP/1.1 200 OK');
             echo json_encode($myDbReq);
         }
+    }
+    else{
+        header('HTTP/1.1 400 Bad Request');
+        echo json_encode($myDbReq);
+    }
+}
+else if ($requestMethod == "DELETE" && $requestRessource == "favorites" && intval($id) > 0 && intval($id)){
+    $myDbReq = $myDb->delFavorite($email, $id);
+    if (!$myDbReq){
+        header('HTTP/1.1 400 Bad Request');
+        echo "e";
     }
     else{
         header('HTTP/1.1 200 OK');

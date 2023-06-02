@@ -145,7 +145,7 @@
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam (':email', $email, PDO::PARAM_STR, 50);
       $statement->execute();
-      $result = $statement->fetch();
+      $result = $statement->fetch(PDO::FETCH_ASSOC);
     }
     catch (PDOException $exception)
     {
@@ -161,7 +161,7 @@
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam (':email', $email, PDO::PARAM_STR, 50);
       $statement->execute();
-      $result = $statement->fetch();
+      $result = $statement->fetch(PDO::FETCH_ASSOC);
     }
     catch (PDOException $exception)
     {
@@ -175,40 +175,20 @@
   public function requestFavorites($email){
       try
       {
-        $request = 'SELECT id_tracks FROM favorites_tracks WHERE email=:email';
+        $request = 'SELECT id_tracks, name_tracks, date_listened, duration, track_path, id_album, id_artist FROM tracks WHERE id_tracks IN (SELECT id_tracks FROM favorites_tracks WHERE email=:email)';
         $statement = $this->myPDO->prepare($request);
         $statement->bindParam (':email', $email, PDO::PARAM_STR, 50);
         $statement->execute();
-        $result = $statement->fetch();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
       }
       catch (PDOException $exception)
       {
         error_log('Request error: '.$exception->getMessage());
         return false;
       }
-      if( $result == ""){
-        return $result;
-      }
-      $favorites = array();
-      for ($i=0;$i<sizeof($result);$i++){         
-        try
-        {
-          $request = 'SELECT id_tracks, name_tracks, date_listened, duration, track_path, id_album, id_artist FROM tracks WHERE id_tracks=:id_tracks';
-          $statement = $this->myPDO->prepare($request);
-          $statement->bindParam (':id_tracks', $id_tracks, PDO::PARAM_STR, 50);
-          $statement->execute();
-          $result = $statement->fetch();
-        }
-        catch (PDOException $exception)
-        {
-          error_log('Request error: '.$exception->getMessage());
-          return false;
-        }
-        if (!$result)
-          return false;
-        array_push($favorites, $result);
-      }
-      return $favorites;
+      if (!$result)
+        return false;
+      return $result;
 
   }
 
@@ -229,6 +209,32 @@
     }
     return true;
   }
-  } 
+
+  //Supprime une musique des favories d'un utilisateur
+  public function delFavorite($email, $id_tracks){
+    try
+    {
+      $request = 'DELETE FROM favorites_tracks WHERE id_tracks=:id_tracks AND email=:email';
+      $statement = $this->myPDO->prepare($request);
+      $statement->bindParam (':email', $email, PDO::PARAM_STR, 50);
+      $statement->bindParam (':id_tracks', $id_tracks, PDO::PARAM_INT, 50);
+      $statement->execute();
+      $result = $statement->fetch(PDO::FETCH_ASSOC);
+      echo $result;
+    }
+    catch (PDOException $exception)
+    {
+      error_log('Request error: '.$exception->getMessage());
+      echo var_dump($result)."a";
+      return false;
+    }
+    if (!$result)
+      echo "b";
+      return false;
+    echo var_dump($result)."c";
+    return true;
+  }
+
+  }
 
 ?>
