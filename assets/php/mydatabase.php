@@ -299,8 +299,8 @@
     try{
       $request = "SELECT id_playlist, name_playlist, date_creation, img_path AS src FROM playlist WHERE id_playlist=:id_playlist AND email=:email";
       $statement = $this->myPDO->prepare($request);
-      $statement->bindParam(":email", $email, PDO::PARAM_STR, 50);
       $statement->bindParam(":id_playlist", $id_playlist, PDO::PARAM_STR, 50);
+      $statement->bindParam(":email", $email, PDO::PARAM_STR, 50);
       $statement->execute();
       $result = $statement->fetch(PDO::FETCH_ASSOC);
     }

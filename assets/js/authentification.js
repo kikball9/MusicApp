@@ -3,7 +3,7 @@ document.getElementById("auth-form").onsubmit = (event) => {
     event.preventDefault();
     userLogin = document.getElementById("login-input").value;
     userPassword = document.getElementById("password-input").value;
-    Cookies.set("login", userLogin);
+    Cookies.set("email", userLogin);
     xhr = new XMLHttpRequest();
     xhr.open("GET", "assets/php/request.php/authenticate");
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
