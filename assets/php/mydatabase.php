@@ -145,23 +145,18 @@
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam (':email', $email, PDO::PARAM_STR, 50);
       $statement->execute();
-      $result = $statement->fetch(PDO::FETCH_ASSOC);
     }
     catch (PDOException $exception)
     {
       error_log('Request error: '.$exception->getMessage());
       return false;
     }
-    if (!$result)
-      return false;
-    
     try
       {
       $request = 'DELETE FROM favorites_tracks WHERE email=:email';
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam (':email', $email, PDO::PARAM_STR, 50);
       $statement->execute();
-      $result = $statement->fetch(PDO::FETCH_ASSOC);
     }
     catch (PDOException $exception)
     {
