@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/styleguide.css">
     <link rel="stylesheet" href="assets/bootstrap-5.3.0-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js" integrity="sha256-oE03O+I6Pzff4fiMqwEGHbdfcW7a3GRRxlL+U49L5sA=" crossorigin="anonymous"></script> 
     <script src="assets/js/ajax.js" defer></script>
@@ -82,7 +83,7 @@
   <!-- Home -->
   <section id="home_page" style="display: none;">
     <!-- Header -->
-    <header class="mb-5">
+    <header class="">
       <nav class="navbar p-2 navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Accueil</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,88 +118,230 @@
     </header>
 
     <!-- Last Listens -->
-    <div class="container bg-primary text-white text-center p-2 mb-5">Dernière écoutes</div>
+    <h1 id="title">Dernière écoutes</h1>
     
     <ul class="list-group align-items-center flex-column">
-      <li class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 color">
-          <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
-          <div class="text-center title p-1 text-white">titre - artiste</div>
-          <img src="assets/img/heart-icon.png" alt="heart_icon" class="icon">
-          <img src="assets/img/detail-icon.png" alt="detail_icon" class="icon">
-      </li>
-      <li class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 color">
+      <li id="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
         <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
-        <div class="text-center title p-1 text-white">titre - artiste</div>
-        <img src="assets/img/heart-icon.png" alt="heart_icon" class="icon">
-        <img src="assets/img/detail-icon.png" alt="detail_icon" class="icon">
+        <div class="text-center title p-1 text-white">
+            <ul class="m-0  list-inline" style="list-style: none;">
+                <li class="list-inline-item">titre</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">artiste</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">duree</li>
+            </ul>
+        </div>
+        <button class="btn">
+            <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
+        </button>
+        <button class="btn">
+            <i class="bi bi-three-dots-vertical three-dot"></i>
+        </button>
       </li>
-      <li class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 color">
+      <li id="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
         <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
-        <div class="text-center title p-1 text-white">titre - artiste</div>
-        <img src="assets/img/heart-icon.png" alt="heart_icon" class="icon">
-        <img src="assets/img/detail-icon.png" alt="detail_icon" class="icon">
+        <div class="text-center title p-1 text-white">
+            <ul class="m-0  list-inline" style="list-style: none;">
+                <li class="list-inline-item">titre</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">artiste</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">duree</li>
+            </ul>
+        </div>
+        <button class="btn">
+            <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
+        </button>
+        <button class="btn">
+            <i class="bi bi-three-dots-vertical three-dot"></i>
+        </button>
       </li>
-      <li class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 color">
+      <li id="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
         <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
-        <div class="text-center title p-1 text-white">titre - artiste</div>
-        <img src="assets/img/heart-icon.png" alt="heart_icon" class="icon">
-        <img src="assets/img/detail-icon.png" alt="detail_icon" class="icon">
+        <div class="text-center title p-1 text-white">
+            <ul class="m-0  list-inline" style="list-style: none;">
+                <li class="list-inline-item">titre</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">artiste</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">duree</li>
+            </ul>
+        </div>
+        <button class="btn">
+            <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
+        </button>
+        <button class="btn">
+            <i class="bi bi-three-dots-vertical three-dot"></i>
+        </button>
       </li>
-      <li class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 color">
+      <li id="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
         <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
-        <div class="text-center title p-1 text-white">titre - artiste</div>
-        <img src="assets/img/heart-icon.png" alt="heart_icon" class="icon">
-        <img src="assets/img/detail-icon.png" alt="detail_icon" class="icon">
+        <div class="text-center title p-1 text-white">
+            <ul class="m-0  list-inline" style="list-style: none;">
+                <li class="list-inline-item">titre</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">artiste</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">duree</li>
+            </ul>
+        </div>
+        <button class="btn">
+            <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
+        </button>
+        <button class="btn">
+            <i class="bi bi-three-dots-vertical three-dot"></i>
+        </button>
+      </li>
+      <li id="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
+        <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
+        <div class="text-center title p-1 text-white">
+            <ul class="m-0  list-inline" style="list-style: none;">
+                <li class="list-inline-item">titre</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">artiste</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">duree</li>
+            </ul>
+        </div>
+        <button class="btn">
+            <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
+        </button>
+        <button class="btn">
+            <i class="bi bi-three-dots-vertical three-dot"></i>
+        </button>
       </li>
     </ul>
     
     <!-- Titre Liked -->
-    <div class="container bg-primary text-white text-center p-2 mt-5 mb-5">Titres aimés</div>
+    <h1 id="title">Titres aimés</h1>
+    <ul class="list-group align-items-center flex-column">
+      <li id="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
+        <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
+        <div class="text-center title p-1 text-white">
+            <ul class="m-0  list-inline" style="list-style: none;">
+                <li class="list-inline-item">titre</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">artiste</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">duree</li>
+            </ul>
+        </div>
+        <button class="btn">
+            <i class="bi bi-suit-heart-fill filled-heart icon-btn" aria-hidden="true"></i>
+        </button>
+        <button class="btn">
+            <i class="bi bi-three-dots-vertical three-dot"></i>
+        </button>
+      </li>
+      <li id="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
+        <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
+        <div class="text-center title p-1 text-white">
+            <ul class="m-0  list-inline" style="list-style: none;">
+                <li class="list-inline-item">titre</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">artiste</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">duree</li>
+            </ul>
+        </div>
+        <button class="btn">
+            <i class="bi bi-suit-heart-fill filled-heart icon-btn" aria-hidden="true"></i>
+        </button>
+        <button class="btn">
+            <i class="bi bi-three-dots-vertical three-dot"></i>
+        </button>
+      </li>
+    </ul>
+    
 
     <!-- Playlist -->
-    <div class="container bg-primary text-white text-center p-2 mt-5 mb-5">Playlists</div>
+    <h1 id="title">Playlists</h1>
 
     <div class="row flex-row flex-nowrap p-0 m-3">
-      <ul class="list-group list-group-horizontal-md d-flex justify-content-center">
-        
-        <li class="list-group-item p-0 d-flex m-2">
+      <ul class="list-group list-group-horizontal-md d-flex p-4 m-3">
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
           <div>
               <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
-              <div class="text-center">nom_album</div>
+              <div id="album-title" class="text-center">nom_album</div>
           </div>
         </li>
-        <li class="list-group-item p-0 d-flex m-2">
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
           <div>
               <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
-              <div class="text-center">nom_album</div>
+              <div id="album-title" class="text-center">nom_album</div>
           </div>
         </li>
-        <li class="list-group-item p-0 d-flex m-2">
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
           <div>
               <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
-              <div class="text-center">nom_album</div>
+              <div id="album-title" class="text-center">nom_album</div>
           </div>
         </li>
-        <li class="list-group-item p-0 d-flex m-2">
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
           <div>
               <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
-              <div class="text-center">nom_album</div>
+              <div id="album-title" class="text-center">nom_album</div>
           </div>
         </li>
-        <li class="list-group-item p-0 d-flex m-2">
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
           <div>
               <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
-              <div class="text-center">nom_album</div>
+              <div id="album-title" class="text-center">nom_album</div>
+          </div>
+        </li>
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
+          <div>
+              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+              <div id="album-title" class="text-center">nom_album</div>
+          </div>
+        </li>
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
+          <div>
+              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+              <div id="album-title" class="text-center">nom_album</div>
+          </div>
+        </li>
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
+          <div>
+              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+              <div id="album-title" class="text-center">nom_album</div>
+          </div>
+        </li>
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
+          <div>
+              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+              <div id="album-title" class="text-center">nom_album</div>
+          </div>
+        </li>
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
+          <div>
+              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+              <div id="album-title" class="text-center">nom_album</div>
+          </div>
+        </li>
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
+          <div>
+              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+              <div id="album-title" class="text-center">nom_album</div>
+          </div>
+        </li>
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
+          <div>
+              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+              <div id="album-title" class="text-center">nom_album</div>
           </div>
         </li>
       </ul>
+    </div>  
+
+    <div class="row flex-row w-25 m-auto">
+      <button class="btn btn-outline-success mt-5 mb-5" type="button">Créer une playlist</button>
     </div>
-
-
-    <div class="w-25 container bg-primary text-white text-center p-2 mb-5">Dernière écoutes</div>
+    <br><br><br><br><br><br><br>
 
     <!-- Footer -->
-    <footer class="mt-5">
+    <footer class="">
       <div class="container-fluid bg-primary text-white text-center p-3">play</div>
     </footer>
   </section>
