@@ -111,10 +111,13 @@ else if ($requestMethod == "POST" && $requestRessource == "user"){
                     header('HTTP/1.1 400 Bad Request');
                 }
                 else{
-                    header('HTTP/1.1 201 Created');
                     $token = base64_encode(openssl_random_pseudo_bytes(12));
-                    $db->addToken($username, $token);
-                    echo json_encode($token);
+                    $myDb->addToken($_POST["email"], $token);
+                    header('Content-Type: text/html; charset=utf-8');
+                    header('Cache-control: no-store, no-cache, must-revalidate');
+                    header('Pragma: no-cache');
+                    header('HTTP/1.1 201 Created');
+                    echo $token;
                     exit;
                 }
             }
