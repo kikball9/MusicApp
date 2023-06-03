@@ -46,5 +46,14 @@ document.getElementById("create-form").onsubmit = (event) => {
     xhr.send("first_name="+prenom_user+"&name_user="+nom_user+"&date_birth="+age_user);
     document.getElementById("login-input").value = "";
     document.getElementById("password-input").value = "";
-    
 }
+
+document.getElementById("create-account-btn").addEventListener("click", () => {
+    document.getElementById("login_page").style.display = "none";
+    document.getElementById("signin_page").style.display = "block";
+});
+
+document.getElementById("connect-btn").addEventListener("click", () => {
+    document.getElementById("login_page").style.display = "block";
+    document.getElementById("signin_page").style.display = "none";
+});

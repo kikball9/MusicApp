@@ -67,12 +67,4 @@ function httpErrors(errorCode)
     500: 'Erreur interne du serveur',
     503: 'Service indisponible'
   };
-
-  // Display error.
-  /*if (errorCode in messages)
-  {
-    $('#errors').html('<i class="fa fa-exclamation-circle"></i> <strong>' +
-      messages[errorCode] + '</strong>');
-    $('#errors').show();
-  }*/
 }

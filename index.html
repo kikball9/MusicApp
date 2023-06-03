@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/styleguide.css">
     <link rel="stylesheet" href="assets/bootstrap-5.3.0-dist/css/bootstrap.css">
 
@@ -14,11 +14,11 @@
     <script src="assets/js/createAccount.js" defer></script>
     <title>MusicApp</title>
 </head>
-<body style="background-color: black;">
-  
+<body>
+
   <!-- Login -->
-  <section id="login_page" class="text-white flex-column" style="display: block;">
-    <div class="container text-white text-center p-5 align-self-center" style="background-color: #212529; border-radius: 40px;">
+  <section id="login_page" class="text-white flex-column login" style="display: block;">
+    <div class="container text-white text-center p-5 align-self-center" style="background-color: #212529; border-radius: 40px; ; align-items: center; justify-content: center;  ">
       <h1>Connexion</h1>
       <form id="auth-form">
         <div>
@@ -37,19 +37,14 @@
         <div id="bad_pwd" class="bg-danger w-25 container text-center" style="display: none;">
           <p>Mot de passe incorrect</p>
         </div>
-        
-        <button type="submit">
-            Se connecter
-        </button>
+        <button id="create-account-btn" class="btn btn-outline-success mt-3" type="button">Créer un compte</button>
+        <button class="btn btn-outline-success mt-3" type="submit">Connexion</button>
       </form>
-      
-      <button class="btn btn-outline-success mt-3" type="submit">Créer un compte</button>
-
     </div>
   </section>
 
   <!-- Signin -->
-  <section id="signin_page" class="text-white flex-column" style="display: block;">
+  <section id="signin_page" class="text-white flex-column login" style="display: none;">
     <div class="container text-white text-center p-5 align-self-center" style="background-color: #212529; border-radius: 40px;">
       <h1>Création de compte</h1>
       <form id="create-form">
@@ -77,10 +72,10 @@
           <label for="exampleInputPassword1">Confirmer mot de passe</label>
           <input id="confirm-mdp-input" type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirmer votre mot de passe">
         </div>
-       
-        <button class="btn btn-outline-success mt-3" type="submit">Créer un compte</button>
+
+        <button id="connect-btn" class="btn btn-outline-success mt-3" type="button">Se connecter</button>
+        <button class="btn btn-outline-success mt-3" type="submit">S'inscire</button>
       </form>
-      
     </div>
   </section>
 

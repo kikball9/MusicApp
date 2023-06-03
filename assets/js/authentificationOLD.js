@@ -20,7 +20,6 @@ document.getElementById("auth-form").onsubmit = (event) => {
                 document.getElementById("home_page").style.display = "block";
                 document.getElementById("login_page").style.display = "none";
                 document.getElementById("signin_page").style.display = "none";
-
                 
                 break;
             default:
@@ -33,6 +32,7 @@ document.getElementById("auth-form").onsubmit = (event) => {
     };
     xhr.onloadend = () => {
         //Récupérer les données du site
+        Cookies.set("token", xhr.responseText);
     };
     xhr.send();
     document.getElementById("login-input").value = userLogin;
