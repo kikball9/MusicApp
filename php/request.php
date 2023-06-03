@@ -92,7 +92,7 @@ if ($requestRessource == "authenticate"){
 }
 //Création d'un utilisateur
 else if ($requestMethod == "POST" && $requestRessource == "user"){
-    if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["first_name"]) && isset($_POST["name_user"]) && isset($_POST["date_birth"])){ //&& isset($_FILES["myFile"])){
+    if (isset($_SERVER["PHP_AUTH_USER"]) && isset($_SERVER["PHP_AUTH_PW"]) && isset($_POST["first_name"]) && isset($_POST["name_user"]) && isset($_POST["date_birth"])){ //&& isset($_FILES["myFile"])){
         $imgPath = "none";
         /*
         $img_path = uploadImg("myFile", explode("@", $email)[0].time());
@@ -102,17 +102,20 @@ else if ($requestMethod == "POST" && $requestRessource == "user"){
         //Verification champs email et date
         if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST["date_birth"])){
             $dateArray = explode("-", $_POST["date_birth"]);
-            if (!checkdate(intval($dateArray[1]), intval($dateArray[2]), intval($dateArray[0])) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
+            $email = $_SERVER["PHP_AUTH_USER"];
+            $password = $_SERVER["PHP_AUTH_PW"];
+            echo $_SERVER["PHP_AUTH_PW"];
+            if (!checkdate(intval($dateArray[1]), intval($dateArray[2]), intval($dateArray[0])) || !filter_var($email, FILTER_VALIDATE_EMAIL)){
                 header('HTTP/1.1 400 Bad Request');
             }
             else {
-                $myDbReq = $myDb->addUser($_POST["email"], $_POST["password"], $_POST["first_name"], $_POST["name_user"], $_POST["date_birth"], $imgPath);
+                $myDbReq = $myDb->addUser($email, $password, $_POST["first_name"], $_POST["name_user"], $_POST["date_birth"], $imgPath);
                 if(!$myDbReq){
                     header('HTTP/1.1 400 Bad Request');
                 }
                 else{
                     $token = base64_encode(openssl_random_pseudo_bytes(12));
-                    $myDb->addToken($_POST["email"], $token);
+                    $myDb->addToken($email, $token);
                     header('Content-Type: text/html; charset=utf-8');
                     header('Cache-control: no-store, no-cache, must-revalidate');
                     header('Pragma: no-cache');
