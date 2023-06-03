@@ -13,7 +13,6 @@ document.getElementById("auth-form").onsubmit = (event) => {
         switch (xhr.status){
             case 200:
             case 201:
-                Cookies.set("token", xhr.responseText);
                 //Cacher l'auth et afficher le reste
                 console.log("login success !");
 
@@ -31,6 +30,7 @@ document.getElementById("auth-form").onsubmit = (event) => {
         }
     };
     xhr.onloadend = () => {
+        Cookies.set("token", xhr.responseText);
         //Récupérer les données du site
         Cookies.set("token", xhr.responseText);
     };
