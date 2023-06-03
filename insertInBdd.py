@@ -15,7 +15,7 @@ class myDatabase:
 
     def __del__(self):
         self.conn.close()
-    
+
     def dbQuery(self, query):
         try:
             self.cursor.execute(query)
@@ -23,13 +23,13 @@ class myDatabase:
              return e
         self.conn.commit()
         return self.cursor
-    
+
     def addTypeArtist(self, typeArtist):
         self.dbQuery(f"INSERT INTO type_artist(type_artist) VALUES('{typeArtist}')")
-    
+
     def addArtist(self, nameArtist, typeArtist, img_path):
         self.dbQuery(f"INSERT INTO artist (name_artist, type_artist, img_path) VALUES('{nameArtist}', '{typeArtist}', '{img_path}')")
-    
+
     def addTrack(self, name, artist, path, album):
         myQuery = self.dbQuery(f"SELECT id_artist FROM artist WHERE name_artist='{artist}'")
         result = myQuery.fetchall()
@@ -67,13 +67,13 @@ class myDatabase:
 
     def delTypeArtist(self, type_artist):
         self.dbQuery(f"DELETE FROM type_artist WHERE type_artist='{type_artist}'")
-    
+
     def delAlbumStyle(self, style):
         idAlbumsWithStyle = self.dbQuery(f"SELECT id_album FROM is_style WHERE style='{style}'")
         result = idAlbumsWithStyle.fetchall()
         albumsWithStyle = []
         for i in range(len(result)):
-            myQuery = self.dbQuery(f"SELECT name_album FROM album WHERE id_album={anIdAlbum[i][0]}")
+            myQuery = self.dbQuery(f"SELECT name_album FROM album WHERE id_album={idAlbumsWithStyle[i][0]}")
             result = myQuery.fetchall()
             if result != []:
                 albumsWithStyle.append(result[0][0])
@@ -81,7 +81,7 @@ class myDatabase:
             self.delAlbum(album)
         self.dbQuery(f"DELETE FROM is_style WHERE style='{style}'")
         self.dbQuery(f"DELETE FROM album_style WHERE style='{style}'")
-        
+
 
     def delAlbum(self, nameAlbum, delTracks = False):
         myQuery = self.dbQuery(f"SELECT id_album FROM album WHERE name_album='{nameAlbum}'")
@@ -96,7 +96,7 @@ class myDatabase:
         for i in range(len(result)):
             self.delTrack(result[i][0])
         self.dbQuery(f"DELETE FROM album WHERE id_album={id_album}")
-    
+
     def delArtist(self, nameArtist):
         myQuery = self.dbQuery(f"SELECT id_artist FROM artist WHERE name_artist='{nameArtist}'")
         result = myQuery.fetchall()
@@ -121,6 +121,18 @@ class myDatabase:
         self.dbQuery(f"DELETE FROM playlist_tracks WHERE id_tracks={id_tracks}")
         self.dbQuery(f"DELETE FROM tracks WHERE id_tracks={id_tracks}")
 
-if __name__ == "__main__":
-    myDb = myDatabase()
-    myDb.delAlbum("2album")
+    # def delUser(self, user_email):
+    #     myQuery = self.dbQuery(f"SELECT id_tracks FROM tracks WHERE name_tracks='{track}'")
+    #     result = myQuery.fetchall()
+    #     if result == []:
+    #         print("Error, no tracks with this name")
+    #         return
+    #     id_tracks= result[0][0]
+    #     self.dbQuery(f"DELETE FROM favorites_tracks WHERE id_tracks={id_tracks}")
+    #     self.dbQuery(f"DELETE FROM playlist_tracks WHERE id_tracks={id_tracks}")
+    #     self.dbQuery(f"DELETE FROM tracks WHERE id_tracks={id_tracks}")
+    
+
+# if __name__ == "__main__":
+#     myDb = myDatabase()
+#     myDb.delArtist("Maitre Gims")

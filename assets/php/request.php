@@ -21,13 +21,14 @@ function authenticate($db){
             header('Pragma: no-cache');
 
             header('HTTP/1.1 200 OK');
+            echo "Vosu êtes authentifié !\n";
             echo $token;
             exit;
         }
     }
     else {
         header('HTTP/1.1 401 Unauthorized');
-        echo "c";
+        echo "Vous n'êtes pas authentifié";
         exit;
     }
 }
@@ -58,23 +59,27 @@ $requestMethod = $_SERVER['REQUEST_METHOD'];
 $request = substr($_SERVER['PATH_INFO'], 1);
 $request = explode('/', $request);
 $requestRessource = array_shift($request);
+// var_dump($requestRessource);
 $id = array_shift($request);
+echo($requestMethod."\t".$requestRessource);
+
 if ($id == '')
   $id = NULL;
+
 //Verification du token et acquisition de l'idendité de l'utilisateur pour chaque requête sauf si l'utilisateur s'authentifie
 if ($requestRessource == "authenticate"){
     authenticate($myDb);
 }
-else {
-    $email = verifyToken($myDb);
-    if (isset($_COOKIE["email"])){
-        if($email != $_COOKIE["email"]){
-            header('HTTP/1.1 401 Unauthorized');
-            echo json_encode($email);
-            exit;
-        }
-    }
-}
+// else {
+//     $email = verifyToken($myDb);
+//     if (isset($_COOKIE["email"])){
+//         if($email != $_COOKIE["email"]){
+//             header('HTTP/1.1 401 Unauthorized');
+//             echo json_encode($email);
+//             exit;
+//         }
+//     }
+// }
 if($requestMethod == "GET" && $requestRessource == ""){
     header("HTTP/1.1 200 OK");
 }
@@ -101,6 +106,8 @@ else if ($requestMethod == "GET" && $requestRessource == "user"){
 
 //Création d'un utilisateur
 else if ($requestMethod == "POST" && $requestRessource == "user"){
+    echo "contenu de \$_POST :\n";
+    var_dump($_POST);   
     if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["first_name"]) && isset($_POST["name_user"]) && isset($_POST["date_birth"]) && isset($_FILES["imgUser"])){
         //Upload de l'image de l'utilisateur
         $extFile = substr($_FILES["myfile"]["name"], strpos($_FILES["myfile"]["name"], "."));

@@ -20,24 +20,24 @@
     }
     //Vérifie que l'email et le password correspondent à un utilisateur
     public function checkUser($email, $password){
-    try
-    {
-      $request = 'SELECT * FROM users WHERE email=:email AND password=SHA1(:password)';
-      $statement = $this->myPDO->prepare($request);
-      $statement->bindParam (':email', $email, PDO::PARAM_STR, 50);
-      $statement->bindParam (':password', $password, PDO::PARAM_STR, 40);
-      $statement->execute();
-      $result = $statement->fetch();
+      try
+      {
+        $request = 'SELECT * FROM users WHERE email=:email AND password=SHA1(:password)';
+        $statement = $this->myPDO->prepare($request);
+        $statement->bindParam (':email', $email, PDO::PARAM_STR, 50);
+        $statement->bindParam (':password', $password, PDO::PARAM_STR, 40);
+        $statement->execute();
+        $result = $statement->fetch();
+      }
+      catch (PDOException $exception)
+      {
+        error_log('Request error: '.$exception->getMessage());
+        return false;
+      }
+      if (!$result)
+        return false;
+      return true;
     }
-    catch (PDOException $exception)
-    {
-      error_log('Request error: '.$exception->getMessage());
-      return false;
-    }
-    if (!$result)
-      return false;
-    return true;
-  }
 
   //Ajoute un token d'identification à un utilisateur
   public function addToken($email, $token){
@@ -97,6 +97,7 @@
 
   //Ajoute un utilisateur
   public function addUser($email, $password, $first_name, $name_user, $date_birth, $img_path){
+    echo "appel fonction addUser";
     try{
       $request = "INSERT INTO users(email, password, first_name, name_user, date_birth, img_path) VALUES(:email, SHA1(:password), :first_name, :name_user, :date_birth, :img_path)";
       $statement = $this->myPDO->prepare($request);
