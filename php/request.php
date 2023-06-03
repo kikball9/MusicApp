@@ -27,6 +27,7 @@ function authenticate($db){
     }
     else {
         header('HTTP/1.1 401 Unauthorized');
+        echo "c";
         exit;
     }
 }
@@ -103,6 +104,7 @@ else if ($requestMethod == "POST" && $requestRessource == "user"){
             $dateArray = explode("-", $_POST["date_birth"]);
             $email = $_SERVER["PHP_AUTH_USER"];
             $password = $_SERVER["PHP_AUTH_PW"];
+            echo $_SERVER["PHP_AUTH_PW"];
             if (!checkdate(intval($dateArray[1]), intval($dateArray[2]), intval($dateArray[0])) || !filter_var($email, FILTER_VALIDATE_EMAIL)){
                 header('HTTP/1.1 400 Bad Request');
             }
@@ -134,8 +136,8 @@ else if ($requestMethod == "POST" && $requestRessource == "user"){
 }
 else{
     $email = verifyToken($myDb);
-    if (isset($_COOKIE["login"])){
-        if($email != $_COOKIE["login"]){
+    if (isset($_COOKIE["email"])){
+        if($email != $_COOKIE["email"]){
             header('HTTP/1.1 401 Unauthorized');
             exit;
         }

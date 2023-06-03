@@ -42,7 +42,7 @@
   //Ajoute un token d'identification à un utilisateur
   public function addToken($email, $token){
     try
-    { 
+    {
       $request = 'UPDATE users SET token=:token WHERE email=:email';
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam(':email', $email, PDO::PARAM_STR, 50);
@@ -111,6 +111,7 @@
     catch (PDOException $exception)
     {
       error_log('Request error: '.$exception->getMessage());
+      echo $exception->getMessage();
       return false;
     }
     return true;
