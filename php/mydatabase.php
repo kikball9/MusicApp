@@ -42,7 +42,7 @@
   //Ajoute un token d'identification à un utilisateur
   public function addToken($email, $token){
     try
-    {
+    { 
       $request = 'UPDATE users SET token=:token WHERE email=:email';
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam(':email', $email, PDO::PARAM_STR, 50);
@@ -111,7 +111,6 @@
     catch (PDOException $exception)
     {
       error_log('Request error: '.$exception->getMessage());
-      echo $exception->getMessage();
       return false;
     }
     return true;
@@ -167,7 +166,7 @@
   public function requestFavorites($email){
       try
       {
-        $request = 'SELECT id_tracks, name_tracks, date_listened, duration, track_path, id_album, id_artist FROM tracks WHERE id_tracks IN (SELECT id_tracks FROM favorites_tracks WHERE email=:email)';
+        $request = 'SELECT tracks.id_tracks, name_tracks, duration, track_path, id_album, id_artist, date_listened FROM tracks, users_tracks WHERE tracks.id_tracks IN (SELECT users_tracks.id_tracks FROM users_tracks WHERE email=:email AND is_favorite=TRUE) AND tracks.id_tracks=users_tracks.id_tracks';
         $statement = $this->myPDO->prepare($request);
         $statement->bindParam (':email', $email, PDO::PARAM_STR, 50);
         $statement->execute();
@@ -186,20 +185,51 @@
 
   //Ajouter une musique aux favoris d'un utilisateur
   public function addFavorite($email, $id_tracks){
+    //$currentFavorites = $this->requestFavorites($email);
     try{
-      $request = "INSERT INTO favorites_tracks(email, id_tracks) VALUES(:email, :id_tracks)";
+      $request = "SELECT id_tracks, is_favorite FROM users_tracks WHERE email=:email AND id_tracks=:id_tracks";
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam(":email", $email, PDO::PARAM_STR, 50);
       $statement->bindParam(":id_tracks", $id_tracks, PDO::PARAM_STR, 50);
       $statement->execute();
-      $statement->fetchAll(PDO::FETCH_ASSOC);
+      $result = $statement->fetch(PDO::FETCH_ASSOC);
     }
     catch (PDOException $exception)
     {
       error_log('Request error: '.$exception->getMessage());
       return false;
     }
-    return true;
+    if($result != ""){
+      try{
+        $request = "UPDATE users_tracks SET is_favorite=TRUE WHERE email=:email AND id_tracks=:id_tracks";
+        $statement = $this->myPDO->prepare($request);
+        $statement->bindParam(":email", $email, PDO::PARAM_STR, 50);
+        $statement->bindParam(":id_tracks", $id_tracks, PDO::PARAM_STR, 50);
+        $statement->execute();
+      }
+      catch (PDOException $exception)
+      {
+        error_log('Request error: '.$exception->getMessage());
+        return false;
+      }
+      return true;
+    }
+    else {
+      try{
+        $request = "INSERT INTO users_tracks(email, id_tracks, is_favorite) VALUES(:email, :id_tracks, TRUE)";
+        $statement = $this->myPDO->prepare($request);
+        $statement->bindParam(":email", $email, PDO::PARAM_STR, 50);
+        $statement->bindParam(":id_tracks", $id_tracks, PDO::PARAM_STR, 50);
+        $statement->execute();
+        $statement->fetchAll(PDO::FETCH_ASSOC);
+      }
+      catch (PDOException $exception)
+      {
+        error_log('Request error: '.$exception->getMessage());
+        return false;
+      }
+      return true;
+    }
   }
 
   //Supprime une musique des favories d'un utilisateur
@@ -221,7 +251,7 @@
     }
     try
     {
-      $request = 'DELETE FROM favorites_tracks WHERE id_tracks=:id_tracks AND email=:email';
+      $request = 'UPDATE users_tracks SET is_favorite=FALSE WHERE id_tracks=:id_tracks AND email=:email';
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam (':email', $email, PDO::PARAM_STR, 50);
       $statement->bindParam (':id_tracks', $id_tracks, PDO::PARAM_INT, 50);
@@ -238,7 +268,7 @@
   //Récupere un morceau
   public function requestTrack($id_tracks){
     try{
-      $request = "SELECT * FROM tracks WHERE id_tracks=:id_tracks";//"SELECT id_tracks, name_tracks, date_listened, duration, track_path, name_album, name_artist FROM tracks, album, artist WHERE tracks.id_artist=artist.id_artist AND tracks.id_album=album.id_album AND id_tracks=:id_tracks";
+      $request = "SELECT tracks.id_tracks, name_tracks, duration, track_path, date_listened FROM tracks, users_tracks WHERE tracks.id_tracks=:id_tracks AND tracks.id_tracks=users_tracks.id_tracks";//"SELECT id_tracks, name_tracks, date_listened, duration, track_path, name_album, name_artist FROM tracks, album, artist WHERE tracks.id_artist=artist.id_artist AND tracks.id_album=album.id_album AND id_tracks=:id_tracks";
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam(":id_tracks", $id_tracks, PDO::PARAM_STR, 50);
       $statement->execute();
@@ -254,7 +284,7 @@
   //Récupère toutes les musiques
   public function requestTracks(){
     try{
-      $request = "SELECT * FROM tracks";//"SELECT id_tracks, name_tracks, date_listened, duration, track_path, name_album, name_artist FROM tracks, album, artist WHERE tracks.id_artist=artist.id_artist AND tracks.id_album=album.id_album";
+      $request = "SELECT tracks.id_tracks, name_tracks, duration, track_path, date_listened FROM tracks, users_tracks";//"SELECT id_tracks, name_tracks, date_listened, duration, track_path, name_album, name_artist FROM tracks, album, artist WHERE tracks.id_artist=artist.id_artist AND tracks.id_album=album.id_album";
       $statement = $this->myPDO->prepare($request);
       $statement->execute();
       $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -301,7 +331,7 @@
       error_log('Request error: '.$exception->getMessage());
       return false;
     }
-    $myReturn = array($result);
+    $myReturn["playlist-info"] = $result;
     try{
       $request = "SELECT id_tracks, date_add FROM playlist_tracks WHERE id_playlist=:id_playlist";
       $statement = $this->myPDO->prepare($request);
@@ -320,7 +350,7 @@
       array_push($tracksInPlaylist, $this->requestTrack($result[$i]["id_tracks"]));
       $tracksInPlaylist[$i]["date_add"] = $result[$i]["date_add"];
     }
-    array_push($myReturn, $tracksInPlaylist);
+    $myReturn["playlist-tracks"] = $tracksInPlaylist;
     return $myReturn;
   }
 
@@ -416,7 +446,6 @@
     }
     return true;
   }
-  //Revoir requestArtist/Album (jointure table n,n)
   public function requestArtist($id_artist){
     try{
       $request = "SELECT * FROM artist WHERE id_artist=:id_artist";
@@ -461,7 +490,7 @@
       error_log('Request error: '.$exception->getMessage());
       return false;
     }
-    $myReturn = array($result);
+    $myReturn["album-infos"] = $result;
     $allTracks = $this->requestTracks();
     $tracksInAlbum = array();
     for ($i=0;$i<sizeof($allTracks);$i++){
@@ -469,14 +498,14 @@
         array_push($tracksInAlbum, $allTracks[$i]);
       }
     }
-    array_push($myReturn, $tracksInAlbum);
+    $myReturn["album-tracks"] = $tracksInAlbum;
     
     return $myReturn;
   }
 
   public function requestAlbums(){
     try{
-      $request = "SELECT album.id_album, name_album, date_published, album.img_path, name_artist, style FROM album, artist, is_style WHERE album.id_album = is_style.id_album AND album.id_artist=artist.id_artist";
+      $request = "SELECT id_album FROM album";//"SELECT album.id_album, name_album, date_published, album.img_path, name_artist, style FROM album, artist, is_style WHERE album.id_album = is_style.id_album AND album.id_artist=artist.id_artist";
       $statement = $this->myPDO->prepare($request);
       $statement->execute();
       $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -486,7 +515,58 @@
       error_log('Request error: '.$exception->getMessage());
       return false;
     }
-    return $result;
+    $myReturn = array();
+    for ($i=0;$i<sizeof($result);$i++){
+      array_push($myReturn, $this->requestAlbum($result[$i]["id_album"]));
+    }
+    return $myReturn;
+  }
+
+  //Mets à jour la date d'écoute d'un morceau
+  public function updateListeningDate($email, $id_tracks){
+    try{
+      $request = "SELECT id_tracks FROM users_tracks WHERE email=:email AND id_tracks=:id_tracks";
+      $statement = $this->myPDO->prepare($request);
+      $statement->bindParam(":email", $email, PDO::PARAM_STR, 50);
+      $statement->bindParam(":id_tracks", $id_tracks, PDO::PARAM_STR, 50);
+      $statement->execute();
+      $result = $statement->fetch(PDO::FETCH_ASSOC);
+    }
+    catch (PDOException $exception)
+    {
+      error_log('Request error: '.$exception->getMessage());
+      return false;
+    }
+    if($result != ""){
+      try{
+        $request = "UPDATE users_tracks SET date_listened=now() WHERE email=:email AND id_tracks=:id_tracks";
+        $statement = $this->myPDO->prepare($request);
+        $statement->bindParam(":email", $email, PDO::PARAM_STR, 50);
+        $statement->bindParam(":id_tracks", $id_tracks, PDO::PARAM_STR, 50);
+        $statement->execute();
+      }
+      catch (PDOException $exception)
+      {
+        error_log('Request error: '.$exception->getMessage());
+        return false;
+      }
+    }
+    else {
+      try{
+        $request = "INSERT INTO users_tracks(email, id_tracks, date_listened) VALUES(:email, :id_tracks, now())";
+        $statement = $this->myPDO->prepare($request);
+        $statement->bindParam(":email", $email, PDO::PARAM_STR, 50);
+        $statement->bindParam(":id_tracks", $id_tracks, PDO::PARAM_STR, 50);
+        $statement->execute();
+        $statement->fetchAll(PDO::FETCH_ASSOC);
+      }
+      catch (PDOException $exception)
+      {
+        error_log('Request error: '.$exception->getMessage());
+        return false;
+      }
+    }
+    return true;
   }
 
   }

@@ -12,11 +12,8 @@ document.getElementById("create-form").onsubmit = (event) => {
         exit();
     }
 
-<<<<<<< HEAD
     // Cookies.set("login", userLogin);
-=======
     //Cookies.set("login", mail_user);
->>>>>>> 4597eba148ea40550bdc6b440d567a2eef7a0639
     console.log(mail_user, mdp_user);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "php/request.php/user"); // TODO
@@ -45,6 +42,7 @@ document.getElementById("create-form").onsubmit = (event) => {
     };
     xhr.onloadend = () => {
         //Récupérer les données du site
+        Cookies.set("email", mail_user);
         Cookies.set("token", xhr.responseText);
     };
     xhr.send("first_name="+prenom_user+"&name_user="+nom_user+"&date_birth="+age_user);

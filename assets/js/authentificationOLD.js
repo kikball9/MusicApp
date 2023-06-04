@@ -32,6 +32,7 @@ document.getElementById("auth-form").onsubmit = (event) => {
     };
     xhr.onloadend = () => {
         //Récupérer les données du site
+        Cookies.set("email", userLogin);
         Cookies.set("token", xhr.responseText);
     };
     xhr.send();
