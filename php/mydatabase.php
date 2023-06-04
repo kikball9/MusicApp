@@ -117,6 +117,7 @@
   }
 
   //Modifier un utilisateur (sauf l'email)
+  //NOT DONE
   public function modifyUser($email, $password, $first_name, $name_user, $date_birth, $img){
     try{
       $request = "UPDATE users SET password=:password, first_naem=:first_name, name_user=:name_user, date_birth=:date_birth, img_path=:img_path WHERE email=:email";
@@ -139,21 +140,16 @@
 
   //supprimer un utilisateur
   public function delUser($email){
+    $playlistToDelete = $this->requestPlaylists($email);
+    $favs = $this->requestFavorites($email);
+    for ($i=0;$i<sizeof($playlistToDelete);$i++){
+      echo $playlistToDelete[$i]["id_playlist"];
+      $this->delPlaylist($email, $playlistToDelete[$i][0]["id_playlist"]);
+      $this->delFavorite($email, $favs[$i]["id_favorite"]);
+    }
     try
     {
       $request = 'DELETE FROM users WHERE email=:email';
-      $statement = $this->myPDO->prepare($request);
-      $statement->bindParam (':email', $email, PDO::PARAM_STR, 50);
-      $statement->execute();
-    }
-    catch (PDOException $exception)
-    {
-      error_log('Request error: '.$exception->getMessage());
-      return false;
-    }
-    try
-      {
-      $request = 'DELETE FROM favorites_tracks WHERE email=:email';
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam (':email', $email, PDO::PARAM_STR, 50);
       $statement->execute();
@@ -241,7 +237,7 @@
   //Récupere un morceau
   public function requestTrack($id_tracks){
     try{
-      $request = "SELECT * FROM tracks WHERE id_tracks=:id_tracks";
+      $request = "SELECT * FROM tracks WHERE id_tracks=:id_tracks";//"SELECT id_tracks, name_tracks, date_listened, duration, track_path, name_album, name_artist FROM tracks, album, artist WHERE tracks.id_artist=artist.id_artist AND tracks.id_album=album.id_album AND id_tracks=:id_tracks";
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam(":id_tracks", $id_tracks, PDO::PARAM_STR, 50);
       $statement->execute();
@@ -257,7 +253,7 @@
   //Récupère toutes les musiques
   public function requestTracks(){
     try{
-      $request = "SELECT * FROM tracks";
+      $request = "SELECT * FROM tracks";//"SELECT id_tracks, name_tracks, date_listened, duration, track_path, name_album, name_artist FROM tracks, album, artist WHERE tracks.id_artist=artist.id_artist AND tracks.id_album=album.id_album";
       $statement = $this->myPDO->prepare($request);
       $statement->execute();
       $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -402,12 +398,13 @@
     return true;
   }
 
-  public function delTrackFromPlaylist($id_playlist, $id_tracks){
+  public function delTrackFromPlaylist($email, $id_playlist, $id_tracks){    
     try{
-      $request = "DELETE FROM playlist_tracks WHERE id_tracks=:id_tracks AND id_playlist=:id_playlist";
+      $request = "DELETE FROM playlist_tracks WHERE id_tracks=:id_tracks AND id_playlist=:id_playlist AND playlist.email=:email";
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam (':id_tracks', $id_tracks, PDO::PARAM_INT, 50);
       $statement->bindParam (':id_playlist', $id_playlist, PDO::PARAM_INT, 50);
+      $statement->bindParam (':email', $email, PDO::PARAM_STR, 50);
       $statement->execute();
     }
     catch (PDOException $exception)
@@ -418,7 +415,7 @@
     }
     return true;
   }
-
+  //Revoir requestArtist/Album (jointure table n,n)
   public function requestArtist($id_artist){
     try{
       $request = "SELECT * FROM artist WHERE id_artist=:id_artist";
@@ -452,7 +449,7 @@
 
   public function requestAlbum($id_album){
     try{
-      $request = "SELECT * FROM album WHERE id_album=:id_album";
+      $request = "SELECT album.id_album, name_album, date_published, img_path, id_artist, style FROM album, is_style WHERE album.id_album=:id_album AND album.id_album = is_style.id_album";//"SELECT album.id_album, name_album, date_published, album.img_path, name_artist, style FROM album, artist, is_style WHERE album.id_album = is_style.id_album AND album.id_artist = artist.id_artist AND  album.id_album = :id_album";
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam (':id_album', $id_album, PDO::PARAM_INT, 50);
       $statement->execute();
@@ -463,12 +460,22 @@
       error_log('Request error: '.$exception->getMessage());
       return false;
     }
-    return $result;
+    $myReturn = array($result);
+    $allTracks = $this->requestTracks();
+    $tracksInAlbum = array();
+    for ($i=0;$i<sizeof($allTracks);$i++){
+      if ($allTracks[$i]["id_album"] == $id_album){
+        array_push($tracksInAlbum, $allTracks[$i]);
+      }
+    }
+    array_push($myReturn, $tracksInAlbum);
+    
+    return $myReturn;
   }
 
   public function requestAlbums(){
     try{
-      $request = "SELECT * FROM album";
+      $request = "SELECT album.id_album, name_album, date_published, album.img_path, name_artist, style FROM album, artist, is_style WHERE album.id_album = is_style.id_album AND album.id_artist=artist.id_artist";
       $statement = $this->myPDO->prepare($request);
       $statement->execute();
       $result = $statement->fetchAll(PDO::FETCH_ASSOC);
