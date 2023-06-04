@@ -12,7 +12,11 @@ document.getElementById("create-form").onsubmit = (event) => {
         exit();
     }
 
+<<<<<<< HEAD
     // Cookies.set("login", userLogin);
+=======
+    //Cookies.set("login", mail_user);
+>>>>>>> 4597eba148ea40550bdc6b440d567a2eef7a0639
     console.log(mail_user, mdp_user);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "php/request.php/user"); // TODO

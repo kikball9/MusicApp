@@ -105,15 +105,15 @@ select option {
     background: linear-gradient(rgba(35, 45, 37, 1) 25%, rgb(0, 0, 0) 100%);
     box-shadow: 2px 1px 1px rgba(35, 45, 37, 1);
 }
+/* #track-selected {
+    background-color: red;
+}    */
 
 #title {
     color: white;
     margin: 3rem 0 2rem 10%;
 }
 
-#music-player {
-    
-}
 
 .icon-btn:hover {
     color: green;

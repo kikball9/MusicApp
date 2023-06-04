@@ -275,7 +275,7 @@ else if ($requestMethod == "GET" && $requestRessource == "track"){
 }
 else if ($requestMethod == "POST" && $requestRessource == "playlist"){
     //Ajout d'une playlist
-    if (isset($_POST["name_playlist"]) ){//&& isset($_FILES["myFile"])){
+    if (isset($_POST["img"]) && isset($_POST["name_playlist"]) && isset($_FILES["myFile"])){
         /*
         $img_path = uploadImg("myFile", $_POST["name_playlist"]);;
         if(!$img_path){
@@ -351,13 +351,20 @@ else if ($requestMethod == "DELETE" && $requestRessource == "playlist" && $id !=
         }
     }
     else  {
-        $myDbReq = $myDb->delTrackFromPlaylist($email, $id, $id2);
-        if (!$myDbReq){
+        //Vérifie que la playlist appartienne à l'utilisateur
+        $myDbReq = $myDb->requestPlaylist($email, $id);
+        if (!$myDbReq || $myDbReq == array()){
             header('HTTP/1.1 400 Bad Request');
         }
-        else{
-            header('HTTP/1.1 200 OK');
-            echo json_encode($myDbReq);
+        else {
+            $myDbReq = $myDb->delTrackFromPlaylist($id, $id2);
+            if (!$myDbReq){
+                header('HTTP/1.1 400 Bad Request');
+            }
+            else{
+                header('HTTP/1.1 200 OK');
+                echo json_encode($myDbReq);
+            }
         }
     }
 
