@@ -142,7 +142,7 @@ else{
     }
 }
 //Variables utilisées pour le contrôle des requêtes
-$idTracksMax = $myDb->requestTracks()[sizeof($myDb->requestTracks())-1]["id_tracks"];
+$idTracksMax = $myDb->requestTracks($email)[sizeof($myDb->requestTracks($email))-1]["id_tracks"];
 
 /*
 Gestion de la base de données en fonction des requêtes de l'utilisateur:
@@ -168,28 +168,32 @@ else if ($requestMethod == "GET" && $requestRessource == "user"){
 }
 //Mofification d'un utilisateur
 else if ($requestMethod == "PUT" && $requestRessource == "user"){
+    $imgPath = "none";
     parse_str(file_get_contents('php://input'), $_PUT);
-    if (isset($_PUT["password"]) && isset($_PUT["first_name"]) && isset($_PUT["name_user"]) && isset($_PUT["date_birth"]) ){//&& isset($_FILES["myFile"])){
-        /*
-        $img_path = uploadImg("fileName", explode("@", $email)[0].time());
-        if (!$img_path){
-            header('HTTP/1.1 400 Bad Request');
-        }*/
-        $imgPath = "none";
-        //Verification champs email et date
-        if (!preg_match("^[0-9]{4}-[0-1][0-9]-[0-3][0-9]$", $_PUT["date_birth"]) || !filter_var($_PUT["email"], FILTER_VALIDATE_EMAIL)){
+    if (isset($_PUT["password"]) && isset($_PUT["first_name"]) && isset($_PUT["name_user"]) && isset($_PUT["date_birth"]))
+    if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $_PUT["date_birth"])){
+        $dateArray = explode("-", $_PUT["date_birth"]);
+        if (!checkdate(intval($dateArray[1]), intval($dateArray[2]), intval($dateArray[0])) || !filter_var($email, FILTER_VALIDATE_EMAIL)){
             header('HTTP/1.1 400 Bad Request');
         }
-        $myDbReq = $myDb->modifyUser($email, $_PUT["password"], $_PUT["first_name"], $_PUT["name_user"], $_PUT["date_birth"], $imgPath);
-        if(!$myDbReq){
-            header('HTTP/1.1 400 Bad Request');
-        }
-        else{
-            header('HTTP/1.1 200 OK');
-            echo json_encode($myDbReq);
+        else {
+            $myDbReq = $myDb->modifyUser($email, $password, $_PUT["first_name"], $_PUT["name_user"], $_PUT["date_birth"], $imgPath);
+            if(!$myDbReq){
+                header('HTTP/1.1 400 Bad Request');
+            }
+            else{
+                $token = base64_encode(openssl_random_pseudo_bytes(12));
+                $myDb->addToken($email, $token);
+                header('Content-Type: text/html; charset=utf-8');
+                header('Cache-control: no-store, no-cache, must-revalidate');
+                header('Pragma: no-cache');
+                header('HTTP/1.1 200 OK');
+                echo $token;
+                exit;
+            }
         }
     }
-    else{
+    else {
         header('HTTP/1.1 400 Bad Request');
     }
 }
@@ -250,7 +254,7 @@ else if ($requestMethod == "DELETE" && $requestRessource == "favorites" && intva
 else if ($requestMethod == "GET" && $requestRessource == "track"){
     //Envoie une track en fonction de l'id utilisé
     if (isset($_GET["id_tracks"])){
-        $myDbReq = $myDb->requestTrack($_GET["id_tracks"]);
+        $myDbReq = $myDb->requestTrack($_GET["id_tracks"], $email);
         if (!$myDbReq){
             header('HTTP/1.1 400 Bad Request');
         }
@@ -261,7 +265,7 @@ else if ($requestMethod == "GET" && $requestRessource == "track"){
     }
     //Envoie toutes les tracks
     else{
-        $myDbReq = $myDb->requestTracks();
+        $myDbReq = $myDb->requestTracks($email);
         if (!$myDbReq){
             header('HTTP/1.1 400 Bad Request');
         }
@@ -327,7 +331,11 @@ else if ($requestMethod == "GET" && $requestRessource == "playlist"){
     }
     else{
         $myDbReq = $myDb->requestPlaylists($email);
-        if (!$myDbReq){
+        if ($myDbReq == ""){
+            header('HTTP/1.1 200 OK');
+            echo json_encode($myDbReq);
+        }
+        else if (!$myDbReq){
             header('HTTP/1.1 400 Bad Request');
         }
         else{
@@ -387,7 +395,7 @@ else if($requestMethod == "GET" && $requestRessource == "artist"){
 else if($requestMethod == "GET" && $requestRessource == "album"){
     //Envoie les informations d'un album
     if (isset($_GET["id_album"])){
-        $myDbReq = $myDb->requestAlbum($_GET["id_album"]);
+        $myDbReq = $myDb->requestAlbum($_GET["id_album"], $email);
         if (!$myDbReq){
             header('HTTP/1.1 400 Bad Request');
         }
@@ -398,7 +406,7 @@ else if($requestMethod == "GET" && $requestRessource == "album"){
     }
     //Envoie les informations de tous les albums
     else {
-        $myDbReq = $myDb->requestAlbums();
+        $myDbReq = $myDb->requestAlbums($email);
         if (!$myDbReq){
             header('HTTP/1.1 400 Bad Request');
         }
@@ -419,6 +427,16 @@ else if ($requestMethod == "POST" && $requestRessource == "play"){
             echo json_encode($myDbReq);
         }
     }
+}
+else if ($requestMethod == "GET" && $requestRessource == "last_listened"){
+    $myDbReq = $myDb->requestLastListened($email);
+        if (!$myDbReq){
+            header('HTTP/1.1 400 Bad Request');
+        }
+        else{
+            header('HTTP/1.1 200 OK');
+            echo json_encode($myDbReq);
+        }
 }
 
 //Si la requête ne correspond à aucun cas traité
