@@ -224,9 +224,10 @@ else if ($requestMethod == "GET" && $requestRessource == "favorites"){
     }
 }
 //Ajout d'une musique favorie d'un utilisateur
-else if ($requestMethod == "POST" && $requestRessource == "favorites"){
-    if (isset($_POST["id_tracks"])){
-        $myDbReq = $myDb->addFavorite($email, $_POST["id_tracks"]);
+else if ($requestMethod == "PUT" && $requestRessource == "favorites"){
+    parse_str(file_get_contents('php://input'), $_PUT);
+    if (isset($_PUT["id_tracks"])){
+        $myDbReq = $myDb->addFavorite($email, $_PUT["id_tracks"]);
         if(!$myDbReq){
             header('HTTP/1.1 400 Bad Request');
         }
@@ -416,9 +417,10 @@ else if($requestMethod == "GET" && $requestRessource == "album"){
         }
     }
 }
-else if ($requestMethod == "POST" && $requestRessource == "play"){
-    if (isset($_POST["id_tracks"])){
-        $myDbReq = $myDb->updateListeningDate($email, $_POST["id_tracks"]);
+else if ($requestMethod == "PUT" && $requestRessource == "play"){
+    parse_str(file_get_contents('php://input'), $_PUT);
+    if (isset($_PUT["id_tracks"])){
+        $myDbReq = $myDb->updateListeningDate($email, $_PUT["id_tracks"]);
         if (!$myDbReq){
             header('HTTP/1.1 400 Bad Request');
         }

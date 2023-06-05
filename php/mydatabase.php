@@ -597,7 +597,6 @@
         $statement = $this->myPDO->prepare($request);
         $statement->bindParam(":email", $email, PDO::PARAM_STR, 50);
         $statement->execute();
-        $statement->fetchAll(PDO::FETCH_ASSOC);
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
     }
     catch (PDOException $exception)
@@ -605,7 +604,7 @@
         error_log('Request error: '.$exception->getMessage());
         return false;
       }
-    return json_encode($result);
+    return $result;
 
   }
 
