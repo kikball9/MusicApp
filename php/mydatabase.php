@@ -166,7 +166,7 @@
   public function requestFavorites($email){
       try
       {
-        $request = 'SELECT tracks.id_tracks, name_tracks, duration, track_path, id_album, id_artist, date_listened FROM tracks, users_tracks WHERE tracks.id_tracks IN (SELECT users_tracks.id_tracks FROM users_tracks WHERE email=:email AND is_favorite=TRUE) AND tracks.id_tracks=users_tracks.id_tracks';
+        $request = 'SELECT tracks.id_tracks, name_tracks, duration, track_path, tracks.id_album, tracks.id_artist, date_listened, album.img_path AS album_img, artist.name_artist FROM tracks, users_tracks, album, artist WHERE tracks.id_tracks IN (SELECT users_tracks.id_tracks FROM users_tracks WHERE email=:email AND is_favorite=TRUE) AND tracks.id_tracks=users_tracks.id_tracks AND tracks.id_album=album.id_album AND tracks.id_artist=artist.id_artist AND email=:email';
         $statement = $this->myPDO->prepare($request);
         $statement->bindParam (':email', $email, PDO::PARAM_STR, 50);
         $statement->execute();
@@ -268,7 +268,7 @@
   //Récupere un morceau
   public function requestTrack($id_tracks, $email){
     try{
-      $request = "SELECT tracks.id_tracks, name_tracks, duration, track_path, date_listened, id_album, id_artist FROM tracks, users_tracks WHERE tracks.id_tracks=:id_tracks AND tracks.id_tracks=users_tracks.id_tracks AND email=:email";//"SELECT id_tracks, name_tracks, date_listened, duration, track_path, name_album, name_artist FROM tracks, album, artist WHERE tracks.id_artist=artist.id_artist AND tracks.id_album=album.id_album AND id_tracks=:id_tracks";
+      $request = "SELECT tracks.id_tracks, name_tracks, duration, track_path, date_listened, is_favorite, id_album, id_artist FROM tracks, users_tracks WHERE tracks.id_tracks=:id_tracks AND tracks.id_tracks=users_tracks.id_tracks AND email=:email";//"SELECT id_tracks, name_tracks, date_listened, duration, track_path, name_album, name_artist FROM tracks, album, artist WHERE tracks.id_artist=artist.id_artist AND tracks.id_album=album.id_album AND id_tracks=:id_tracks";
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam(":id_tracks", $id_tracks, PDO::PARAM_STR, 50);
       $statement->bindParam(":email", $email, PDO::PARAM_STR, 50);
@@ -469,7 +469,7 @@
     }
     return true;
   }
-  public function requestArtist($id_artist){
+  public function requestArtist($email, $id_artist){
     try{
       $request = "SELECT * FROM artist WHERE id_artist=:id_artist";
       $statement = $this->myPDO->prepare($request);
@@ -482,12 +482,24 @@
       error_log('Request error: '.$exception->getMessage());
       return false;
     }
-    return $result;
+    if ($result == ""){
+      return $result;
+    }
+    $myReturn["artist-infos"] = $result;
+    $albums = $this->requestAlbums($email);
+    $albumsOfArtist = array();
+    for ($i=0;$i<sizeof($albums);$i++){
+      if ($albums[$i]["album-infos"][0]["id_artist"] == $id_artist){
+        array_push($albumsOfArtist, $albums[$i]);
+      }
+    }
+    $myReturn["artist-albums"] = $albumsOfArtist;
+    return $myReturn;
   }
 
-  public function requestArtists(){
+  public function requestArtists($email){
     try{
-      $request = "SELECT * FROM artist";
+      $request = "SELECT id_artist FROM artist";
       $statement = $this->myPDO->prepare($request);
       $statement->execute();
       $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -497,7 +509,14 @@
       error_log('Request error: '.$exception->getMessage());
       return false;
     }
-    return $result;
+    if ($result == ""){
+      return "";
+    }
+    $myReturn = array();
+    for ($i=0;$i<sizeof($result);$i++){
+      array_push($myReturn, $this->requestArtist($email, $result[$i]["id_artist"]));
+    }
+    return $myReturn;
   }
 
   public function requestAlbum($id_album, $email){
@@ -593,7 +612,7 @@
 
   public function requestLastListened($email){
     try{
-      $request = "SELECT tracks.id_tracks, name_tracks, duration, track_path, id_album, id_artist, date_listened FROM tracks, users_tracks WHERE tracks.id_tracks=users_tracks.id_tracks AND email=:email ORDER BY date_listened";
+      $request = "SELECT tracks.id_tracks, name_tracks, duration, track_path, tracks.id_album, tracks.id_artist, date_listened, album.img_path AS img_album, name_artist  FROM tracks, users_tracks, album, artist WHERE tracks.id_tracks=users_tracks.id_tracks AND email=:email AND tracks.id_album=album.id_album AND tracks.id_artist=artist.id_artist ORDER BY date_listened DESC";
         $statement = $this->myPDO->prepare($request);
         $statement->bindParam(":email", $email, PDO::PARAM_STR, 50);
         $statement->execute();
