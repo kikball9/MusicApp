@@ -126,130 +126,67 @@
     <!-- Last Listens -->
     <h1 id="title">Dernière écoutes</h1>
     <ul id="home-page-last-listened-container" class="list-group align-items-center flex-column">
-      <li class="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
-        <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
-        <div class="text-center title p-1 text-white">
-            <ul class="m-0  list-inline" style="list-style: none;">
-                <li class="list-inline-item">titre</li>
-                <i class="bi bi-dot"></i>
-                <li class="list-inline-item">artiste</li>
-                <i class="bi bi-dot"></i>
-                <li class="list-inline-item">duree</li>
-            </ul>
+      <li class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white" style="border: none;">
+        <div class="m-auto w-100 d-flex">
+          <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
+          <div class="text-center title p-1 text-white">
+              <ul class="m-0  list-inline" style="list-style: none;">
+                  <li class="list-inline-item">titre</li>
+                  <i class="bi bi-dot"></i>
+                  <li class="list-inline-item">artiste</li>
+                  <i class="bi bi-dot"></i>
+                  <li class="list-inline-item">duree</li>
+              </ul>
+          </div>
+          <button class="btn">
+              <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
+          </button>
+          <button class="btn">
+              <i class="bi bi-three-dots-vertical three-dot"></i>
+          </button>
         </div>
-        <button class="btn">
-            <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
-        </button>
-        <button class="btn">
-            <i class="bi bi-three-dots-vertical three-dot"></i>
-        </button>
       </li>
     </ul>
-    
+    <br><br><br><br><br>
+
     <!-- Titre Liked -->
     <h1 id="title">Titres aimés</h1>
-    <ul id="home-page-liked-container" class="list-group align-items-center flex-column">
-      <li class="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
-        <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
-        <div class="text-center title p-1 text-white">
-            <ul class="m-0  list-inline" style="list-style: none;">
-                <li class="list-inline-item">titre</li>
-                <i class="bi bi-dot"></i>
-                <li class="list-inline-item">artiste</li>
-                <i class="bi bi-dot"></i>
-                <li class="list-inline-item">duree</li>
-            </ul>
+    <ul id="home-page-last-listened-container" class="list-group align-items-center flex-column">
+      <li class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white" style="border: none;">
+        <div class="m-auto w-100 d-flex">
+          <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
+          <div class="text-center title p-1 text-white">
+              <ul class="m-0  list-inline" style="list-style: none;">
+                  <li class="list-inline-item">titre</li>
+                  <i class="bi bi-dot"></i>
+                  <li class="list-inline-item">artiste</li>
+                  <i class="bi bi-dot"></i>
+                  <li class="list-inline-item">duree</li>
+              </ul>
+          </div>
+          <button class="btn">
+              <i class="bi bi-heart-fill filled-heart icon-btn" aria-hidden="true"></i>
+          </button>
+          <button class="btn">
+              <i class="bi bi-three-dots-vertical three-dot"></i>
+          </button>
         </div>
-        <button class="btn">
-            <i class="bi bi-suit-heart-fill filled-heart icon-btn" aria-hidden="true"></i>
-        </button>
-        <button class="btn">
-            <i class="bi bi-three-dots-vertical three-dot"></i>
-        </button>
       </li>
     </ul>
+    <br><br><br><br><br>
     
     <!-- Playlist -->
     <h1 id="title">Playlists</h1>
-    <div class="row flex-row flex-nowrap p-0 m-3">
-      <ul class="list-group list-group-horizontal-md d-flex p-4 m-3">
-        <li class="album" class="list-group-item text-white p-0 d-flex m-2">
-<<<<<<< HEAD
+    <div class="p-0 m-3 align-items-center justify-content-center">
+      <ul id="artist-page-album-container" class="list-group list-group-horizontal-md d-flex p-4 m-3 justify-content-center">
+        <li  class="album list-group-item text-white p-0 d-flex m-2">
           <div>
               <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
-              <div id="album-title" class="text-center">nom_album</div>
-          </div>
-        </li>
-        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
-          <div>
-              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
-              <div id="album-title" class="text-center">nom_album</div>
-          </div>
-        </li>
-        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
-          <div>
-              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
-              <div id="album-title" class="text-center">nom_album</div>
-          </div>
-        </li>
-        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
-          <div>
-              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
-              <div id="album-title" class="text-center">nom_album</div>
-          </div>
-        </li>
-        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
-          <div>
-              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
-              <div id="album-title" class="text-center">nom_album</div>
-          </div>
-        </li>
-        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
-          <div>
-              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
-              <div id="album-title" class="text-center">nom_album</div>
-          </div>
-        </li>
-        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
-          <div>
-              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
-              <div id="album-title" class="text-center">nom_album</div>
-          </div>
-        </li>
-        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
-          <div>
-              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
-              <div id="album-title" class="text-center">nom_album</div>
-          </div>
-        </li>
-        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
-          <div>
-              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
-              <div id="album-title" class="text-center">nom_album</div>
-          </div>
-        </li>
-        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
-          <div>
-              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
-              <div id="album-title" class="text-center">nom_album</div>
-          </div>
-        </li>
-        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
-          <div>
-              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
-              <div id="album-title" class="text-center">nom_album</div>
-          </div>
-        </li>
-        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
-=======
->>>>>>> f375268acb44bb4354ef9f581601f97f160a4873
-          <div>
-              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
-              <div class="album-title" class="text-center">nom_album</div>
+              <div  class="album-title text-center">nom_album</div>
           </div>
         </li>
       </ul>
-    </div>  
+    </div> 
 
     <!-- Add Playlist Button -->
     <div id="create-playlist" class="row flex-row w-25 m-auto" style="display: block;">
@@ -269,13 +206,13 @@
             </form>
       </div>
   </div>
-    <br><br><br><br><br><br><br>
+  <br><br><br><br><br>
 
     <!-- Footer -->
     <footer>
       <div class="container-fluid text-white text-center p-3">
         <audio controls>
-          <source src="ressources/musique/trm.mp3" type="audio/mpeg" style="width: 100%;">
+          <source src="assets/ressources/musique/trm.mp3" type="audio/mpeg" style="width: 100%;">
         </audio>
       </div>
     </footer>

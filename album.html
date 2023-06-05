@@ -51,7 +51,7 @@
         </header>
     
         <!-- Album info -->
-       <div style="border-radius: 25px;" class="container bg-gradient text-white d-flex align-items-center list-group-item">
+       <div style="border-radius: 25px;" class="container bg-gradient text-white d-flex align-items-center list-group-item mb-5">
             <img id="album-page-album-image" src="assets/img/album.jpeg" alt="album_img" class="img-large">
             <div class="w-100" style="margin-left: 1.5rem;">
                 <p id="album-page-album-title" class="title-detail">Album_name</p>
@@ -72,25 +72,27 @@
         
         <!-- Titre album -->
         <h1 id="title">Titres</h1>
-        <ul id="album-page-track-container" class="list-group align-items-center flex-column">
-            <li class="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
-                <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
-                <div class="text-center title p-1 text-white">
-                    <ul class="m-0  list-inline" style="list-style: none;">
-                        <li class="list-inline-item">titre</li>
-                        <i class="bi bi-dot"></i>
-                        <li class="list-inline-item">artiste</li>
-                        <i class="bi bi-dot"></i>
-                        <li class="list-inline-item">duree</li>
-                    </ul>
-                </div>
-                <button class="btn">
-                    <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
-                </button>
-                <button class="btn">
-                    <i class="bi bi-three-dots-vertical three-dot"></i>
-                </button>
-              </li>
+        <ul id="home-page-last-listened-container" class="list-group align-items-center flex-column">
+          <li class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white" style="border: none;">
+            <div class="m-auto w-100 d-flex">
+              <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
+              <div class="text-center title p-1 text-white">
+                  <ul class="m-0  list-inline" style="list-style: none;">
+                      <li class="list-inline-item">titre</li>
+                      <i class="bi bi-dot"></i>
+                      <li class="list-inline-item">artiste</li>
+                      <i class="bi bi-dot"></i>
+                      <li class="list-inline-item">duree</li>
+                  </ul>
+              </div>
+              <button class="btn">
+                  <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
+              </button>
+              <button class="btn">
+                  <i class="bi bi-three-dots-vertical three-dot"></i>
+              </button>
+            </div>
+          </li>
         </ul>
     
         <!-- Footer -->

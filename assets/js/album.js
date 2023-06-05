@@ -4,14 +4,6 @@ function sec2min(sec){
     return Math.trunc(sec/60)+":"+sec%60;
 }
 
-<<<<<<< HEAD
-function displayAlbum(myAlbum){
-    ajaxRequest("GET", "php/request.php/artist?id_artist="+myAlbum["album-infos"][0]["id_artist"], (artist)=>{ 
-        artistName = artist[0]["name_artist"];
-        document.getElementById("album-artist-name").innerHTML = artistName;
-        document.getElementById("album-page-artist-image").setAttribute("src", artist[0]["img_path"])
-    })
-=======
 function displayAlbumWithAllInfos(myArtist){
     artistName = myArtist["artist-infos"][0]["name_artist"];
     var myAlbum;
@@ -20,7 +12,6 @@ function displayAlbumWithAllInfos(myArtist){
             myAlbum = myArtist["artist-albums"][i];
         }
     }
->>>>>>> f375268acb44bb4354ef9f581601f97f160a4873
     document.getElementById("album-album-style").innerHTML = myAlbum["album-infos"][0]["style"];
     var date= myAlbum["album-infos"][0]["date_published"].split("-");
     var newDate = date[2]+"/"+date[1]+"/"+date[0];
