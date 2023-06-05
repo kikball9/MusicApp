@@ -1,7 +1,7 @@
 var myArtistInfos;
 var idArtist;
 
-function displayAlbum(albums){
+function displayAlbumInfos(albums){
     document.getElementById("album-container").innerHTML = "";
     for (var i =0;i<albums.length;i++){
         if (albums[i]["album-infos"][0]["id_artist"] == idArtist){
@@ -15,14 +15,15 @@ function displayAlbum(albums){
     }
 }
 
-function displayArtist(artist){
+function displayArtistInfos(artist){
     document.getElementById("artist-title").innerHTML = artist[0]["name_artist"];
     document.getElementById("type_artist").innerHTML = artist[0]["type_artist"];
+    document.getElementById("artistImg").setAttribute("src", artist[0]["img_path"]);
 }
 
-function displayPage(id_artist){
+function displayPageArtist(id_artist){
     idArtist = id_artist;
-    ajaxRequest("GET", "php/request.php/album", displayAlbum);
-    ajaxRequest("GET", "php/request.php/artist?id_artist="+id_artist, displayArtist)
+    ajaxRequest("GET", "php/request.php/album", displayAlbumInfos);
+    ajaxRequest("GET", "php/request.php/artist?id_artist="+id_artist, displayArtistInfos)
 }
 
