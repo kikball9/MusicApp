@@ -75,11 +75,27 @@
     </div>
     <br><br>
 
+    <!-- Change PDP -->
+    <h1 id="title">Changer de photo de profil</h1>
+    <div style="border-radius: 25px;" class="container bg-gradient mt-5 mb-5 text-white d-flex align-items-center list-group-item">
+        <div class="w-100 p-5" style="">
+            <form id="create-form">
+                <div class="form-group mb-4">
+                  <label>Photo de profil</label>
+                  <input type="file" class="form-control"placeholder="Votre mot de passe">
+                </div>
+                <div class="row flex-row w-25 m-auto">
+                    <button class="btn btn-outline-success mt-2 mb-2" type="submit">Enregistrer</button>
+                </div>
+              </form>
+        </div>
+    </div>
+
     <!-- Change Password -->
     <h1 id="title">Changer de mot de passe</h1>
     <div style="border-radius: 25px; height: 300px;" class="container bg-gradient mt-5 text-white d-flex align-items-center list-group-item">
-        <div class="w-100" style="margin-left: 1.5rem;">
-            <form id="create-form">
+        <div class="w-100 p-5" style="">
+            <form id="create-form" class="mt-5">
                 <div class="form-group mb-4">
                   <label for="pwd-input">Nouveau mot de passe</label>
                   <input id="pwd-input" name="pwd" type="password" class="form-control"placeholder="Votre mot de passe">
@@ -95,11 +111,15 @@
         </div>
     </div>
 
-    <br><br>
+    <div class="row flex-row w-25 m-auto justify-content-center">
+        <button class="btn btn-outline-danger mt-5 mb-5 w-75" type="button">Suppression du compte</button>
+    </div>
+
+    <br><br><br><br><br>
 
     <!-- Footer -->
     <footer>
-      <div class="container-fluid text-white text-center p-3">
+      <div class="container-fluid text-white text-center p-3 bg-gradient">
         <audio controls>
           <source src="ressources/musique/trm.mp3" type="audio/mpeg" style="width: 100%;">
         </audio>
