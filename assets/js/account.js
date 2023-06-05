@@ -5,4 +5,5 @@ document.getElementById("del-account-btn").addEventListener("click", () => {
 });
 
 /* USER INFORMATION */
-ajaxRequest("GET", "../php/request.php/user", ()=> {return;});
+var info = ajaxRequest("GET", "../php/request.php/user", ()=> {return;});
+info
