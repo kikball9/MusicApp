@@ -40,7 +40,7 @@ function ajaxRequest(type, url, callback, data = null)
         break;
       case 401:
       case 403:
-        document.getElementById("authentication").style.display = "initial";
+        //document.getElementById("authentication").style.display = "initial";
         break;
       default:
         httpErrors(xhr.status);

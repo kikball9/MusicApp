@@ -170,30 +170,32 @@ else if ($requestMethod == "GET" && $requestRessource == "user"){
 else if ($requestMethod == "PUT" && $requestRessource == "user"){
     $imgPath = "none";
     parse_str(file_get_contents('php://input'), $_PUT);
-    if (isset($_PUT["password"]) && isset($_PUT["first_name"]) && isset($_PUT["name_user"]) && isset($_PUT["date_birth"]))
-    if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $_PUT["date_birth"])){
-        $dateArray = explode("-", $_PUT["date_birth"]);
-        if (!checkdate(intval($dateArray[1]), intval($dateArray[2]), intval($dateArray[0])) || !filter_var($email, FILTER_VALIDATE_EMAIL)){
-            header('HTTP/1.1 400 Bad Request');
-        }
-        else {
-            $myDbReq = $myDb->modifyUser($email, $password, $_PUT["first_name"], $_PUT["name_user"], $_PUT["date_birth"], $imgPath);
-            if(!$myDbReq){
+    if (isset($_PUT["password"]) && isset($_PUT["first_name"]) && isset($_PUT["name_user"]) && isset($_PUT["date_birth"])){
+        if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $_PUT["date_birth"])){
+            $dateArray = explode("-", $_PUT["date_birth"]);
+            if (!checkdate(intval($dateArray[1]), intval($dateArray[2]), intval($dateArray[0])) || !filter_var($email, FILTER_VALIDATE_EMAIL)){
                 header('HTTP/1.1 400 Bad Request');
             }
-            else{
-                $token = base64_encode(openssl_random_pseudo_bytes(12));
-                $myDb->addToken($email, $token);
-                header('Content-Type: text/html; charset=utf-8');
-                header('Cache-control: no-store, no-cache, must-revalidate');
-                header('Pragma: no-cache');
-                header('HTTP/1.1 200 OK');
-                echo $token;
-                exit;
+            else {
+                $myDbReq = $myDb->modifyUser($email, $_PUT["password"], $_PUT["first_name"], $_PUT["name_user"], $_PUT["date_birth"], $imgPath);
+                if(!$myDbReq || $myDbReq == ""){
+                    header('HTTP/1.1 400 Bad Request');
+                }
+                else{
+                    header('Content-Type: text/html; charset=utf-8');
+                    header('Cache-control: no-store, no-cache, must-revalidate');
+                    header('Pragma: no-cache');
+                    header('HTTP/1.1 200 OK');
+                    exit;
+                }
             }
         }
+        else {
+            header('HTTP/1.1 400 Bad Request');
+            echo "f";
+        }
     }
-    else {
+    else{
         header('HTTP/1.1 400 Bad Request');
     }
 }

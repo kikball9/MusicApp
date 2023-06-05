@@ -120,7 +120,7 @@
   //NOT DONE
   public function modifyUser($email, $password, $first_name, $name_user, $date_birth, $img){
     try{
-      $request = "UPDATE users SET password=:password, first_naem=:first_name, name_user=:name_user, date_birth=:date_birth, img_path=:img_path WHERE email=:email";
+      $request = "UPDATE users SET password=SHA1(:password), first_name=:first_name, name_user=:name_user, date_birth=:date_birth, img_path=:img_path WHERE email=:email";
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam(":email", $email, PDO::PARAM_STR, 50);
       $statement->bindParam(":password", $password, PDO::PARAM_STR, 50);
@@ -128,7 +128,7 @@
       $statement->bindParam(":name_user", $name_user, PDO::PARAM_STR, 50);
       $statement->bindParam(":date_birth", $date_birth, PDO::PARAM_STR, 50);
       $statement->bindParam(":img_path", $img, PDO::PARAM_STR, 50);
-      $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+      $statement->execute();
     }
     catch (PDOException $exception)
     {

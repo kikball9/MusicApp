@@ -7,6 +7,24 @@ body{
 .row.flex-row.flex-nowrap {
     overflow-x: scroll;
 }
+
+.album-title {
+    font-weight: 900;
+    padding: 10px;
+}
+
+.album {
+    border-radius: 25px !important;
+    background-color: transparent !important;
+    border: none !important;
+    color: white !important;
+    background-color: black !important;
+    border-radius: 25px !important;
+}
+.album:hover {
+    box-shadow: 0 4px 0 rgb(50, 95, 59);
+}
+
 /* SrollBar */
 /* width */
 ::-webkit-scrollbar {
@@ -83,20 +101,6 @@ select option {
     margin: auto 0 auto 10px;
 }
 
-#album-title {
-    font-weight: 900;
-    padding: 10px;
-}
-
-#album {
-    border-radius: 25px;
-    background-color: transparent;
-    border: none;
-}
-#album:hover {
-    box-shadow: 0 4px 0 rgb(50, 95, 59);
-}
-
 #track-bar {
     background: linear-gradient(rgba(35, 45, 37, 0.855) 0%, rgb(0, 0, 0) 100%);
     border: none;   
@@ -109,7 +113,7 @@ select option {
     background-color: red;
 }    */
 
-#title {
+#artist-title {
     color: white;
     margin: 3rem 0 2rem 10%;
 }
@@ -131,12 +135,6 @@ footer {
     bottom: 0;
     width: 100%;
     background-color: rgb(33, 37, 41);
-}
-
-#album {
-    color: white;
-    background-color: black;
-    border-radius: 25px;
 }
 
 label {
