@@ -8,13 +8,13 @@
 #------------------------------------------------------------
 
 CREATE TABLE users(
-        email      Varchar (50) NOT NULL ,
+        email      Varchar (250) NOT NULL ,
         password   Varchar (50) NOT NULL ,
         first_name Varchar (50) NOT NULL ,
         name_user  Varchar (50) NOT NULL ,
         date_birth Datetime NOT NULL ,
-        img_path   Varchar (50) NOT NULL ,
-        token      Varchar (50)
+        img_path   Varchar (250) NOT NULL ,
+        token      Varchar (250)
 	,CONSTRAINT users_PK PRIMARY KEY (email)
 )ENGINE=InnoDB;
 
@@ -36,7 +36,7 @@ CREATE TABLE type_artist(
 CREATE TABLE artist(
         id_artist   Int  Auto_increment  NOT NULL ,
         name_artist Varchar (50) NOT NULL ,
-        img_path    Varchar (50) NOT NULL ,
+        img_path    Varchar (250) NOT NULL ,
         type_artist Varchar (50) NOT NULL
 	,CONSTRAINT artist_PK PRIMARY KEY (id_artist)
 
@@ -52,7 +52,7 @@ CREATE TABLE album(
         id_album       Int  Auto_increment  NOT NULL ,
         name_album     Varchar (50) NOT NULL ,
         date_published Varchar (50) NOT NULL ,
-        img_path       Varchar (50) NOT NULL ,
+        img_path       Varchar (250) NOT NULL ,
         id_artist      Int NOT NULL
 	,CONSTRAINT album_PK PRIMARY KEY (id_album)
 
@@ -76,10 +76,10 @@ CREATE TABLE album_style(
 
 CREATE TABLE tracks(
         id_tracks     Int  Auto_increment  NOT NULL ,
-        name_tracks   Varchar (50) NOT NULL ,
+        name_tracks   Varchar (250) NOT NULL ,
         date_listened Date ,
         duration      Int NOT NULL ,
-        track_path    Varchar (50) NOT NULL ,
+        track_path    Varchar (250) NOT NULL ,
         id_album      Int ,
         id_artist     Int NOT NULL
 	,CONSTRAINT tracks_PK PRIMARY KEY (id_tracks)
@@ -97,7 +97,7 @@ CREATE TABLE playlist(
         id_playlist   Int  Auto_increment  NOT NULL ,
         name_playlist Varchar (50) NOT NULL ,
         date_creation Date NOT NULL ,
-        img_path      Varchar (50) NOT NULL ,
+        img_path      Varchar (250) NOT NULL ,
         email         Varchar (50) NOT NULL
 	,CONSTRAINT playlist_PK PRIMARY KEY (id_playlist)
 
@@ -139,7 +139,7 @@ CREATE TABLE playlist_tracks(
 #------------------------------------------------------------
 
 CREATE TABLE favorites_tracks(
-        email     Varchar (50) NOT NULL ,
+        email     Varchar (250) NOT NULL ,
         id_tracks Int NOT NULL
 	,CONSTRAINT favorites_tracks_PK PRIMARY KEY (email,id_tracks)
 

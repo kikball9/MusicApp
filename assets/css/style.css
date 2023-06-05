@@ -69,7 +69,7 @@ body{
     width: 100%;
 }
 
-#title {
+.title {
     color: white;
     margin: 3rem 0 2rem 10%;
 }
@@ -106,11 +106,11 @@ select option {
     margin: auto 0 auto 10px;
 }
 
-.track-bar {
+#track-bar {
     background: linear-gradient(rgba(35, 45, 37, 0.855) 0%, rgb(0, 0, 0) 100%) !important;
     border: none !important;   
 }
-.track-bar:hover {
+#track-bar:hover {
     background: linear-gradient(rgba(35, 45, 37, 1) 25%, rgb(0, 0, 0) 100%) !important;
     box-shadow: 2px 1px 1px rgba(35, 45, 37, 1) !important;
 }

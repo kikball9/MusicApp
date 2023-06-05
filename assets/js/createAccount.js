@@ -16,7 +16,7 @@ document.getElementById("create-form").onsubmit = (event) => {
     //Cookies.set("login", mail_user);
     console.log(mail_user, mdp_user);
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "php/request.php/user"); // TODO
+    xhr.open("POST", "php/request.php/user"); 
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.setRequestHeader("Authorization", "Basic "+btoa(mail_user+":"+mdp_user));
     xhr.onload = () => {

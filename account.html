@@ -60,13 +60,14 @@
 
    <!-- User info -->
    <div style="border-radius: 25px;" class="container bg-gradient text-white d-flex align-items-center list-group-item">
-        <img src="assets/img/user-not-found.jpeg" alt="album_img" class="img-large">
+        <img id="img-user" src="assets/img/user-not-found.jpeg" alt="album_img" class="img-large">
         <div class="w-100" style="margin-left: 1.5rem;">
-            <p id="names" class="title-detail" style="word-spacing: 2rem;">Prenom Nom</p>
+            <div style="display: flex;">
+              <p id="name-user" class="title-detail" style="margin-right: 5rem;">Prenom</p>
+              <p id="first-name-user" class="title-detail">Nom</p>
+            </div>
             <div class="d-flex  align-items-center list-group-item">
-                <small class="w-100 m-lg-4">
-                    email_user
-                </small>
+              <small id="email-user" class="w-100 m-lg-4">email_user</small>
             </div>
         </div>
     </div>
@@ -90,7 +91,7 @@
                   <input id="age-edit-input" name="date_birth" type="date" class="form-control">
                 </div>
                 <div class="row flex-row w-25 m-auto">
-                    <button class="btn btn-outline-success mt-5 mb-5" type="submit">Sauvegarder</button>
+                    <button id="user-info-edit-btn" class="btn btn-outline-success mt-5 mb-5" type="submit">Sauvegarder</button>
                 </div>
               </form>
         </div>
