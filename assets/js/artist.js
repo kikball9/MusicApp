@@ -15,9 +15,9 @@ function displayAlbumInfos(albums){
 }
 
 function displayArtistInfos(artist){
-    document.getElementById("artist-title").innerHTML = artist[0]["name_artist"];
-    document.getElementById("type_artist").innerHTML = artist[0]["type_artist"];
-    document.getElementById("artistImg").setAttribute("src", artist[0]["img_path"]);
+    document.getElementById("artist-title").innerHTML = artist["artist-infos"][0]["name_artist"];
+    document.getElementById("type_artist").innerHTML = artist["artist-infos"][0]["type_artist"];
+    document.getElementById("artistImg").setAttribute("src", artist["artist-infos"][0]["img_path"]);
 }
 
 function displayPageArtist(id_artist){

@@ -339,7 +339,7 @@
   public function requestPlaylist($email, $id_playlist){
     
     try{
-      $request = "SELECT id_playlist, name_playlist, date_creation, img_path AS src FROM playlist WHERE id_playlist=:id_playlist AND email=:email";
+      $request = "SELECT id_playlist, name_playlist, date_creation FROM playlist WHERE id_playlist=:id_playlist AND email=:email";
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam(":id_playlist", $id_playlist, PDO::PARAM_STR, 50);
       $statement->bindParam(":email", $email, PDO::PARAM_STR, 50);
@@ -351,7 +351,31 @@
       error_log('Request error: '.$exception->getMessage());
       return false;
     }
+    if ($result == ""){
+      return $result;
+    }
+
     $myReturn["playlist-info"] = $result;
+    try{
+      $request = "SELECT img_path FROM album, tracks, playlist_tracks WHERE album.id_album=tracks.id_album AND tracks.id_tracks=playlist_tracks.id_tracks AND playlist_tracks.id_playlist=:id_playlist";
+      $statement = $this->myPDO->prepare($request);
+      $statement->bindParam(":id_playlist", $id_playlist, PDO::PARAM_STR, 50);
+      $statement->execute();
+      $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+    }
+    catch (PDOException $exception)
+    {
+      error_log('Request error: '.$exception->getMessage());
+      return false;
+    }
+    if ($result == ""){
+      $myReturn["playlist-info"]["img_path"] = "assets/img/album.jpeg";
+    }
+    else {
+      $myReturn["playlist-info"]["img_path"] = $result["img_path"];
+
+    }
     try{
       $request = "SELECT id_tracks, date_add FROM playlist_tracks WHERE id_playlist=:id_playlist";
       $statement = $this->myPDO->prepare($request);
@@ -454,7 +478,7 @@
 
   public function delTrackFromPlaylist($email, $id_playlist, $id_tracks){    
     try{
-      $request = "DELETE FROM playlist_tracks WHERE id_tracks=:id_tracks AND id_playlist=:id_playlist AND playlist.email=:email";
+      $request = "DELETE FROM playlist_tracks WHERE id_tracks=:id_tracks AND id_playlist=:id_playlist AND id_playlist IN (SELECT id_playlist FROM playlist WHERE email=:email)";
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam (':id_tracks', $id_tracks, PDO::PARAM_INT, 50);
       $statement->bindParam (':id_playlist', $id_playlist, PDO::PARAM_INT, 50);

@@ -425,6 +425,7 @@ else if ($requestMethod == "PUT" && $requestRessource == "play"){
         $myDbReq = $myDb->updateListeningDate($email, $_PUT["id_tracks"]);
         if (!$myDbReq){
             header('HTTP/1.1 400 Bad Request');
+            echo "o";
         }
         else{
             header('HTTP/1.1 200 OK');

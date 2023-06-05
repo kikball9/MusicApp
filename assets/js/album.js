@@ -13,7 +13,7 @@ function displayAlbumWithAllInfos(myArtist){
         }
     }
     document.getElementById("album-album-style").innerHTML = myAlbum["album-infos"][0]["style"];
-    var date= myAlbum["album-infos"][0]["date_published"].split("-");
+    var date= myAlbum["album-infos"][0]["date_published"].split(' ')[0].split("-");
     var newDate = date[2]+"/"+date[1]+"/"+date[0];
     document.getElementById("album-date-published").innerHTML = newDate;
     document.getElementById("album-page-album-image").setAttribute("src", myAlbum["album-infos"][0]["img_path"]);
