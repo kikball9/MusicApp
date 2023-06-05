@@ -1,130 +1,145 @@
-@import url("https://fonts.googleapis.com/css?family=Inter:700");
-
-.header {
-  align-items: flex-start;
-  background-color: transparent;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  min-width: 1440px;
-  width: auto;
+body{
+    overflow-x: hidden;
+    height: 100%;
+    background: linear-gradient(rgba(8, 8, 8, 0.855) 0%, rgb(0, 0, 0) 100%);
 }
 
-.overlap-group6 {
-  height: 106px;
-  position: relative;
-  width: 407px;
+.row.flex-row.flex-nowrap {
+    overflow-x: scroll;
+}
+/* SrollBar */
+/* width */
+::-webkit-scrollbar {
+    width: 20px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px rgb(1, 0, 0); 
+    border-radius: 10px;
+    background: linear-gradient(rgba(8, 8, 8, 0.855) 0%, rgb(0, 0, 0) 100%);
+}  
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(28, 50, 27); 
+    border-radius: 10px;
+} 
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #466546; 
 }
 
-.overlap-group7 {
-  background-color: var(--sanguine-brown);
-  border: 2px solid;
-  border-color: var(--theme-colorswhite);
-  height: 106px;
-  margin-top: -1px;
-  position: relative;
-  width: 717px;
+/* IMAGE */
+.img-small {
+    max-height: 40px;
+    max-width: 40px;
+}
+.img-large {
+    height: 235px;
+    width: 235px;
+    border-radius: 25px;
+}
+.icon {
+    height: 30px;
+    width: 30px;
+    margin: 5px;
+}
+.img-icon {
+    height: 80px;
 }
 
-.overlap-group8 {
-  height: 106px;
-  margin-top: -1px;
-  position: relative;
-  width: 316px;
+.title {
+    width: 100%;
 }
 
-.overlap-group-1 {
-  align-items: flex-end;
-  background-color: var(--sanguine-brown);
-  border: 2px solid;
-  border-color: var(--theme-colorswhite);
-  display: flex;
-  height: 106px;
-  justify-content: flex-end;
-  left: 0;
-  min-width: 316px;
-  padding: 31px 37px;
-  position: absolute;
-  top: 0;
+
+select option {
+    color: green;
+    background-color: black;
 }
 
-.overlap-group1 {
-  align-items: flex-start;
-  background-color: var(--sanguine-brown);
-  border: 2px solid;
-  border-color: var(--theme-colorswhite);
-  display: flex;
-  height: 106px;
-  left: 0;
-  min-width: 407px;
-  padding: 36px 119px;
-  position: absolute;
-  top: 0;
+#filter {
+    width: 100px;
+    border: none;
+    text-align: center;
 }
 
-.accueil {
-  letter-spacing: 0;
-  line-height: 31.2px;
-  white-space: nowrap;
-  width: 159px;
+#filter:hover{
+    background-color: green;
+    color: white;
 }
 
-.home_icon {
-  height: 46px;
-  left: 30px;
-  position: absolute;
-  top: 31px;
-  width: 38px;
+.login {
+    /* width: 20%; */
+    margin-top: 10%;
+    /* width: 500px;
+    height: 1200px; */
 }
 
-.que-souhaitez-vous-ecouter {
-  color: #b0a7a7;
-  cursor: pointer;
-  font-family: var(--font-family-inter);
-  font-size: var(--font-size-m);
-  font-weight: 700;
-  left: 163px;
-  letter-spacing: 0;
-  line-height: 31.2px;
-  position: absolute;
-  top: 34px;
-  white-space: nowrap;
-  width: 539px;
+.title-detail {
+    font-size: 100px;
 }
 
-.rectangle-6 {
-  background-color: var(--alto);
-  border-radius: 50px;
-  height: 58px;
-  left: 100px;
-  position: absolute;
-  top: 22px;
-  width: 532px;
+.svg {
+    margin: auto 0 auto 10px;
 }
 
-.search_icon {
-  height: 31px;
-  left: 126px;
-  position: absolute;
-  top: 33px;
-  width: 23px;
+#album-title {
+    font-weight: 900;
+    padding: 10px;
 }
 
-.profil_icon {
-  height: 53px;
-  width: 46px;
+#album {
+    border-radius: 25px;
+    background-color: transparent;
+    border: none;
+}
+#album:hover {
+    box-shadow: 0 4px 0 rgb(50, 95, 59);
 }
 
-.nav1 {
-  align-items: flex-start;
-  background-color: var(--sanguine-brown);
-  border: 2px solid;
-  border-color: var(--theme-colorswhite);
-  display: flex;
-  height: 106px;
-  left: 302px;
-  min-width: 105px;
-  padding: 25px 29.5px;
-  position: absolute;
-  top: 0;
+#track-bar {
+    background: linear-gradient(rgba(35, 45, 37, 0.855) 0%, rgb(0, 0, 0) 100%);
+    border: none;   
+}
+#track-bar:hover {
+    background: linear-gradient(rgba(35, 45, 37, 1) 25%, rgb(0, 0, 0) 100%);
+    box-shadow: 2px 1px 1px rgba(35, 45, 37, 1);
+}
+/* #track-selected {
+    background-color: red;
+}    */
+
+#title {
+    color: white;
+    margin: 3rem 0 2rem 10%;
+}
+
+
+.icon-btn:hover {
+    color: green;
+}
+.heart, .three-dot {
+    color: white;
+}
+.filled-heart {
+    color: green;
+}
+
+footer {
+    margin-top: 10rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(33, 37, 41);
+}
+
+#album {
+    color: white;
+    background-color: black;
+    border-radius: 25px;
+}
+
+label {
+    font-size: 20px;
+    margin-bottom: 5px;
 }

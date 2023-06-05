@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/styleguide.css">
+    <link rel="stylesheet" href="assets/bootstrap-5.3.0-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js" integrity="sha256-oE03O+I6Pzff4fiMqwEGHbdfcW7a3GRRxlL+U49L5sA=" crossorigin="anonymous"></script> 
+    <script src="assets/js/ajax.js" defer></script>
+    <title>MusicApp | Album</title>
+</head>
+<body>
+    <section id="album_page" style="height: 980px;">
+        <!-- Header -->
+        <header class="mb-5">
+          <nav class="navbar p-2 navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Accueil</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">Favoris</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Playlist</a>
+                </li>
+              </ul>
+            </div>
+            <form class="d-flex">
+              <input class="form-control mr-sm-2 m-2" type="search" placeholder="Search" aria-label="Search">
+              <select id="filter" class="form-control m-2" name="Filtre">
+                <option>Filtre</option>
+                <option>Titre</option>
+                <option>Artiste</option>
+                <option>Album</option>
+              </select>
+              <button class="btn btn-outline-success my-2 my-sm-0 m-2" type="submit">Search</button>
+            </form>
+            <ul class="navbar-nav mr-auto" style="margin-left: 2rem;">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Compte</a>
+              </li>
+            </ul>
+          </nav>
+        </header>
+    
+        <!-- Album info -->
+       <div style="border-radius: 25px;" class="container bg-gradient text-white d-flex align-items-center list-group-item">
+            <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+            <div class="w-100" style="margin-left: 1.5rem;">
+                <p class="title-detail">Album_name</p>
+                <div class="d-flex  align-items-center list-group-item">
+                    <img src="ressources/artiste_img/artist.jpeg" alt="artist_img" class="img-small" style="clip-path: ellipse(50% 50%); height: 200px; width: 200px;">
+                    <small class="w-100 m-lg-4">
+                        <ul class="m-0  list-inline" style="list-style: none;">
+                            <li class="list-inline-item">Artiste_name</li>
+                            <i class="bi bi-dot"></i>
+                            <li class="list-inline-item">Style</li>
+                            <i class="bi bi-dot"></i>
+                            <li class="list-inline-item">Date_parution</li>
+                        </ul>
+                    </small>
+                </div>
+            </div>
+       </div>
+        
+        <!-- Titre album -->
+        <h1 id="title">Titres</h1>
+        <ul class="list-group align-items-center flex-column">
+            <li id="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
+                <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
+                <div class="text-center title p-1 text-white">
+                    <ul class="m-0  list-inline" style="list-style: none;">
+                        <li class="list-inline-item">titre</li>
+                        <i class="bi bi-dot"></i>
+                        <li class="list-inline-item">artiste</li>
+                        <i class="bi bi-dot"></i>
+                        <li class="list-inline-item">duree</li>
+                    </ul>
+                </div>
+                <button class="btn">
+                    <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
+                </button>
+                <button class="btn">
+                    <i class="bi bi-three-dots-vertical three-dot"></i>
+                </button>
+              </li>
+              <li id="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
+                <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
+                <div class="text-center title p-1 text-white">
+                    <ul class="m-0  list-inline" style="list-style: none;">
+                        <li class="list-inline-item">titre</li>
+                        <i class="bi bi-dot"></i>
+                        <li class="list-inline-item">artiste</li>
+                        <i class="bi bi-dot"></i>
+                        <li class="list-inline-item">duree</li>
+                    </ul>
+                </div>
+                <button class="btn">
+                    <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
+                </button>
+                <button class="btn">
+                    <i class="bi bi-three-dots-vertical three-dot"></i>
+                </button>
+              </li>
+              <li id="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
+                <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
+                <div class="text-center title p-1 text-white">
+                    <ul class="m-0  list-inline" style="list-style: none;">
+                        <li class="list-inline-item">titre</li>
+                        <i class="bi bi-dot"></i>
+                        <li class="list-inline-item">artiste</li>
+                        <i class="bi bi-dot"></i>
+                        <li class="list-inline-item">duree</li>
+                    </ul>
+                </div>
+                <button class="btn">
+                    <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
+                </button>
+                <button class="btn">
+                    <i class="bi bi-three-dots-vertical three-dot"></i>
+                </button>
+              </li>
+              <li id="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
+                <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
+                <div class="text-center title p-1 text-white">
+                    <ul class="m-0  list-inline" style="list-style: none;">
+                        <li class="list-inline-item">titre</li>
+                        <i class="bi bi-dot"></i>
+                        <li class="list-inline-item">artiste</li>
+                        <i class="bi bi-dot"></i>
+                        <li class="list-inline-item">duree</li>
+                    </ul>
+                </div>
+                <button class="btn">
+                    <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
+                </button>
+                <button class="btn">
+                    <i class="bi bi-three-dots-vertical three-dot"></i>
+                </button>
+              </li>
+              <li id="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
+                <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
+                <div class="text-center title p-1 text-white">
+                    <ul class="m-0  list-inline" style="list-style: none;">
+                        <li class="list-inline-item">titre</li>
+                        <i class="bi bi-dot"></i>
+                        <li class="list-inline-item">artiste</li>
+                        <i class="bi bi-dot"></i>
+                        <li class="list-inline-item">duree</li>
+                    </ul>
+                </div>
+                <button class="btn">
+                    <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
+                </button>
+                <button class="btn">
+                    <i class="bi bi-three-dots-vertical three-dot"></i>
+                </button>
+              </li>
+        </ul>
+    
+        <!-- Footer -->
+        <footer>
+          <div class="container-fluid text-white text-center p-3">
+            <audio controls>
+              <source src="ressources/musique/trm.mp3" type="audio/mpeg" style="width: 100%;">
+            </audio>
+          </div>
+        </footer>
+      </section>
+</body>
+</html>
