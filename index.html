@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/styleguide.css">
+    
+    <!-- <script src="assets/css/test.js" defer></script>
+    <link rel="stylesheet" href="assets/css/test.scss"> -->
+    
+    <link rel="stylesheet" href="assets/bootstrap-5.3.0-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js" integrity="sha256-oE03O+I6Pzff4fiMqwEGHbdfcW7a3GRRxlL+U49L5sA=" crossorigin="anonymous"></script> 
+    <script src="assets/js/ajax.js" defer></script>
+    <script src="assets/js/authentificationOLD.js" defer></script>
+    <script src="assets/js/createAccount.js" defer></script>
+
+    <script src="assets/js/home.js" defer></script>
+    <title>MusicApp</title>
+</head>
+<body>
+
+  <!-- Login -->
+  <section id="login_page" class="text-white flex-column login" style="display: block; height: 850px;">
+    <div class="container text-white text-center p-5 align-self-center" style="background-color: #212529; border-radius: 40px; ; align-items: center; justify-content: center;  ">
+      <h1>Connexion</h1>
+      <form id="auth-form">
+        <div>
+            <div>
+              <span>Login></span>
+            </div>
+            <input type="text" id="login-input" placeholder="Entrez votre login" autofocus required>
+        </div>
+        <div>
+            <div>
+              <span>Mot de passe></span>
+            </div>
+            <input id="password-input" type="password"placeholder="Entrez votre mot de passe" autofocus required>
+        </div>
+        <br>
+        <div id="bad_pwd" class="bg-danger w-25 container text-center" style="display: none;">
+          <p>Mot de passe incorrect</p>
+        </div>
+        <button id="create-account-btn" class="btn btn-outline-success mt-3" type="button">Créer un compte</button>
+        <button class="btn btn-outline-success mt-3" type="submit">Connexion</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Signin -->
+  <section id="signin_page" class="text-white flex-column login" style="display: none; height: 850px;">
+    <div class="container text-white text-center p-5 align-self-center" style="background-color: #212529; border-radius: 40px;">
+      <h1>Création de compte</h1>
+      <form id="create-form">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Prénom</label>
+          <input id="prenom-input" name="first_name" type="text" class="form-control"placeholder="Votre prénom">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Nom</label>
+          <input id="nom-input" name="name_user" type="text" class="form-control" placeholder="Votre nom">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Age</label>
+          <input id="age-input" name="date_birth" type="date" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input id="mail-input" name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Mot de passe</label>
+          <input id="mdp-input" name="email" type="password" class="form-control" id="exampleInputPassword1" placeholder="Votre mot de passe">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Confirmer mot de passe</label>
+          <input id="confirm-mdp-input" type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirmer votre mot de passe">
+        </div>
+
+        <button id="connect-btn" class="btn btn-outline-success mt-3" type="button">Se connecter</button>
+        <button class="btn btn-outline-success mt-3" type="submit">S'inscire</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Home -->
+  <section id="home_page" style="display: none;">
+    <!-- Header -->
+    <header class="">
+      <nav class="navbar p-2 navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Accueil</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Favoris</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Playlist</a>
+            </li>
+          </ul>
+        </div>
+        <form class="d-flex">
+          <div>
+            <label for="scales">Titre</label>
+            <input type="checkbox" id="scales" name="scales" checked>
+          </div>
+          <div>
+            <label for="scales">Artiste</label>
+            <input type="checkbox" id="scales" name="scales" checked>
+          </div>
+          <div>
+            <label for="scales">Album</label>
+            <input type="checkbox" id="scales" name="scales" checked>
+          </div>
+          <input class="form-control mr-sm-2 m-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0 m-2" type="submit">Search</button>
+        </form>
+        <ul class="navbar-nav mr-auto" style="margin-left: 2rem;">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Compte</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Last Listens -->
+    <h1 id="title">Dernière écoutes</h1>
+    
+    <ul class="list-group align-items-center flex-column">
+      <li id="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
+        <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
+        <div class="text-center title p-1 text-white">
+            <ul class="m-0  list-inline" style="list-style: none;">
+                <li class="list-inline-item">titre</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">artiste</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">duree</li>
+            </ul>
+        </div>
+        <button class="btn">
+            <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
+        </button>
+        <button class="btn">
+            <i class="bi bi-three-dots-vertical three-dot"></i>
+        </button>
+      </li>
+      <li id="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
+        <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
+        <div class="text-center title p-1 text-white">
+            <ul class="m-0  list-inline" style="list-style: none;">
+                <li class="list-inline-item">titre</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">artiste</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">duree</li>
+            </ul>
+        </div>
+        <button class="btn">
+            <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
+        </button>
+        <button class="btn">
+            <i class="bi bi-three-dots-vertical three-dot"></i>
+        </button>
+      </li>
+      <li id="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
+        <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
+        <div class="text-center title p-1 text-white">
+            <ul class="m-0  list-inline" style="list-style: none;">
+                <li class="list-inline-item">titre</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">artiste</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">duree</li>
+            </ul>
+        </div>
+        <button class="btn">
+            <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
+        </button>
+        <button class="btn">
+            <i class="bi bi-three-dots-vertical three-dot"></i>
+        </button>
+      </li>
+      <li id="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
+        <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
+        <div class="text-center title p-1 text-white">
+            <ul class="m-0  list-inline" style="list-style: none;">
+                <li class="list-inline-item">titre</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">artiste</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">duree</li>
+            </ul>
+        </div>
+        <button class="btn">
+            <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
+        </button>
+        <button class="btn">
+            <i class="bi bi-three-dots-vertical three-dot"></i>
+        </button>
+      </li>
+      <li id="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
+        <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
+        <div class="text-center title p-1 text-white">
+            <ul class="m-0  list-inline" style="list-style: none;">
+                <li class="list-inline-item">titre</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">artiste</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">duree</li>
+            </ul>
+        </div>
+        <button class="btn">
+            <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
+        </button>
+        <button class="btn">
+            <i class="bi bi-three-dots-vertical three-dot"></i>
+        </button>
+      </li>
+    </ul>
+    
+    <!-- Titre Liked -->
+    <h1 id="title">Titres aimés</h1>
+    <ul class="list-group align-items-center flex-column">
+      <li id="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
+        <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
+        <div class="text-center title p-1 text-white">
+            <ul class="m-0  list-inline" style="list-style: none;">
+                <li class="list-inline-item">titre</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">artiste</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">duree</li>
+            </ul>
+        </div>
+        <button class="btn">
+            <i class="bi bi-suit-heart-fill filled-heart icon-btn" aria-hidden="true"></i>
+        </button>
+        <button class="btn">
+            <i class="bi bi-three-dots-vertical three-dot"></i>
+        </button>
+      </li>
+      <li id="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white">
+        <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
+        <div class="text-center title p-1 text-white">
+            <ul class="m-0  list-inline" style="list-style: none;">
+                <li class="list-inline-item">titre</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">artiste</li>
+                <i class="bi bi-dot"></i>
+                <li class="list-inline-item">duree</li>
+            </ul>
+        </div>
+        <button class="btn">
+            <i class="bi bi-suit-heart-fill filled-heart icon-btn" aria-hidden="true"></i>
+        </button>
+        <button class="btn">
+            <i class="bi bi-three-dots-vertical three-dot"></i>
+        </button>
+      </li>
+    </ul>
+    
+
+    <!-- Playlist -->
+    <h1 id="title">Playlists</h1>
+    <div class="row flex-row flex-nowrap p-0 m-3">
+      <ul class="list-group list-group-horizontal-md d-flex p-4 m-3">
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
+          <div>
+              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+              <div id="album-title" class="text-center">nom_album</div>
+          </div>
+        </li>
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
+          <div>
+              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+              <div id="album-title" class="text-center">nom_album</div>
+          </div>
+        </li>
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
+          <div>
+              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+              <div id="album-title" class="text-center">nom_album</div>
+          </div>
+        </li>
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
+          <div>
+              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+              <div id="album-title" class="text-center">nom_album</div>
+          </div>
+        </li>
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
+          <div>
+              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+              <div id="album-title" class="text-center">nom_album</div>
+          </div>
+        </li>
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
+          <div>
+              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+              <div id="album-title" class="text-center">nom_album</div>
+          </div>
+        </li>
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
+          <div>
+              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+              <div id="album-title" class="text-center">nom_album</div>
+          </div>
+        </li>
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
+          <div>
+              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+              <div id="album-title" class="text-center">nom_album</div>
+          </div>
+        </li>
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
+          <div>
+              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+              <div id="album-title" class="text-center">nom_album</div>
+          </div>
+        </li>
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
+          <div>
+              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+              <div id="album-title" class="text-center">nom_album</div>
+          </div>
+        </li>
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
+          <div>
+              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+              <div id="album-title" class="text-center">nom_album</div>
+          </div>
+        </li>
+        <li id="album" class="list-group-item text-white p-0 d-flex m-2">
+          <div>
+              <img src="assets/img/album.jpeg" alt="album_img" class="img-large">
+              <div id="album-title" class="text-center">nom_album</div>
+          </div>
+        </li>
+      </ul>
+    </div>  
+
+    <div id="create-playlist" class="row flex-row w-25 m-auto" style="display: block;">
+      <button id="btn-create-playlist" class="btn btn-outline-success mt-5 mb-5" type="button">Nouvelle playlist</button>
+    </div>
+
+    <div style="border-radius: 25px; height: auto;" class="container bg-gradient mt-5 text-white d-flex align-items-center list-group-item m-auto w-50">
+      <div class="w-100" style="" >
+          <form id="create-playlist-form" style="display: none; margin: 5%;">
+              <div class="form-group mb-4">
+                <label for="pwd-input" class="mb-4">Nom de la nouvelle playlist</label>
+                <input id="pwd-input" name="pwd" type="password" class="form-control"placeholder="Votre nouvelle playlist">
+              </div> 
+              <div class="col flex-col w-25 m-auto">
+                <button id="playlist-cancel-btn" class="btn btn-outline-danger mt-2 mb-1" type="submit">Annuler</button>  
+                <button id="playlist-created-btn" class="btn btn-outline-success mt-2 mb-1" type="submit">Créer</button>
+              </div>
+            </form>
+      </div>
+  </div>
+
+    <br><br><br><br><br><br><br>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container-fluid text-white text-center p-3">
+        <audio controls>
+          <source src="ressources/musique/trm.mp3" type="audio/mpeg" style="width: 100%;">
+        </audio>
+      </div>
+    </footer>
+
+  </section>
+
+</body>
+</html>
