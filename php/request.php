@@ -374,7 +374,7 @@ else if ($requestMethod == "DELETE" && $requestRessource == "playlist" && $id !=
 else if($requestMethod == "GET" && $requestRessource == "artist"){
     //Envoie les informations d'un artiste
     if (isset($_GET["id_artist"])){
-        $myDbReq = $myDb->requestArtist($_GET["id_artist"]);
+        $myDbReq = $myDb->requestArtist($email, $_GET["id_artist"]);
         if (!$myDbReq){
             header('HTTP/1.1 400 Bad Request');
         }
@@ -385,7 +385,7 @@ else if($requestMethod == "GET" && $requestRessource == "artist"){
     }
     //Envoie les informations de tous les artistes
     else {
-        $myDbReq = $myDb->requestArtists();
+        $myDbReq = $myDb->requestArtists($email);
         if (!$myDbReq){
             header('HTTP/1.1 400 Bad Request');
         }
@@ -430,6 +430,10 @@ else if ($requestMethod == "PUT" && $requestRessource == "play"){
             header('HTTP/1.1 200 OK');
             echo json_encode($myDbReq);
         }
+    }
+    else {
+        echo $_PUT["id_tracks"];
+        header('HTTP/1.1 400 Bad Request');
     }
 }
 else if ($requestMethod == "GET" && $requestRessource == "last_listened"){
