@@ -46,6 +46,7 @@ function ajaxRequest(type, url, callback, data = null)
         httpErrors(xhr.status);
     }
   };
+  httpErrors(xhr.status);
 
   // Send XML HTTP request.
   xhr.send(data);
@@ -67,4 +68,6 @@ function httpErrors(errorCode)
     500: 'Erreur interne du serveur',
     503: 'Service indisponible'
   };
+
+  console.log(messages[errorCode]);
 }
