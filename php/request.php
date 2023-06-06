@@ -440,13 +440,18 @@ else if ($requestMethod == "PUT" && $requestRessource == "play"){
 }
 else if ($requestMethod == "GET" && $requestRessource == "last_listened"){
     $myDbReq = $myDb->requestLastListened($email);
-        if (!$myDbReq){
-            header('HTTP/1.1 400 Bad Request');
-        }
-        else{
-            header('HTTP/1.1 200 OK');
-            echo json_encode($myDbReq);
-        }
+    if ($myDbReq ==  array()){
+        header('HTTP/1.1 200 OK');
+        echo json_encode($myDbReq);
+    }
+    else if (!$myDbReq){
+        echo "aaa";
+        header('HTTP/1.1 400 Bad Request');
+    }
+    else{
+        header('HTTP/1.1 200 OK');
+        echo json_encode($myDbReq);
+    }
 }
 
 //Si la requête ne correspond à aucun cas traité

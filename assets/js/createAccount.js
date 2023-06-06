@@ -26,9 +26,7 @@ document.getElementById("create-form").onsubmit = (event) => {
                 //Cacher l'auth et afficher le reste
                 console.log("login success !");
 
-                document.getElementById("home_page").style.display = "block";
-                document.getElementById("login_page").style.display = "none";
-                document.getElementById("signin_page").style.display = "none";
+                displayPageHome();
 
                 
                 break;

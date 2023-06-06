@@ -268,7 +268,7 @@
   //Récupere un morceau
   public function requestTrack($id_tracks, $email){
     try{
-      $request = "SELECT tracks.id_tracks, name_tracks, duration, track_path, date_listened, is_favorite, id_album, id_artist FROM tracks, users_tracks WHERE tracks.id_tracks=:id_tracks AND tracks.id_tracks=users_tracks.id_tracks AND email=:email";//"SELECT id_tracks, name_tracks, date_listened, duration, track_path, name_album, name_artist FROM tracks, album, artist WHERE tracks.id_artist=artist.id_artist AND tracks.id_album=album.id_album AND id_tracks=:id_tracks";
+      $request = "SELECT tracks.id_tracks, name_tracks, duration, track_path, date_listened, is_favorite, tracks.id_album, tracks.id_artist, album.img_path AS img_album, name_artist FROM tracks, users_tracks, album, artist WHERE tracks.id_tracks=:id_tracks AND tracks.id_tracks=users_tracks.id_tracks AND email=:email AND album.id_album = tracks.id_album AND artist.id_artist=tracks.id_artist";//"SELECT id_tracks, name_tracks, date_listened, duration, track_path, name_album, name_artist FROM tracks, album, artist WHERE tracks.id_artist=artist.id_artist AND tracks.id_album=album.id_album AND id_tracks=:id_tracks";
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam(":id_tracks", $id_tracks, PDO::PARAM_STR, 50);
       $statement->bindParam(":email", $email, PDO::PARAM_STR, 50);
@@ -282,7 +282,7 @@
     }
     if ($result == ""){
       try{
-        $request = "SELECT tracks.id_tracks, name_tracks, duration, track_path, id_album, id_artist FROM tracks WHERE tracks.id_tracks=:id_tracks";//"SELECT id_tracks, name_tracks, date_listened, duration, track_path, name_album, name_artist FROM tracks, album, artist WHERE tracks.id_artist=artist.id_artist AND tracks.id_album=album.id_album AND id_tracks=:id_tracks";
+        $request = "SELECT tracks.id_tracks, name_tracks, duration, track_path, tracks.id_album, tracks.id_artist, album.img_path AS img_album, name_artist FROM tracks, album, artist WHERE tracks.id_tracks=:id_tracks AND tracks.id_album=album.id_album AND tracks.id_artist=artist.id_artist";//"SELECT id_tracks, name_tracks, date_listened, duration, track_path, name_album, name_artist FROM tracks, album, artist WHERE tracks.id_artist=artist.id_artist AND tracks.id_album=album.id_album AND id_tracks=:id_tracks";
         $statement = $this->myPDO->prepare($request);
         $statement->bindParam(":id_tracks", $id_tracks, PDO::PARAM_STR, 50);
         $statement->execute();

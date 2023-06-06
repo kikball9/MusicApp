@@ -2,10 +2,6 @@ var idTrack;
 var idArtist;
 var idAlbum;
 
-function sec2min(sec){
-    return Math.trunc(sec/60)+":"+sec%60;
-}
-
 function displayTrackInfos(track){
     document.getElementById("artist-page-album-container").innerHTML = "";
     for (var i =0;i<track.length;i++){
@@ -22,7 +18,6 @@ function displayTrackInfos(track){
 
 function displayTrackInfos(track){
     document.getElementById("track-name").innerHTML = track["name_tracks"];
-    document.getElementById("track-img").innerHTML = track["track_path"];
     document.getElementById("track-duration").innerHTML = sec2min(track["duration"]);
 }
 
@@ -34,7 +29,20 @@ function displayArtistInfos(artists){
                 if(artists[i]["artist-albums"][j]["album-tracks"][k]["id_tracks"] == idTrack){
                     idArtist = artists[i]["artist-infos"][0]["id_artist"];
                     document.getElementById("artist-name").innerHTML = artists[i]["artist-infos"][0]["name_artist"];
+                    var idMonArtist = artists[i]["artist-infos"][0]["id_artist"];
                     document.getElementById("track-img").setAttribute("src", artists[i]["artist-infos"][0]["img_path"]);
+                    document.getElementById("track-img").onmouseover = ()=>{
+                        document.getElementById("track-img").style.cursor = "pointer";
+                    }
+                    document.getElementById("track-img").onclick = ()=>{
+                        displayPageArtist(idMonArtist);
+                    }
+                    document.getElementById("artist-name").onmouseover = ()=>{
+                        document.getElementById("artist-name").style.cursor = "pointer";
+                    }
+                    document.getElementById("artist-name").onclick = ()=>{
+                        displayPageArtist(idMonArtist);
+                    }
                 }
             }
         }
@@ -56,7 +64,17 @@ function displayAlbumInfos(myAlbum){
                 idAlbum = myAlbum["artist-albums"][i]["album-infos"][0]["id_album"];
                 console.log("id album find");
                 document.getElementById("album-img").setAttribute("src", myAlbum["artist-albums"][i]["album-infos"][0]["img_path"]);
-                document.getElementById("album-name").innerHTML = myAlbum["artist-albums"][i]["album-infos"][0]["name_album"];            
+                document.getElementById("album-img").setAttribute("onmouseover", "this.style.cursor = 'pointer';")
+                document.getElementById("album-img").onclick = ()=>{
+                    displayPageAlbum(idAlbum);
+                }
+                document.getElementById("album-name").innerHTML = myAlbum["artist-albums"][i]["album-infos"][0]["name_album"];
+                document.getElementById("album-name").onmouseover = ()=>{
+                    document.getElementById("album-name").style.cursor = "pointer";
+                }
+                document.getElementById("album-name").onclick = ()=>{
+                    displayPageAlbum(idAlbum);
+                }
             }
         }
     }
@@ -70,7 +88,7 @@ function displayAlbumInfos(myAlbum){
 
                 
                 document.getElementById("track-album-page-container").innerHTML += '\
-                    <li value="'+myAlbum["artist-albums"][i]["album-tracks"][j]["id_tracks"]+'" class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white"> \
+                    <li onmouseover="this.style.cursor = \'pointer\';" onclick="displayPageTrack('+myAlbum["artist-albums"][i]["album-tracks"][j]["id_tracks"]+');" value="'+myAlbum["artist-albums"][i]["album-tracks"][j]["id_tracks"]+'" class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white"> \
                         <img class="img-small" src="'+myAlbum["artist-albums"][i]["album-infos"][0]["img_path"]+'" alt="album_img"> \
                         <div class="text-center title p-1 text-white"> \
                             <ul class="m-0  list-inline" style="list-style: none;"> \
@@ -91,9 +109,24 @@ function displayAlbumInfos(myAlbum){
             }
         }
     }
+    document.getElementById("album-artist-name").onmouseover = ()=>{
+        document.getElementById("").style.cursor = "pointer";
+    }
+    document.getElementById("album-artist-name").onclick = ()=>{
+        displayPageArtist(myAlbum["album-infos"][0]["id_artist"])
+    }
+    document.getElementById("album-page-artist-image").onmouseover = ()=>{
+        document.getElementById("album-page-artist-image").style.cursor = "pointer";
+    }
+    document.getElementById("album-page-artist-image").onclick = ()=>{
+        displayPageArtist(myAlbum["album-infos"][0]["id_artist"])
+    }
 }
 
 function displayPageTrack(id_track){
+    hideEverything();
+    displayHeaderFooter();
+    document.getElementById("track_page").style.display = "block";
     idTrack = id_track;
     // ajaxRequest("GET", "php/request.php/album?id_album="+id_album, () => {return;});
     

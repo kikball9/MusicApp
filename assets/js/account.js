@@ -1,9 +1,3 @@
-/* DELETE USER ACCOUNT */
-document.getElementById("del-account-btn").addEventListener("click", () => {
-    ajaxRequest("DELETE", "php/request.php/user", ()=> {return;});
-    document.getElementById("home_page").style.display = "none";
-});
-
 /* USER INFORMATION */
 
 function fetchUserInfos(user){
@@ -15,6 +9,13 @@ function fetchUserInfos(user){
     document.getElementById("name-edit-input").setAttribute("placeholder", user[0]["name_user"]);
     document.getElementById("firstname-edit-input").setAttribute("placeholder", user[0]["first_name"]);
     document.getElementById("age-edit-input").value = user[0]["date_birth"].substr(0,10);
+}
+
+function displayAccount(){
+    hideEverything()
+    displayHeaderFooter();
+    document.getElementById("account_page").style.display = "block";
+    ajaxRequest("GET", "php/request.php/user", fetchUserInfos);
 }
 
 // EDIT USER INFORMATION
@@ -35,3 +36,9 @@ document.getElementById("user-edit-form").onsubmit = (event) => {
         console.log("Changement effectué");
     }
 }
+
+/* DELETE USER ACCOUNT */
+document.getElementById("del-account-btn").addEventListener("click", () => {
+    ajaxRequest("DELETE", "php/request.php/user", ()=> {return;});
+    document.getElementById("home_page").style.display = "none";
+});
