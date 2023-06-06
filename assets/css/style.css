@@ -129,6 +129,10 @@ select option {
     margin: 3rem 0 2rem 10%;
 }
 
+.artist-title{
+    color: white;
+    margin: 3rem 0 2rem 10%;
+}
 
 .icon-btn:hover {
     color: green;
