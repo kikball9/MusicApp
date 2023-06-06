@@ -16,10 +16,7 @@ document.getElementById("auth-form").onsubmit = (event) => {
                 Cookies.set("token", xhr.responseText);
                 //Cacher l'auth et afficher le reste
                 console.log("login success !");
-
-                document.getElementById("home_page").style.display = "block";
-                document.getElementById("login_page").style.display = "none";
-                document.getElementById("signin_page").style.display = "none";
+                displayPageHome();
                 
                 break;
             default:
@@ -49,9 +46,8 @@ if (typeof Cookies.get("token") !== 'undefined'){
     xhr.onloadend = () => {
         if (xhr.status == 200){
             //Cacher l'auth et afficher le reste
-            document.getElementById("home_page").style.display = "block";
-            document.getElementById("login_page").style.display = "none";
-            document.getElementById("signin_page").style.display = "none";
+            displayPageHome();
+
         }
     }
     xhr.send();

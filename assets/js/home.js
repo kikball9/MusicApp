@@ -126,7 +126,6 @@ document.getElementById("playlist-cancel-btn").addEventListener("click", () => {
 /*Display header footer and contents*/
 document.body.onload =()=>{
     document.getElementById("home_page").style.top = (window.innerHeight*0.05+document.getElementsByTagName("header")[0].clientHeight+10)+"px";
-    displayPageHome();
 }
 
 document.getElementById("account-btn").onclick = ()=>{
