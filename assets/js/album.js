@@ -63,6 +63,7 @@ function displayAlbum(myAlbum){
 
 function displayPageAlbum(id_album){
     hideEverything();
+    displayHeaderFooter();
     document.getElementById("album_page").style.display = "block";
     ajaxRequest("GET", "php/request.php/album?id_album="+id_album, displayAlbum);
 }

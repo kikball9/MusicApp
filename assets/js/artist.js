@@ -17,6 +17,7 @@ function displayArtist(artist){
 
 function displayPageArtist(id_artist){
     hideEverything();
+    displayHeaderFooter();
     document.getElementById("artist_page").style.display = "block";
     ajaxRequest("GET", "php/request.php/artist?id_artist="+id_artist, displayArtist)
 }

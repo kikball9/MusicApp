@@ -7,7 +7,13 @@ function sec2min(sec){
 
 function displayLastListened(last_listened){
     document.getElementById("last_listen_page").style.display = "block";
-    document.getElementById("home-page-last-listened-container").innerHTML = "";
+    if (last_listened.length == 0){
+        document.getElementById("home-page-last-listened-container").innerHTML = "<h3 class='text-white'>Aucun titres écouté</h3>";
+
+    }
+    else {
+        document.getElementById("home-page-last-listened-container").innerHTML = "";
+    }
     for (var i=0;i<last_listened.length;i++){
         if (i <= 9){
             document.getElementById("home-page-last-listened-container").innerHTML += '<li value="'+last_listened[i]["id_tracks"]+'" class="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white"> \
@@ -34,7 +40,12 @@ function displayLastListened(last_listened){
 
 function displayLikedTracks(likedTracks){
     document.getElementById("liked_titles_page").style.display = "block";
-    document.getElementById("home-page-liked-container").innerHTML = "";
+    if (likedTracks.length == 0){
+        document.getElementById("home-page-liked-container").innerHTML = "<h3 class='text-white'>Aucun titres aimé</h3>";
+    } 
+    else {
+        document.getElementById("home-page-liked-container").innerHTML = ""
+    }
     for (var i=0;i<likedTracks.length;i++){
         document.getElementById("home-page-liked-container").innerHTML += '<li values="'+likedTracks[i]["id_tracks"]+'" class="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white"> \
         <img class="img-small" src="'+likedTracks[i]["album_img"]+'" alt="album_img"> \
@@ -60,7 +71,12 @@ function displayLikedTracks(likedTracks){
 
 function displayPlaylist(myPlaylists){
     document.getElementById("add_playlist_page").style.display = "block";
-    document.getElementById("home-page-playlist-container").innerHTML = "";
+    if (myPlaylists.length == 0){
+        document.getElementById("home-page-playlist-container").innerHTML = "<h3 class='text-white'>Pas de playlist créée</h3>";
+    }
+    else {
+        document.getElementById("home-page-playlist-container").innerHTML = "";
+    }
     for (var i=0;i<myPlaylists.length;i++){
         document.getElementById("home-page-playlist-container").innerHTML += '<li value="'+myPlaylists[i]["playlist-info"]["id_playlist"]+'" class="album" class="list-group-item text-white p-0 d-flex m-2"> \
         <div> \
@@ -73,6 +89,7 @@ function displayPlaylist(myPlaylists){
 
 function displayPageHome(){
     hideEverything();
+    displayHeaderFooter();
     ajaxRequest("GET", "php/request.php/last_listened", displayLastListened);
     ajaxRequest("GET", "php/request.php/favorites", displayLikedTracks);
     ajaxRequest("GET", "php/request.php/playlist", displayPlaylist);
@@ -84,6 +101,19 @@ function hideHome(){
     document.getElementById("add_playlist_page").style.display = "none";
 }
 
+function hideHeaderFooter(){
+    document.getElementsByTagName("header")[0].style.display = "none";
+    document.getElementsByTagName("footer")[0].style.display = "none";
+    console.log("ji suis pas");
+}
+
+function displayHeaderFooter(){
+    document.getElementsByTagName("header")[0].style.display = "block";
+    document.getElementsByTagName("footer")[0].style.display = "block";
+    console.log("ji suis");
+    document.getElementById("home_page").style.top = (window.innerHeight*0.05+document.getElementsByTagName("header")[0].clientHeight+10)+"px";
+}
+
 function hideEverything(){
     document.getElementById("login_page").style.display = "none";
     document.getElementById("signin_page").style.display = "none";
@@ -92,10 +122,12 @@ function hideEverything(){
     document.getElementById("album_page").style.display = "none";
     document.getElementById("artist_page").style.display = "none";
     document.getElementById("track_page").style.display = "none";
+    hideHeaderFooter();
 }
 
 function displayFavs(){
     hideEverything();
+    displayHeaderFooter();
     ajaxRequest("GET", "php/request.php/favorites", displayLikedTracks);
 }
 
@@ -120,11 +152,7 @@ document.getElementById("playlist-cancel-btn").addEventListener("click", () => {
     document.getElementById("create-playlist").style.display = "block";
 });
 
-/*Display header footer and contents*/
-document.body.onload =()=>{
-    document.getElementById("home_page").style.top = (window.innerHeight*0.05+document.getElementsByTagName("header")[0].clientHeight+10)+"px";
-}
-
+/*Bouttons du header*/
 document.getElementById("account-btn").onclick = ()=>{
     displayAccount();
 }

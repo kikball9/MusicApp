@@ -2,10 +2,6 @@ var idTrack;
 var idArtist;
 var idAlbum;
 
-function sec2min(sec){
-    return Math.trunc(sec/60)+":"+sec%60;
-}
-
 function displayTrackInfos(track){
     document.getElementById("artist-page-album-container").innerHTML = "";
     for (var i =0;i<track.length;i++){
@@ -129,6 +125,7 @@ function displayAlbumInfos(myAlbum){
 
 function displayPageTrack(id_track){
     hideEverything();
+    displayHeaderFooter();
     document.getElementById("track_page").style.display = "block";
     idTrack = id_track;
     // ajaxRequest("GET", "php/request.php/album?id_album="+id_album, () => {return;});

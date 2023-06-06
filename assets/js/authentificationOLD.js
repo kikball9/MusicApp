@@ -39,6 +39,7 @@ document.getElementById("auth-form").onsubmit = (event) => {
 }
 
 if (typeof Cookies.get("token") !== 'undefined'){
+    //ajaxRequest("GET", "php/request")
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "php/request.php");
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -49,6 +50,12 @@ if (typeof Cookies.get("token") !== 'undefined'){
             displayPageHome();
 
         }
+        else {
+            hideHeaderFooter();
+        }
     }
     xhr.send();
+}
+else {
+    hideHeaderFooter();
 }

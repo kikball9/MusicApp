@@ -13,6 +13,7 @@ function fetchUserInfos(user){
 
 function displayAccount(){
     hideEverything()
+    displayHeaderFooter();
     document.getElementById("account_page").style.display = "block";
     ajaxRequest("GET", "php/request.php/user", fetchUserInfos);
 }
