@@ -18,34 +18,14 @@ function sec2min(sec){
 function displayTrack(myTrack){
     // console.log(myTrack["name_tracks"]);
     
-    document.getElementById("track-container").innerHTML += '\
-    <li onmouseover="this.style.cursor=\'pointer\'" onclick="displayPageTrack('+myTrack["id_tracks"]+')" value="'+myTrack["id_tracks"]+'" class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white"> \
-        <div class="m-auto w-100 d-flex">\
-            <img id="album-img'+myTrack["id_tracks"]+'" class="img-small" src="" alt="album_img"> \
-            <div class="text-center title p-1 text-white"> \
-                <ul class="m-0  list-inline" style="list-style: none;"> \
-                    <li class="list-inline-item">'+myTrack["name_tracks"]+'</li> \
-                    <i class="bi bi-dot"></i> \
-                    <li id="artist-name'+myTrack["id_tracks"]+'" class="list-inline-item"></li> \
-                    <i class="bi bi-dot"></i> \
-                    <li class="list-inline-item">'+sec2min(myTrack["duration"])+'</li> \
-                </ul> \
-            </div> \
-            <button class="btn"> \
-                <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
-            </button> \
-            <button class="btn"> \
-                <i class="bi bi-three-dots-vertical three-dot"></i> \
-            </button> \
-        </div> \
-    </li>';
+    displayOneTrack(document.getElementById("track-container"), myTrack);
 
-    ajaxRequest("GET", "php/request.php/album?id_album="+myTrack["id_album"], (myAlbum) => {
+    /*ajaxRequest("GET", "php/request.php/album?id_album="+myTrack["id_album"], (myAlbum) => {
         document.getElementById("album-img"+myTrack["id_tracks"]).setAttribute("src", myAlbum["album-infos"][0]["img_path"]); 
     });
     ajaxRequest("GET", "php/request.php/artist?id_artist="+myTrack["id_artist"], (myArtist) => {
         document.getElementById("artist-name"+myTrack["id_tracks"]).innerHTML =  myArtist["artist-infos"][0]["name_artist"];
-    });
+    });*/
 }
 
 function displayPlaylist(myPlaylist){

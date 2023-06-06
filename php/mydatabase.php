@@ -166,7 +166,7 @@
   public function requestFavorites($email){
       try
       {
-        $request = 'SELECT tracks.id_tracks, name_tracks, duration, track_path, tracks.id_album, tracks.id_artist, date_listened, album.img_path AS album_img, artist.name_artist FROM tracks, users_tracks, album, artist WHERE tracks.id_tracks IN (SELECT users_tracks.id_tracks FROM users_tracks WHERE email=:email AND is_favorite=TRUE) AND tracks.id_tracks=users_tracks.id_tracks AND tracks.id_album=album.id_album AND tracks.id_artist=artist.id_artist AND email=:email';
+        $request = 'SELECT tracks.id_tracks, name_tracks, duration, track_path, tracks.id_album, tracks.id_artist, date_listened, album.img_path AS img_album, artist.name_artist FROM tracks, users_tracks, album, artist WHERE tracks.id_tracks IN (SELECT users_tracks.id_tracks FROM users_tracks WHERE email=:email AND is_favorite=TRUE) AND tracks.id_tracks=users_tracks.id_tracks AND tracks.id_album=album.id_album AND tracks.id_artist=artist.id_artist AND email=:email';
         $statement = $this->myPDO->prepare($request);
         $statement->bindParam (':email', $email, PDO::PARAM_STR, 50);
         $statement->execute();

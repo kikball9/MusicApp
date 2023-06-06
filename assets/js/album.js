@@ -4,6 +4,107 @@ function sec2min(sec){
     return Math.trunc(sec/60)+":"+sec%60;
 }
 
+function handlePlayClick(event, idTrack) {
+    event.stopPropagation();
+    ajaxRequest("GET", "php/request.php/track?id_tracks="+idTrack, (track)=>{
+        document.getElementById("footerSource").setAttribute("source", track["track_path"]);
+        document.getElementById("audioSource").play();
+    })
+}
+
+function handleLikedClick(event, idTrack) {
+    event.stopPropagation();
+    ajaxRequest("GET", "php/request.php/track?id_tracks="+idTrack, (track)=>{
+        if (track["is_favorite"] != 1){
+            ajaxRequest("PUT", "php/request.php/favorites", ()=>{return;}, "id_tracks="+track["id_tracks"]);
+        }
+        else {
+            ajaxRequest("DELETE", "php/request.php/favorites/"+track["id_tracks"], ()=>{return;})
+        }
+    });
+    
+    
+}
+
+function handleAddPlaylistClick(event, idTrack){
+    event.stopPropagation();
+    if (document.getElementById("playlistAddSelect-"+idTrack).style.display == "none"){
+        ajaxRequest("GET", "php/request.php/playlist", (playlist)=>{
+            document.getElementById("playlistAddSelect-"+idTrack).innerHTML = "";
+            document.getElementById("playlistAddSelect-"+idTrack).style.display = "block";
+            document.getElementById("labelAddPlaylist-"+idTrack).style.display = "block";
+            for (var i=0;i<playlist.length;i++){
+                document.getElementById("playlistAddSelect-"+idTrack).innerHTML += "<option value='"+playlist[i]["playlist-info"]["id_playlist"]+"'>"+playlist[i]["playlist-info"]["name_playlist"]+"</option>";
+            }
+            document.getElementById("playlistAddSelect-"+idTrack).onclick = (event)=>{
+                event.stopPropagation();
+            }
+            document.getElementById("playlistAddSelect-"+idTrack).onchange = ()=>{
+                ajaxRequest("POST", "php/request.php/playlist", ()=>{return;}, "id_tracks="+idTrack+"&id_playlist="+document.getElementById("playlistAddSelect-"+idTrack).value);
+                document.getElementById("playlistAddSelect-"+idTrack).style.display = "none";
+                document.getElementById("labelAddPlaylist-"+idTrack).style.display = "none";
+            }
+        })
+    }
+    else {
+        document.getElementById("playlistAddSelect-"+idTrack).style.display = "none";
+        document.getElementById("labelAddPlaylist-"+idTrack).style.display = "none";
+    }
+}
+
+function handleInfoClick(event, idTrack){
+    event.stopPropagation();
+    displayPageTrack(idTrack);
+}
+
+function displayOneTrack(containerElem, jsonTrack){
+    var likeBtn, buffer;
+    if (jsonTrack["is_favorite"] == 1){
+        buffer = '<i class=\"bi bi-heart heart icon-btn\" aria-hidden=\"true\">'
+        likeBtn = '<button id="A_liked" onclick="handleLikedClick(event, '+jsonTrack["id_tracks"]+');" class="btn"> \
+        <i class="bi bi-suit-heart-fill filled-heart icon-btn" aria-hidden="true"></i> \
+      </button>';
+    }
+    //<i class=\"bi bi-suit-heart-fill filled-heart icon-btn\" aria-hidden=\"true\">
+    
+    else{
+        likeBtn = '<button id="A_liked" onclick="handleLikedClick(event,'+jsonTrack['id_tracks']+');" class="btn"> \
+                <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
+              </button>'
+    }        
+    containerElem.innerHTML += '\
+      <li class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white" style="border: none;"> \
+            <div id="A" onclick="handlePlayClick(event, '+jsonTrack["id_tracks"]+')" class="m-auto w-100 d-flex"> \
+              <img class="img-small" src="'+jsonTrack["img_album"]+'" alt="album_img"> \
+              <div class="btn play-btn"> \
+                <i id="target" class="bi bi-play-fill heart"></i> \
+              </div> \
+              <div class="text-center title p-1 text-white"> \
+                <ul class="m-0  list-inline" style="list-style: none;"> \
+                  <li class="list-inline-item">'+jsonTrack["name_tracks"]+'</li> \
+                  <i class="bi bi-dot"></i> \
+                  <li class="list-inline-item">'+jsonTrack["name_artist"]+'</li> \
+                  <i class="bi bi-dot"></i> \
+                  <li class="list-inline-item">'+sec2min(jsonTrack["duration"])+'</li> \
+                </ul> \
+              </div> \
+              '+likeBtn+' \
+                <button class="btn" onclick="handleAddPlaylistClick(event, '+jsonTrack["id_tracks"]+');"> \
+                    <i class="bi bi-plus heart icon-btn"></i> \
+                </button> \
+                    \
+                </div> \
+                <button class="btn" onclick="handleInfoClick(event, '+jsonTrack["id_tracks"]+')"> \
+                  <i class="bi bi-info-circle heart icon-btn"></i> \
+                </button> \
+            </div> \
+          </li>\
+          <label class="text-white" id="labelAddPlaylist-'+jsonTrack["id_tracks"]+'" style="display: none;" for="addPlaylistForm-'+jsonTrack["id_tracks"]+'">Ajouter à une playlist:</label>\
+          <select name="addPlaylistForm-'+jsonTrack["id_tracks"]+'" style="position: relative;display: none;left:20vw;" id="playlistAddSelect-'+jsonTrack["id_tracks"]+'">\
+                        \
+            </select>';
+}
+
 function displayAlbum(myAlbum){
     document.getElementById("album-album-style").innerHTML = myAlbum["album-infos"][0]["style"];
     var date= myAlbum["album-infos"][0]["date_published"].split(' ')[0].split("-");
@@ -13,25 +114,7 @@ function displayAlbum(myAlbum){
     document.getElementById("album-page-album-title").innerHTML = myAlbum["album-infos"][0]["name_album"];
     document.getElementById("album-page-track-container").innerHTML = "";
     for (var i=0;i<myAlbum["album-tracks"].length;i++){
-        document.getElementById("album-page-track-container").innerHTML += '\
-        <li onclick="displayPageTrack('+myAlbum["album-tracks"][i]["id_tracks"]+')" onmouseover="this.style.cursor=\'pointer\'" value="'+myAlbum["album-tracks"][i]["id_tracks"]+'" class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white"> \
-        <img class="img-small" src="'+myAlbum["album-infos"][0]["img_path"]+'" alt="album_img"> \
-        <div class="text-center title p-1 text-white"> \
-            <ul class="m-0  list-inline" style="list-style: none;"> \
-                <li class="list-inline-item">'+myAlbum["album-tracks"][i]["name_tracks"]+'</li> \
-                <i class="bi bi-dot"></i> \
-                <li class="list-inline-item">'+myAlbum["album-infos"][0]["name_artist"]+'</li> \
-                <i class="bi bi-dot"></i> \
-                <li class="list-inline-item">'+sec2min(myAlbum["album-tracks"][0]["duration"])+'</li> \
-            </ul> \
-        </div> \
-        <button class="btn"> \
-            <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
-        </button> \
-        <button class="btn"> \
-            <i class="bi bi-three-dots-vertical three-dot"></i> \
-        </button> \
-      </li>';
+        displayOneTrack(document.getElementById("album-page-track-container"), myAlbum["album-tracks"][i])
     }
     document.getElementById("album-artist-name").innerHTML = myAlbum["album-infos"][0]["name_artist"];
     document.getElementById("album-page-artist-image").setAttribute("src", myAlbum["album-infos"][0]["artist_img"])

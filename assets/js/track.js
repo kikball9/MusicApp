@@ -14,9 +14,6 @@ function displayTrackInfos(track){
           </li>';
         }
     }
-}
-
-function displayTrackInfos(track){
     document.getElementById("track-name").innerHTML = track["name_tracks"];
     document.getElementById("track-duration").innerHTML = sec2min(track["duration"]);
 }
@@ -136,20 +133,6 @@ function displayPageTrack(id_track){
     // console.log(idArtist);
     // ajaxRequest("GET", "php/request.php/album", displayAlbumInfos);
     ajaxRequest("GET", "php/request.php/track?id_tracks="+id_track, displayTrackInfos)
-}
-
-function handleAClick() {
-    console.log("Clic sur titre");
-}
-
-function handleLikedClick(event) {
-    event.stopPropagation();
-    console.log("Titre aimé !");
-}
-
-function handleOptionsClick(event) {
-    event.stopPropagation();
-    console.log("Options cliqué");
 }
 
 // Bouton play track
