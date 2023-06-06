@@ -99,7 +99,7 @@ function displayFavs(){
 function displayAccount(){
     hideEverything()
     document.getElementById("account_page").style.display = "block";
-    ajaxRequest("GET", "php/request.php/user", fetcUserInfos);
+    ajaxRequest("GET", "php/request.php/user", fetchUserInfos);
 }
 
 /* Creation nouvelle playlist */

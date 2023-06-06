@@ -6,7 +6,7 @@ document.getElementById("del-account-btn").addEventListener("click", () => {
 
 /* USER INFORMATION */
 
-function fetcUserInfos(user){
+function fetchUserInfos(user){
     if(user[0]["src"] != "none") document.getElementById("img-user").setAttribute("src", user[0]["src"])
     document.getElementById("name-user").innerHTML = user[0]["name_user"];
     document.getElementById("first-name-user").innerHTML = user[0]["first_name"];
@@ -25,5 +25,13 @@ document.getElementById("user-edit-form").onsubmit = (event) => {
     prenom_user = document.getElementById("name-edit-input").value;
     nom_user = document.getElementById("firstname-edit-input").value;
     age_user = document.getElementById("age-edit-input").value;
-    ajaxRequest("PUT", "php/request.php/user", ()=>{return;}, )
+    pwd = document.getElementById("account-pwd-input").value;
+    confirm_pwd = document.getElementById("account-confirm-pwd-input").value;
+    if (pwd != confirm_pwd){
+        console.log("Error");
+    }
+    else {
+        ajaxRequest("PUT", "php/request.php/user", ()=>{ajaxRequest("GET", "php/request.php/user", fetchUserInfos);}, "password="+pwd+"&first_name="+prenom_user+"&name_user="+nom_user+"&date_birth="+age_user);
+        console.log("Changement effectué");
+    }
 }

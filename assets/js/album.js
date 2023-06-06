@@ -12,6 +12,12 @@ function displayAlbumWithAllInfos(myArtist){
             myAlbum = myArtist["artist-albums"][i];
         }
     }
+    
+    }
+
+}
+
+function displayAlbum(myAlbum){
     document.getElementById("album-album-style").innerHTML = myAlbum["album-infos"][0]["style"];
     var date= myAlbum["album-infos"][0]["date_published"].split(' ')[0].split("-");
     var newDate = date[2]+"/"+date[1]+"/"+date[0];
@@ -39,17 +45,8 @@ function displayAlbumWithAllInfos(myArtist){
             <i class="bi bi-three-dots-vertical three-dot"></i> \
         </button> \
       </li>';
-    }
-
-    document.getElementById("album-artist-name").innerHTML = artistName;
-    document.getElementById("album-page-artist-image").setAttribute("src", myArtist["artist-infos"][0]["img_path"])
-
-}
-
-function displayAlbum(myAlbum){
-    idAlbum = myAlbum["album-infos"][0]["id_album"];
-    ajaxRequest("GET", "php/request.php/artist?id_artist="+myAlbum["album-infos"][0]["id_artist"], displayAlbumWithAllInfos)
-    
+      document.getElementById("album-artist-name").innerHTML = artistName;
+      document.getElementById("album-page-artist-image").setAttribute("src", myArtist["artist-infos"][0]["img_path"])
 }
 
 function displayPageAlbum(id_album){
