@@ -4,17 +4,6 @@ function sec2min(sec){
     return Math.trunc(sec/60)+":"+sec%60;
 }
 
-
-// function getAlbumPicPath(idAlbum){
-//     // var cover = ajaxRequest("GET", "php/request.php/album?id_album="+idAlbum, () => {});
-//     // return cover;
-//     var cover;
-//     ajaxRequest("GET", "php/request.php/album?id_album="+idAlbum, (myAlbum) => {
-//         cover = myAlbum["album-infos"][0]["img_path"];
-//     });
-//     return cover;
-// }
-
 function displayTrack(myTrack){
     // console.log(myTrack["name_tracks"]);
     

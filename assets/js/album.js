@@ -10,6 +10,7 @@ function handlePlayClick(event, idTrack) {
         document.getElementById("footerSource").setAttribute("source", track["track_path"]);
         document.getElementById("audioSource").play();
     })
+    ajaxRequest("PUT", "php/request.php/play", ()=>{return;}, "id_tracks="+idTrack);
 }
 
 function handleLikedClick(event, idTrack) {
