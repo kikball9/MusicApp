@@ -187,52 +187,6 @@ header {
     position: relative;
     overflow-y: scroll;
     height: 100vh;
-<<<<<<< HEAD
-}
-
-.ma-div {
-    /* width: 200px; */
-    /* height: 200px; */
-    /* background-color: #ccc; */
-    position: relative;
-}
-
-.ma-div:hover .play-btn {
-    display: inline-block;
-    /* visibility: visible; */
-}
-
-.play-btn {
-    display: none;
-    /* visibility: hidden; */
-    /* font-size: 50px; */
-    /* color: red;   */
-}
-
-/* button scroll option */
-.button-container {
-    position: relative;
-    display: inline-block;
-}
-.button-dropdown {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1;
-}
-.button-container.active .button-dropdown {
-    display: block;
-}
-.button-dropdown button {
-    display: block;
-    width: 5vh;
-    height: 4vh;
-    padding: 5px;
-    border: 1px solid white;
-}
-
-=======
     padding-top: 75px;
     padding-bottom: 78px;
 }
@@ -241,4 +195,3 @@ header {
     margin-left: 1vw;
     margin-right: 1vw;
 }
->>>>>>> 368ab36d5b7fc750733d75659f800fa59f974459

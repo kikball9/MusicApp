@@ -17,26 +17,32 @@ function displayLastListened(last_listened){
     for (var i=0;i<last_listened.length;i++){
         if (i <= 9){
             document.getElementById("home-page-last-listened-container").innerHTML += '\
-            <li value="'+last_listened[i]["id_tracks"]+'" class="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white"> \
-                <div class="m-auto w-100 d-flex">\
-                    <img class="img-small" src="'+last_listened[i]["img_album"]+'" alt="album_img"> \
-                    <div class="text-center title p-1 text-white"> \
-                        <ul class="m-0  list-inline" style="list-style: none;"> \
-                            <li class="list-inline-item">'+last_listened[i]["name_tracks"]+'</li> \
-                            <i class="bi bi-dot"></i> \
-                            <li class="list-inline-item">'+last_listened[i]["name_artist"]+'</li> \
-                            <i class="bi bi-dot"></i> \
-                            <li class="list-inline-item">'+sec2min(last_listened[i]["duration"])+'</li> \
-                        </ul> \
-                    </div> \
-                    <button class="btn"> \
-                        <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
-                    </button> \
-                    <button class="btn"> \
-                        <i class="bi bi-three-dots-vertical three-dot"></i> \
-                    </button> \
-                </div>/\
-            </li>';
+            <li value="'+last_listened[i]["id_tracks"]+'" class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white" style="border: none;"> \
+            <div id="A" onclick="handleAClick()" class="m-auto w-100 d-flex"> \
+              <img class="img-small" src="'+last_listened[i]["img_album"]+'" alt="album_img"> \
+              <div class="btn play-btn"> \
+                <i id="target" class="bi bi-play-fill heart"></i> \
+              </div> \
+              <div class="text-center title p-1 text-white"> \
+                <ul class="m-0  list-inline" style="list-style: none;"> \
+                  <li class="list-inline-item">'+last_listened[i]["name_tracks"]+'</li> \
+                  <i class="bi bi-dot"></i> \
+                  <li class="list-inline-item">'+last_listened[i]["name_artist"]+'</li> \
+                  <i class="bi bi-dot"></i> \
+                  <li class="list-inline-item">'+sec2min(last_listened[i]["duration"])+'</li> \
+                </ul> \
+              </div> \
+              <button id="A_liked" onclick="handleLikedClick(event)" class="btn"> \
+                <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
+              </button> \
+              <button class="btn"> \
+                <i class="bi bi-plus heart icon-btn"></i> \
+              </button> \
+              <button class="btn"> \
+                <i class="bi bi-info-circle heart icon-btn"></i> \
+              </button> \
+            </div> \
+          </li>';
         }
     }
 }
@@ -50,49 +56,61 @@ function displayLikedTracks(likedTracks){
         document.getElementById("home-page-liked-container").innerHTML = ""
     }
     for (var i=0;i<likedTracks.length;i++){
-        document.getElementById("home-page-liked-container").innerHTML += '<li values="'+likedTracks[i]["id_tracks"]+'" class="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white"> \
-        <img class="img-small" src="'+likedTracks[i]["album_img"]+'" alt="album_img"> \
-        <div class="text-center title p-1 text-white"> \
-            <ul class="m-0  list-inline" style="list-style: none;"> \
-                <li class="list-inline-item">'+likedTracks[i]["name_tracks"]+'</li> \
-                <i class="bi bi-dot"></i> \
-                <li class="list-inline-item">'+likedTracks[i]["name_artist"]+'</li> \
-                <i class="bi bi-dot"></i> \
-                <li class="list-inline-item">'+sec2min(likedTracks[i]["duration"])+'</li> \
-            </ul> \
-        </div> \
-        <button class="btn"> \
-            <i class="bi bi-suit-heart-fill filled-heart icon-btn" aria-hidden="true"></i> \
-        </button> \
-        <button class="btn"> \
-            <i class="bi bi-three-dots-vertical three-dot"></i> \
-        </button> \
-    </li>'
+        document.getElementById("home-page-liked-container").innerHTML += ' \
+        <li value="'+likedTracks[i]["id_tracks"]+'" class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white" style="border: none;"> \
+            <div id="A" onclick="handleAClick()" class="m-auto w-100 d-flex"> \
+              <img class="img-small" src="'+likedTracks[i]["album_img"]+'" alt="album_img"> \
+              <div class="btn play-btn"> \
+                <i id="target" class="bi bi-play-fill heart"></i> \
+              </div> \
+              <div class="text-center title p-1 text-white"> \
+                <ul class="m-0  list-inline" style="list-style: none;"> \
+                  <li class="list-inline-item">'+likedTracks[i]["name_artist"]+'</li> \
+                  <i class="bi bi-dot"></i> \
+                  <li class="list-inline-item">'+likedTracks[i]["name_artist"]+'</li> \
+                  <i class="bi bi-dot"></i> \
+                  <li class="list-inline-item">'+sec2min(likedTracks[i]["duration"])+'</li> \
+                </ul> \
+              </div> \
+              <button id="A_liked" onclick="handleLikedClick(event)" class="btn"> \
+                <i class="bi bi-suit-heart-fill filled-heart icon-btn" aria-hidden="true"></i> \
+              </button> \
+              <button class="btn"> \
+                <i class="bi bi-plus heart icon-btn"></i> \
+              </button> \
+              <button class="btn"> \
+                <i class="bi bi-info-circle heart icon-btn"></i> \
+              </button> \
+            </div> \
+        </li>';
+
     }
 
 }
 
 function displayAddPlaylist(myPlaylists){
     document.getElementById("add_playlist_page").style.display = "block";
+    document.getElementById("home-page-album-container").innerHTML = "";
     if (myPlaylists.length == 0){
         document.getElementById("home-page-playlist-container").innerHTML = "<h3 class='text-white'>Pas de playlist créée</h3>";
     }
     else {
-        document.getElementById("home-page-playlist-container").innerHTML = "";
-    }
-    for (var i=0;i<myPlaylists.length;i++){
-        document.getElementById("home-page-playlist-container").innerHTML += '<li value="'+myPlaylists[i]["playlist-info"]["id_playlist"]+'" class="album" class="list-group-item text-white p-0 d-flex m-2"> \
-        <div onmouseover="this.style.cursor=\'pointer\'" onclick="displayPagePlaylist('+myPlaylists[i]["playlist-info"]["id_playlist"]+');"> \
-            <img src="'+myPlaylists[i]["playlist-info"]["img_path"]+'" alt="album_img" class="img-large"> \
-            <div class="album-title" class="text-center">'+myPlaylists[i]["playlist-info"]["name_playlist"]+'</div> \
-        </div> \
-      </li>';
+        for (var i=0;i<myPlaylists.length;i++){
+            document.getElementById("home-page-album-container").innerHTML += '\
+                <li value="'+myPlaylists[i]["playlist-info"]["id_playlist"]+'" class="album list-group-item text-white p-0 d-flex m-2"> \
+                    <div onmouseover="this.style.cursor=\'pointer\'" onclick="displayPagePlaylist('+myPlaylists[i]["playlist-info"]["id_playlist"]+');"> \
+                        <img src="'+myPlaylists[i]["playlist-info"]["img_path"]+'" alt="album_img" class="img-large"> \
+                        <div class="album-title text-center">'+myPlaylists[i]["playlist-info"]["name_playlist"]+'</div> \
+                    </div> \
+                </li>';
+        }
     }
 }
 
 function displayPageHome(){
     hideEverything();
     displayHeaderFooter();
+    
     ajaxRequest("GET", "php/request.php/last_listened", displayLastListened);
     ajaxRequest("GET", "php/request.php/favorites", displayLikedTracks);
     ajaxRequest("GET", "php/request.php/playlist", displayAddPlaylist);
@@ -226,8 +244,12 @@ function researchAlbum(allAlbums){
 /* Creation nouvelle playlist */
 document.getElementById("create-playlist-form").onsubmit = (event)=>{
     event.preventDefault();
-    ajaxRequest("POST", "php/request.php/playlist", ()=>{ajaxRequest("GET", "php/request.php/playlist", displayAddPlaylist);}, "name_playlist="+document.getElementById("playlist-input").value)
+    ajaxRequest("POST", "php/request.php/playlist", ()=>{
+        ajaxRequest("GET", "php/request.php/playlist", displayAddPlaylist);
+    }, "name_playlist="+document.getElementById("playlist-input").value);
+    document.getElementById("home-page-album-container").innerHTML = "";
 }
+
 document.getElementById("btn-create-playlist").addEventListener("click", () => {
     document.getElementById("create-playlist-form").style.display = "block";
     document.getElementById("create-playlist").style.display = "none";
