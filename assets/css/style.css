@@ -114,12 +114,32 @@ select option {
     background: linear-gradient(rgba(35, 45, 37, 0.855) 0%, rgb(0, 0, 0) 100%) !important;
     border: none !important; 
     padding: 5px;  
+    /* position: relative; */
 }
 .track-bar:hover {
     background: linear-gradient(rgba(35, 45, 37, 1) 25%, rgb(0, 0, 0) 100%) !important;
     box-shadow: 2px 1px 1px rgba(35, 45, 37, 1) !important;
-    
+    /* display: inline-block;    */
 }
+
+/* 
+.play-btn {
+    display: none;
+    font-size: 50px;
+    color: yellow;
+}
+.play-btn:hover {
+    display: block;
+} */
+
+.play-btn {
+    visibility: hidden;
+}
+
+.track-bar:hover .play-btn {
+    visibility: visible;
+}
+
 /* #track-selected {
     background-color: red;
 }    */
@@ -168,3 +188,46 @@ header {
     overflow-y: scroll;
     height: 100vh;
 }
+
+.ma-div {
+    /* width: 200px; */
+    /* height: 200px; */
+    /* background-color: #ccc; */
+    position: relative;
+}
+
+.ma-div:hover .play-btn {
+    display: inline-block;
+    /* visibility: visible; */
+}
+
+.play-btn {
+    display: none;
+    /* visibility: hidden; */
+    /* font-size: 50px; */
+    /* color: red;   */
+}
+
+/* button scroll option */
+.button-container {
+    position: relative;
+    display: inline-block;
+}
+.button-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+}
+.button-container.active .button-dropdown {
+    display: block;
+}
+.button-dropdown button {
+    display: block;
+    width: 5vh;
+    height: 4vh;
+    padding: 5px;
+    border: 1px solid white;
+}
+

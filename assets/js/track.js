@@ -89,22 +89,24 @@ function displayAlbumInfos(myAlbum){
                 
                 document.getElementById("track-album-page-container").innerHTML += '\
                     <li onmouseover="this.style.cursor = \'pointer\';" onclick="displayPageTrack('+myAlbum["artist-albums"][i]["album-tracks"][j]["id_tracks"]+');" value="'+myAlbum["artist-albums"][i]["album-tracks"][j]["id_tracks"]+'" class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white"> \
-                        <img class="img-small" src="'+myAlbum["artist-albums"][i]["album-infos"][0]["img_path"]+'" alt="album_img"> \
-                        <div class="text-center title p-1 text-white"> \
-                            <ul class="m-0  list-inline" style="list-style: none;"> \
-                                <li class="list-inline-item">'+myAlbum["artist-albums"][i]["album-tracks"][j]["name_tracks"]+'</li> \
-                                <i class="bi bi-dot"></i> \
-                                <li class="list-inline-item">'+myAlbum["artist-infos"][0]["name_artist"]+'</li> \
-                                <i class="bi bi-dot"></i> \
-                                <li class="list-inline-item">'+sec2min(myAlbum["artist-albums"][i]["album-tracks"][j]["duration"])+'</li> \
-                            </ul> \
+                        <div class="m-auto w-100 d-flex">\
+                            <img class="img-small" src="'+myAlbum["artist-albums"][i]["album-infos"][0]["img_path"]+'" alt="album_img"> \
+                            <div class="text-center title p-1 text-white"> \
+                                <ul class="m-0  list-inline" style="list-style: none;"> \
+                                    <li class="list-inline-item">'+myAlbum["artist-albums"][i]["album-tracks"][j]["name_tracks"]+'</li> \
+                                    <i class="bi bi-dot"></i> \
+                                    <li class="list-inline-item">'+myAlbum["artist-infos"][0]["name_artist"]+'</li> \
+                                    <i class="bi bi-dot"></i> \
+                                    <li class="list-inline-item">'+sec2min(myAlbum["artist-albums"][i]["album-tracks"][j]["duration"])+'</li> \
+                                </ul> \
+                            </div> \
+                            <button class="btn"> \
+                                <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
+                            </button> \
+                            <button class="btn"> \
+                                <i class="bi bi-three-dots-vertical three-dot"></i> \
+                            </button> \
                         </div> \
-                        <button class="btn"> \
-                            <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
-                        </button> \
-                        <button class="btn"> \
-                            <i class="bi bi-three-dots-vertical three-dot"></i> \
-                        </button> \
                     </li>';
             }
         }
@@ -134,4 +136,52 @@ function displayPageTrack(id_track){
     // console.log(idArtist);
     // ajaxRequest("GET", "php/request.php/album", displayAlbumInfos);
     ajaxRequest("GET", "php/request.php/track?id_tracks="+id_track, displayTrackInfos)
+}
+
+function handleAClick() {
+    console.log("Clic sur titre");
+}
+
+function handleLikedClick(event) {
+    event.stopPropagation();
+    console.log("Titre aimé !");
+}
+
+function handleOptionsClick(event) {
+    event.stopPropagation();
+    console.log("Options cliqué");
+}
+
+// Bouton play track
+// function handleDivHover() {
+//     var targetIcon = document.getElementsByClassName("play-btn");
+//     // targetIcon.style.display = "inline-block";
+// }
+
+// function handleDivLeave() {
+//     // var targetIcon = document.getElementById("target");
+//     var targetIcon = document.getElementsByClassName("play-btn");
+//     // targetIcon.style.display = "none";
+// }
+
+var trackBar = document.querySelector('.track-bar');
+var playBtn = document.querySelector('.play-btn');
+
+trackBar.addEventListener('mouseover', function() {
+    playBtn.style.visibility = 'visible';
+});
+
+trackBar.addEventListener('mouseout', function() {
+    playBtn.style.visibility = 'hidden';
+});
+
+// Bouton scroll option
+function toggleDropdown() {
+    var buttonContainer = document.getElementById("buttonContainer");
+    buttonContainer.classList.toggle("active");
+}
+
+function closeDropdown() {
+    var buttonContainer = document.getElementById("buttonContainer");
+    buttonContainer.classList.remove("active");
 }

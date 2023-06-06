@@ -13,7 +13,7 @@
     <script src="assets/js/track.js" defer></script>
     <title>MusicApp | Titre</title>
 </head>
-<body>
+<body style="height: 100vh;">
     <section id="album_page" style="height: 980px;">
         <!-- Header -->
         <header class="mb-5">
@@ -49,7 +49,8 @@
             </ul>
           </nav>
         </header>
-    
+        <br><br><br><br><br>
+
         <!-- Track info -->
        <div style="border-radius: 25px;" class="container bg-gradient text-white d-flex align-items-center list-group-item">
             <img id="album-img" src="assets/img/album.jpeg" alt="album_img" class="img-large">
@@ -73,27 +74,57 @@
         <!-- Titre album -->
         <h1 id="title">Titres du même album</h1>
         <ul id="track-album-page-container" class="list-group align-items-center flex-column">
-            <li class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white" style="border: none;">
-                <div class="m-auto w-100 d-flex">
-                  <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
-                  <div class="text-center title p-1 text-white">
-                      <ul class="m-0  list-inline" style="list-style: none;">
-                          <li class="list-inline-item">titre</li>
-                          <i class="bi bi-dot"></i>
-                          <li class="list-inline-item">artiste</li>
-                          <i class="bi bi-dot"></i>
-                          <li class="list-inline-item">duree</li>
-                      </ul>
-                  </div>
+          <li class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white" style="border: none;">
+            <div id="A" onclick="handleAClick()" class="m-auto w-100 d-flex">
+              <img class="img-small" src="assets/img/album.jpeg" alt="album_img">
+              <div class="btn play-btn">
+                <i id="target" class="bi bi-play-fill heart"></i>
+              </div>
+              <div class="text-center title p-1 text-white">
+                <ul class="m-0  list-inline" style="list-style: none;">
+                  <li class="list-inline-item">titre</li>
+                  <i class="bi bi-dot"></i>
+                  <li class="list-inline-item">artiste</li>
+                  <i class="bi bi-dot"></i>
+                  <li class="list-inline-item">duree</li>
+                </ul>
+              </div>
+              <button id="A_liked" onclick="handleLikedClick(event)" class="btn">
+                <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
+              </button>
+
+              <div class="button-container" id="buttonContainer">
+                <button class="btn" onclick="toggleDropdown()" >
+                  <i class="bi bi-three-dots-vertical three-dot"></i>
+                </button>
+                <div class="button-dropdown">
                   <button class="btn">
-                      <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>
+                    <i class="bi bi-plus heart icon-btn"></i>
                   </button>
                   <button class="btn">
-                      <i class="bi bi-three-dots-vertical three-dot"></i>
+                    <i class="bi bi-info-circle heart icon-btn"></i>
                   </button>
                 </div>
-            </li>
+              </div>
+
+              <!-- <button id="Ab" onclick="handleOptionsClick(event)" class="btn">
+                <i class="bi bi-three-dots-vertical three-dot"></i>
+              </button> -->
+            </div>
+          </li>
         </ul>
+
+        <!-- <script>
+          function handleDivHover() {
+            var targetIcon = document.getElementById("target");
+            targetIcon.style.display = "inline-block";
+          }
+      
+          function handleDivLeave() {
+            var targetIcon = document.getElementById("target");
+            targetIcon.style.display = "none";
+          }
+        </script> -->
     
         <!-- Footer -->
         <footer>
