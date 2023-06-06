@@ -123,7 +123,7 @@ function displayAlbumInfos(myAlbum){
     }
 }
 
-function displayPageTrack(id_track, hide = true){
+function displayPageTrack(id_track){
     hideEverything();
     displayHeaderFooter();
     document.getElementById("track_page").style.display = "block";

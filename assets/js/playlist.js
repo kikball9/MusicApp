@@ -4,10 +4,6 @@ function sec2min(sec){
     return Math.trunc(sec/60)+":"+sec%60;
 }
 
-function displayAlbum(myAlbum){
-    // document.getElementById("track-container").innerHTML = "";
-    console.log(myAlbum);
-}
 
 // function getAlbumPicPath(idAlbum){
 //     // var cover = ajaxRequest("GET", "php/request.php/album?id_album="+idAlbum, () => {});
@@ -23,7 +19,7 @@ function displayTrack(myTrack){
     // console.log(myTrack["name_tracks"]);
     
     document.getElementById("track-container").innerHTML += '\
-    <li value="'+myTrack["id_tracks"]+'" class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white"> \
+    <li onmouseover="this.style.cursor=\'pointer\'" onclick="displayPageTrack('+myTrack["id_tracks"]+')" value="'+myTrack["id_tracks"]+'" class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white"> \
         <div class="m-auto w-100 d-flex">\
             <img id="album-img'+myTrack["id_tracks"]+'" class="img-small" src="" alt="album_img"> \
             <div class="text-center title p-1 text-white"> \
@@ -79,6 +75,9 @@ function displayUser(myUser){
 }
 
 function displayPagePlaylist(id_playlist){
+    hideEverything();
+    displayHeaderFooter();
+    document.getElementById("playlist_page").style.display = "block";
     document.getElementById("track-container").innerHTML = "";
     ajaxRequest("GET", "php/request.php/user", displayUser);
     ajaxRequest("GET", "php/request.php/playlist?id_playlist="+id_playlist, displayPlaylist);

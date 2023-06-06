@@ -69,7 +69,7 @@ function displayLikedTracks(likedTracks){
 
 }
 
-function displayPlaylist(myPlaylists){
+function displayAddPlaylist(myPlaylists){
     document.getElementById("add_playlist_page").style.display = "block";
     if (myPlaylists.length == 0){
         document.getElementById("home-page-playlist-container").innerHTML = "<h3 class='text-white'>Pas de playlist créée</h3>";
@@ -79,7 +79,7 @@ function displayPlaylist(myPlaylists){
     }
     for (var i=0;i<myPlaylists.length;i++){
         document.getElementById("home-page-playlist-container").innerHTML += '<li value="'+myPlaylists[i]["playlist-info"]["id_playlist"]+'" class="album" class="list-group-item text-white p-0 d-flex m-2"> \
-        <div> \
+        <div onmouseover="this.style.cursor=\'pointer\'" onclick="displayPagePlaylist('+myPlaylists[i]["playlist-info"]["id_playlist"]+');"> \
             <img src="'+myPlaylists[i]["playlist-info"]["img_path"]+'" alt="album_img" class="img-large"> \
             <div class="album-title" class="text-center">'+myPlaylists[i]["playlist-info"]["name_playlist"]+'</div> \
         </div> \
@@ -92,7 +92,7 @@ function displayPageHome(){
     displayHeaderFooter();
     ajaxRequest("GET", "php/request.php/last_listened", displayLastListened);
     ajaxRequest("GET", "php/request.php/favorites", displayLikedTracks);
-    ajaxRequest("GET", "php/request.php/playlist", displayPlaylist);
+    ajaxRequest("GET", "php/request.php/playlist", displayAddPlaylist);
 }
 
 function hideHome(){
@@ -104,14 +104,11 @@ function hideHome(){
 function hideHeaderFooter(){
     document.getElementsByTagName("header")[0].style.display = "none";
     document.getElementsByTagName("footer")[0].style.display = "none";
-    console.log("ji suis pas");
 }
 
 function displayHeaderFooter(){
     document.getElementsByTagName("header")[0].style.display = "block";
     document.getElementsByTagName("footer")[0].style.display = "block";
-    console.log("ji suis");
-    document.getElementById("home_page").style.top = (window.innerHeight*0.05+document.getElementsByTagName("header")[0].clientHeight+10)+"px";
 }
 
 function hideEverything(){
@@ -123,6 +120,7 @@ function hideEverything(){
     document.getElementById("artist_page").style.display = "none";
     document.getElementById("track_page").style.display = "none";
     document.getElementById("research-div").style.display = "none";
+    document.getElementById("playlist_page").style.display = "none"
     hideHeaderFooter();
 }
 
@@ -225,8 +223,7 @@ function researchAlbum(allAlbums){
 /* Creation nouvelle playlist */
 document.getElementById("create-playlist-form").onsubmit = (event)=>{
     event.preventDefault();
-    ajaxRequest("POST", "php/request.php/playlist", ()=>{return;}, "name_playlist="+document.getElementById("playlist-input").value)
-    ajaxRequest("GET", "php/request.php/playlist", displayPlaylist);
+    ajaxRequest("POST", "php/request.php/playlist", ()=>{ajaxRequest("GET", "php/request.php/playlist", displayAddPlaylist);}, "name_playlist="+document.getElementById("playlist-input").value)
 }
 document.getElementById("btn-create-playlist").addEventListener("click", () => {
     document.getElementById("create-playlist-form").style.display = "block";
@@ -254,6 +251,13 @@ document.getElementById("favs-btn").onclick = ()=>{
 
 document.getElementById("home-btn").onclick = ()=>{
     displayPageHome();
+}
+
+document.getElementById("playlist-btn").onclick = ()=>{
+    hideEverything();
+    displayHeaderFooter();
+    ajaxRequest("GET", "php/request.php/playlist", displayAddPlaylist);
+
 }
 
 /*Barre de recherche du header*/

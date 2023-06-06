@@ -20,6 +20,7 @@
     <script src="assets/js/album.js" defer></script>
     <script src="assets/js/artist.js" defer></script>
     <script src="assets/js/track.js" defer></script>
+    <script src="assets/js/playlist.js" defer></script>
     <script src="assets/js/home.js" defer></script>
     <script src="assets/js/authentificationOLD.js" defer></script>
     <title>MusicApp</title>
@@ -102,7 +103,7 @@
             <a id="favs-btn" class="nav-link" href="#" >Favoris</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Playlist</a>
+            <a id="playlist-btn" class="nav-link" href="#">Playlist</a>
           </li>
         </ul>
       </div>
@@ -424,7 +425,32 @@
     </ul>
     </div>
     <div id="research-div">
+
+    </div>
+    <div id="playlist_page">
+        <!-- Playlist info -->
+        <div style="border-radius: 25px;" class="container bg-gradient text-white d-flex align-items-center list-group-item mb-5">
+          <img id="playlist-img" src="assets/img/album.jpeg" alt="album_img" class="img-large">
+          <div class="w-100" style="margin-left: 1.5rem;">
+              <p id="playlist-name" class="title-detail">Playlist_name</p>
+              <div class="d-flex  align-items-center list-group-item">
+                  <img id="user-img" src="assets/ressources/artist_img/artist.jpeg" alt="artist_img" class="img-small" style="clip-path: ellipse(50% 50%); height: 200px; width: 200px;">
+                  <small class="w-100 m-lg-4">
+                      <ul class="m-0  list-inline" style="list-style: none;">
+                          <li id="user-email"class="list-inline-item">User_name</li>
+                          <i class="bi bi-dot"></i>
+                          <li id="playlist-date-published" class="list-inline-item">Date_parution</li>
+                      </ul>
+                  </small>
+              </div>
+          </div>
+     </div>
       
+      <!-- Titres playlist -->
+      <h1>Titres</h1>
+      <ul id="track-container" class="list-group align-items-center flex-column">
+          <!-- import from playlist.js -->
+      </ul>
     </div>
   <br><br><br><br><br><br><br>
   </section>
