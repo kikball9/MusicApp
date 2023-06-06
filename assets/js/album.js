@@ -12,9 +12,6 @@ function displayAlbumWithAllInfos(myArtist){
             myAlbum = myArtist["artist-albums"][i];
         }
     }
-    
-    }
-
 }
 
 function displayAlbum(myAlbum){
@@ -33,7 +30,7 @@ function displayAlbum(myAlbum){
             <ul class="m-0  list-inline" style="list-style: none;"> \
                 <li class="list-inline-item">'+myAlbum["album-tracks"][i]["name_tracks"]+'</li> \
                 <i class="bi bi-dot"></i> \
-                <li class="list-inline-item">'+artistName+'</li> \
+                <li class="list-inline-item">'+myAlbum["album-infos"][0]["name_artist"]+'</li> \
                 <i class="bi bi-dot"></i> \
                 <li class="list-inline-item">'+sec2min(myAlbum["album-tracks"][0]["duration"])+'</li> \
             </ul> \
@@ -45,8 +42,9 @@ function displayAlbum(myAlbum){
             <i class="bi bi-three-dots-vertical three-dot"></i> \
         </button> \
       </li>';
-      document.getElementById("album-artist-name").innerHTML = artistName;
-      document.getElementById("album-page-artist-image").setAttribute("src", myArtist["artist-infos"][0]["img_path"])
+    }
+      document.getElementById("album-artist-name").innerHTML = myAlbum["album-infos"][0]["name_artist"];
+      document.getElementById("album-page-artist-image").setAttribute("src", myAlbum["album-infos"][0]["artist_img"])
 }
 
 function displayPageAlbum(id_album){

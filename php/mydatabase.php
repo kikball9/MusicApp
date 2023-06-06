@@ -545,7 +545,7 @@
 
   public function requestAlbum($id_album, $email){
     try{
-      $request = "SELECT album.id_album, name_album, date_published, album.img_path, album.id_artist, name_artist, style FROM album, is_style, artist WHERE album.id_album=:id_album AND album.id_album = is_style.id_album AND album.id_artist=artist.id_artist";//"SELECT album.id_album, name_album, date_published, album.img_path, name_artist, style FROM album, artist, is_style WHERE album.id_album = is_style.id_album AND album.id_artist = artist.id_artist AND  album.id_album = :id_album";
+      $request = "SELECT album.id_album, name_album, date_published, album.img_path, album.id_artist, artist.img_path AS artist_img, name_artist, style FROM album, is_style, artist WHERE album.id_album=:id_album AND album.id_album = is_style.id_album AND album.id_artist=artist.id_artist";//"SELECT album.id_album, name_album, date_published, album.img_path, name_artist, style FROM album, artist, is_style WHERE album.id_album = is_style.id_album AND album.id_artist = artist.id_artist AND  album.id_album = :id_album";
       $statement = $this->myPDO->prepare($request);
       $statement->bindParam (':id_album', $id_album, PDO::PARAM_INT, 50);
       $statement->execute();
