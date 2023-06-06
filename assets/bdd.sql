@@ -98,7 +98,7 @@ CREATE TABLE playlist(
         name_playlist Varchar (50) NOT NULL ,
         date_creation Date NOT NULL ,
         img_path      Varchar (250) NOT NULL ,
-        email         Varchar (50) NOT NULL
+        email         Varchar (250) NOT NULL
 	,CONSTRAINT playlist_PK PRIMARY KEY (id_playlist)
 
 	,CONSTRAINT playlist_users_FK FOREIGN KEY (email) REFERENCES users(email)
