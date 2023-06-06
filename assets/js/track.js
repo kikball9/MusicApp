@@ -6,20 +6,19 @@ function displayTrackInfos(track){
     document.getElementById("artist-page-album-container").innerHTML = "";
     for (var i =0;i<track.length;i++){
         if (track[i]["album-infos"][0]["id_artist"] == idArtist){
-            document.getElementById("artist-page-album-container").innerHTML += '<li value="'+track[i]["album-infos"][0]["id_album"]+'" class="list-group-item text-white p-0 d-flex m-2 album"> \
-            <div> \
-                <img src="'+track[i]["album-infos"][0]["img_path"]+'" alt="album_img" class="img-large"> \
-                <div class="album-title text-center">'+track[i]["album-infos"][0]["name_album"]+'</div> \
-            </div> \
-          </li>';
+            document.getElementById("artist-page-album-container").innerHTML += '\
+                <li value="'+track[i]["album-infos"][0]["id_album"]+'" class="list-group-item text-white p-0 d-flex m-2 album"> \
+                    <div> \
+                        <img src="'+track[i]["album-infos"][0]["img_path"]+'" alt="album_img" class="img-large"> \
+                        <div class="album-title text-center">'+track[i]["album-infos"][0]["name_album"]+'</div> \
+                    </div> \
+                </li>';
         }
     }
-}
-
-function displayTrackInfos(track){
     document.getElementById("track-name").innerHTML = track["name_tracks"];
     document.getElementById("track-duration").innerHTML = sec2min(track["duration"]);
 }
+
 
 function displayArtistInfos(artists){
     

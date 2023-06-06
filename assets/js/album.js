@@ -14,24 +14,32 @@ function displayAlbum(myAlbum){
     document.getElementById("album-page-track-container").innerHTML = "";
     for (var i=0;i<myAlbum["album-tracks"].length;i++){
         document.getElementById("album-page-track-container").innerHTML += '\
-        <li onclick="displayPageTrack('+myAlbum["album-tracks"][i]["id_tracks"]+')" onmouseover="this.style.cursor=\'pointer\'" value="'+myAlbum["album-tracks"][i]["id_tracks"]+'" class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white"> \
-        <img class="img-small" src="'+myAlbum["album-infos"][0]["img_path"]+'" alt="album_img"> \
-        <div class="text-center title p-1 text-white"> \
-            <ul class="m-0  list-inline" style="list-style: none;"> \
-                <li class="list-inline-item">'+myAlbum["album-tracks"][i]["name_tracks"]+'</li> \
-                <i class="bi bi-dot"></i> \
-                <li class="list-inline-item">'+myAlbum["album-infos"][0]["name_artist"]+'</li> \
-                <i class="bi bi-dot"></i> \
-                <li class="list-inline-item">'+sec2min(myAlbum["album-tracks"][0]["duration"])+'</li> \
-            </ul> \
-        </div> \
-        <button class="btn"> \
-            <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
-        </button> \
-        <button class="btn"> \
-            <i class="bi bi-three-dots-vertical three-dot"></i> \
-        </button> \
-      </li>';
+            <li onclick="displayPageTrack('+myAlbum["album-tracks"][i]["id_tracks"]+')" onmouseover="this.style.cursor=\'pointer\'" value="'+myAlbum["album-tracks"][i]["id_tracks"]+'" class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white" style="border: none;"> \
+                <div id="A" onclick="handleAClick()" class="m-auto w-100 d-flex"> \
+                <img class="img-small" src="'+myAlbum["album-infos"][0]["img_path"]+'" alt="album_img"> \
+                <div class="btn play-btn"> \
+                    <i id="target" class="bi bi-play-fill heart"></i> \
+                </div> \
+                <div class="text-center title p-1 text-white"> \
+                    <ul class="m-0  list-inline" style="list-style: none;"> \
+                        <li class="list-inline-item">'+myAlbum["album-tracks"][i]["name_tracks"]+'</li> \
+                        <i class="bi bi-dot"></i> \
+                        <li class="list-inline-item">'+myAlbum["album-infos"][0]["name_artist"]+'</li> \
+                        <i class="bi bi-dot"></i> \
+                        <li class="list-inline-item">'+sec2min(myAlbum["album-tracks"][0]["duration"])+'</li> \
+                    </ul> \
+                </div> \
+                <button id="A_liked" onclick="handleLikedClick(event)" class="btn"> \
+                    <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
+                </button> \
+                <button class="btn"> \
+                    <i class="bi bi-plus heart icon-btn"></i> \
+                </button> \
+                <button class="btn"> \
+                    <i class="bi bi-info-circle heart icon-btn"></i> \
+                </button> \
+                </div> \
+            </li>';
     }
     document.getElementById("album-artist-name").innerHTML = myAlbum["album-infos"][0]["name_artist"];
     document.getElementById("album-page-artist-image").setAttribute("src", myAlbum["album-infos"][0]["artist_img"])
