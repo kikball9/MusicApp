@@ -2,6 +2,8 @@ body{
     overflow-x: hidden;
     height: 100%;
     background: linear-gradient(rgba(8, 8, 8, 0.855) 0%, rgb(0, 0, 0) 100%);
+    background-repeat: no-repeat;
+    overflow-y: hidden;
 }
 
 .row.flex-row.flex-nowrap {
@@ -144,6 +146,8 @@ footer {
     bottom: 0;
     width: 100%;
     background-color: rgb(33, 37, 41);
+    margin-top: 5%;
+    z-index: 1000;
 }
 
 label {
@@ -153,8 +157,14 @@ label {
 
 header {
     margin-bottom: 5%;
+    position: fixed;
+    min-width: 100vw;
+    z-index: 1000;
+    height: 5vh;
 }
 
-footer {
-    margin-top: 5%;
+#home_page{
+    position: relative;
+    overflow-y: scroll;
+    height: 100vh;
 }
