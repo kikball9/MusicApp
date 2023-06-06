@@ -20,7 +20,8 @@ function displayAlbumWithAllInfos(myArtist){
     document.getElementById("album-page-album-title").innerHTML = myAlbum["album-infos"][0]["name_album"];
     document.getElementById("album-page-track-container").innerHTML = "";
     for (var i=0;i<myAlbum["album-tracks"].length;i++){
-        document.getElementById("album-page-track-container").innerHTML += '<li value="'+myAlbum["album-tracks"][i]["id_tracks"]+'" class="track-bar" class="list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white"> \
+        document.getElementById("album-page-track-container").innerHTML += '\
+        <li value="'+myAlbum["album-tracks"][i]["id_tracks"]+'" class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white"> \
         <img class="img-small" src="'+myAlbum["album-infos"][0]["img_path"]+'" alt="album_img"> \
         <div class="text-center title p-1 text-white"> \
             <ul class="m-0  list-inline" style="list-style: none;"> \

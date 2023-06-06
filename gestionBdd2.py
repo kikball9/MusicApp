@@ -69,24 +69,6 @@ class myDatabase:
         print("id_album: ", id_album)
         self.dbQuery(f"INSERT INTO is_style(style, id_album) VALUES('{style}', '{id_album}')")
 
-    # def addAlbum(self, name, date_published, img_path, artist, style):
-    #     myQuery = self.dbQuery(f"SELECT id_artist FROM artist WHERE name_artist='Maitre Gims'")
-    #     result = myQuery.fetchall()
-    #     if result == []:
-    #         print("Error, no artist with this name")
-    #         return
-    #     id_artist = result[0][0]
-    #     self.dbQuery(f"INSERT INTO album(name_album, date_published, img_path, id_artist) VALUES('Album name', '6268-12-06', 'path', '1')")
-    #     myQuery = self.dbQuery(f"SELECT id_album FROM album WHERE name_album='Album name'")
-    #     print("1")
-    #     result = myQuery.fetchall()
-    #     print("2")
-    #     if result == []:
-    #         print("Error, no album with this name")
-    #         return
-    #     id_album = result[0][0]
-    #     print("id_album: ", id_album)
-    #     self.dbQuery(f"INSERT INTO is_style(style, id_album) VALUES('Rap', '3')")
 
     def addAlbumStyle(self, style):
         self.dbQuery(f"INSERT INTO album_style(style) VALUES('{style}')")
