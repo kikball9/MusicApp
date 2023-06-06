@@ -29,27 +29,27 @@ document.getElementById("user-edit-form").onsubmit = (event) => {
     // Cookies.set("login", mail_user);
     // console.log("info: ",mail_user, mdp_user);
     
-    var xhr = new XMLHttpRequest();
+    // var xhr = new XMLHttpRequest();
     
-    xhr.open("POST", "php/request.php/user"); 
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    // xhr.setRequestHeader("Authorization", "Basic "+btoa(mail_user+":"+mdp_user));
+    // xhr.open("PUT", "php/request.php/user"); 
+    // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    // // xhr.setRequestHeader("Authorization", "Basic "+btoa(mail_user+":"+mdp_user));
 
-    xhr.onload = () => {
-        switch (xhr.status){
-            case 200:
-            case 201:
-                //Cacher l'auth et afficher le reste
-                console.log("success !");
-                break;
-            default:
-                httpErrors(xhr.status);
-        }
-    };
-    // xhr.onloadend = () => {
-    //     //Récupérer les données du site
-    //     // Cookies.set("email", mail_user);
-    //     // Cookies.set("token", xhr.responseText);
+    // xhr.onload = () => {
+    //     switch (xhr.status){
+    //         case 200:
+    //         case 201:
+    //             //Cacher l'auth et afficher le reste
+    //             console.log("success !");
+    //             break;
+    //         default:
+    //             httpErrors(xhr.status);
+    //     }
     // };
-    xhr.send("first_name="+prenom_user+"&name_user="+nom_user+"&date_birth="+age_user);
+    // // xhr.onloadend = () => {
+    // //     //Récupérer les données du site
+    // //     // Cookies.set("email", mail_user);
+    // //     // Cookies.set("token", xhr.responseText);
+    // // };
+    // xhr.send("first_name="+prenom_user+"&name_user="+nom_user+"&date_birth="+age_user);
 }
