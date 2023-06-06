@@ -102,7 +102,7 @@ function displayFavs(){
 /* Creation nouvelle playlist */
 document.getElementById("create-playlist-form").onsubmit = (event)=>{
     event.preventDefault();
-    ajaxRequest("POST", "php/request.php/playlist", ()=>{return;}, "name_playlist="+document.getElementById("pwd-input").value)
+    ajaxRequest("POST", "php/request.php/playlist", ()=>{return;}, "name_playlist="+document.getElementById("playlist-input").value)
     ajaxRequest("GET", "php/request.php/playlist", displayPlaylist);
 }
 document.getElementById("btn-create-playlist").addEventListener("click", () => {
