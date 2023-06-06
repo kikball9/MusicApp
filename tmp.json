@@ -1,112 +1,64 @@
 {
-    "artist-infos": [
+    "album-infos": [
         {
+            "id_album": "2",
+            "name_album": "Nevermind",
+            "date_published": "1991-09-24 00:00:00",
+            "img_path": "assets/ressources/album_img/nevermind.jpeg",
             "id_artist": "2",
+            "artist_img": "assets/ressources/artist_img/nirvana.jpeg",
             "name_artist": "Nirvana",
-            "img_path": "assets/ressources/artist_img/nirvana.jpeg",
-            "type_artist": "Groupe"
+            "style": "Rock"
         }
     ],
-    "artist-albums": [
+    "album-tracks": [
         {
-            "album-infos": [
-                {
-                    "id_album": "2",
-                    "name_album": "Nevermind",
-                    "date_published": "1991-09-24 00:00:00",
-                    "img_path": "assets/ressources/album_img/nevermind.jpeg",
-                    "id_artist": "2",
-                    "style": "Rock"
-                }
-            ],
-            "album-tracks": [
-                {
-                    "id_tracks": "4",
-                    "name_tracks": "All Electric",
-                    "duration": "160",
-                    "track_path": "assets/ressources/musique/trm.mp3",
-                    "id_album": "2",
-                    "id_artist": "2"
-                },
-                {
-                    "id_tracks": "5",
-                    "name_tracks": "Critical",
-                    "duration": "160",
-                    "track_path": "assets/ressources/musique/trm.mp3",
-                    "id_album": "2",
-                    "id_artist": "2"
-                },
-                {
-                    "id_tracks": "6",
-                    "name_tracks": "Total Access",
-                    "duration": "160",
-                    "track_path": "assets/ressources/musique/trm.mp3",
-                    "id_album": "2",
-                    "id_artist": "2"
-                },
-                {
-                    "id_tracks": "7",
-                    "name_tracks": "Twist My Hips",
-                    "duration": "160",
-                    "track_path": "assets/ressources/musique/trm.mp3",
-                    "id_album": "2",
-                    "id_artist": "2"
-                },
-                {
-                    "id_tracks": "8",
-                    "name_tracks": "Not Too Young",
-                    "duration": "160",
-                    "track_path": "assets/ressources/musique/trm.mp3",
-                    "id_album": "2",
-                    "id_artist": "2"
-                },
-                {
-                    "id_tracks": "9",
-                    "name_tracks": "Twist My Hips",
-                    "duration": "160",
-                    "track_path": "assets/ressources/musique/trm.mp3",
-                    "id_album": "2",
-                    "id_artist": "2"
-                }
-            ]
+            "id_tracks": "4",
+            "name_tracks": "All Electric",
+            "duration": "160",
+            "track_path": "assets/ressources/musique/trm.mp3",
+            "id_album": "2",
+            "id_artist": "2"
         },
         {
-            "album-infos": [
-                {
-                    "id_album": "3",
-                    "name_album": "Bleach",
-                    "date_published": "1989-06-15 00:00:00",
-                    "img_path": "assets/ressources/album_img/bleach.jpeg",
-                    "id_artist": "2",
-                    "style": "Rock"
-                }
-            ],
-            "album-tracks": [
-                {
-                    "id_tracks": "10",
-                    "name_tracks": "Blew",
-                    "duration": "160",
-                    "track_path": "assets/ressources/musique/trm.mp3",
-                    "id_album": "3",
-                    "id_artist": "2"
-                },
-                {
-                    "id_tracks": "11",
-                    "name_tracks": "School",
-                    "duration": "160",
-                    "track_path": "assets/ressources/musique/trm.mp3",
-                    "id_album": "3",
-                    "id_artist": "2"
-                },
-                {
-                    "id_tracks": "12",
-                    "name_tracks": "Love Buzz",
-                    "duration": "160",
-                    "track_path": "assets/ressources/musique/trm.mp3",
-                    "id_album": "3",
-                    "id_artist": "2"
-                }
-            ]
+            "id_tracks": "5",
+            "name_tracks": "Critical",
+            "duration": "160",
+            "track_path": "assets/ressources/musique/trm.mp3",
+            "id_album": "2",
+            "id_artist": "2"
+        },
+        {
+            "id_tracks": "6",
+            "name_tracks": "Total Access",
+            "duration": "160",
+            "track_path": "assets/ressources/musique/trm.mp3",
+            "id_album": "2",
+            "id_artist": "2"
+        },
+        {
+            "id_tracks": "7",
+            "name_tracks": "Twist My Hips",
+            "duration": "160",
+            "track_path": "assets/ressources/musique/trm.mp3",
+            "id_album": "2",
+            "id_artist": "2"
+        },
+        {
+            "id_tracks": "8",
+            "name_tracks": "Not Too Young",
+            "duration": "160",
+            "track_path": "assets/ressources/musique/trm.mp3",
+            "id_album": "2",
+            "id_artist": "2"
+        },
+        {
+            "id_tracks": "9",
+            "name_tracks": "Twist My Hips",
+            "duration": "160",
+            "track_path": "assets/ressources/musique/trm.mp3",
+            "id_album": "2",
+            "id_artist": "2"
         }
     ]
 }
