@@ -149,6 +149,10 @@ select option {
     margin: 3rem 0 2rem 10%;
 }
 
+.artist-title{
+    color: white;
+    margin: 3rem 0 2rem 10%;
+}
 
 .icon-btn:hover {
     color: green;
@@ -161,12 +165,10 @@ select option {
 }
 
 footer {
-    margin-top: 10rem;
     position: fixed;
     bottom: 0;
     width: 100%;
     background-color: rgb(33, 37, 41);
-    margin-top: 5%;
     z-index: 1000;
 }
 
@@ -176,17 +178,16 @@ label {
 }
 
 header {
-    margin-bottom: 5%;
     position: fixed;
     min-width: 100vw;
     z-index: 1000;
-    height: 5vh;
 }
 
 #home_page{
     position: relative;
     overflow-y: scroll;
     height: 100vh;
+<<<<<<< HEAD
 }
 
 .ma-div {
@@ -231,3 +232,13 @@ header {
     border: 1px solid white;
 }
 
+=======
+    padding-top: 75px;
+    padding-bottom: 78px;
+}
+
+#search-form>label{
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
+>>>>>>> 368ab36d5b7fc750733d75659f800fa59f974459

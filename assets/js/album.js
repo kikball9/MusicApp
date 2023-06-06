@@ -4,16 +4,6 @@ function sec2min(sec){
     return Math.trunc(sec/60)+":"+sec%60;
 }
 
-function displayAlbumWithAllInfos(myArtist){
-    artistName = myArtist["artist-infos"][0]["name_artist"];
-    var myAlbum;
-    for (var i=0;i<myArtist["artist-albums"].length;i++){
-        if (myArtist["artist-albums"][i]["album-infos"][0]["id_album"] == idAlbum){
-            myAlbum = myArtist["artist-albums"][i];
-        }
-    }
-}
-
 function displayAlbum(myAlbum){
     document.getElementById("album-album-style").innerHTML = myAlbum["album-infos"][0]["style"];
     var date= myAlbum["album-infos"][0]["date_published"].split(' ')[0].split("-");
