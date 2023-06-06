@@ -141,12 +141,10 @@ select option {
 }
 
 footer {
-    margin-top: 10rem;
     position: fixed;
     bottom: 0;
     width: 100%;
     background-color: rgb(33, 37, 41);
-    margin-top: 5%;
     z-index: 1000;
 }
 
@@ -156,15 +154,20 @@ label {
 }
 
 header {
-    margin-bottom: 5%;
     position: fixed;
     min-width: 100vw;
     z-index: 1000;
-    height: 5vh;
 }
 
 #home_page{
     position: relative;
     overflow-y: scroll;
     height: 100vh;
+    padding-top: 60px;
+    padding-bottom: 78px;
+}
+
+#search-form>label{
+    margin-left: 1vw;
+    margin-right: 1vw;
 }

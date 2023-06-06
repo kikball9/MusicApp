@@ -61,7 +61,7 @@ function displayAlbum(myAlbum){
 
 }
 
-function displayPageAlbum(id_album){
+function displayPageAlbum(id_album, hide = true){
     hideEverything();
     displayHeaderFooter();
     document.getElementById("album_page").style.display = "block";

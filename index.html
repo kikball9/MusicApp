@@ -106,14 +106,20 @@
           </li>
         </ul>
       </div>
-      <form class="d-flex">
-        <input class="form-control mr-sm-2 m-2" type="search" placeholder="Search" aria-label="Search">
-        <select id="filter" class="form-control m-2" name="Filtre">
+      <form id="search-form" class="d-flex">
+        <input id="header-research-input" class="form-control mr-sm-2 m-2" type="search" placeholder="Recherche" aria-label="Search">
+        <!--<select id="filter" class="form-control m-2" name="Filtre">
           <option>Filtre</option>
           <option>Titre</option>
           <option>Artiste</option>
           <option>Album</option>
-        </select>
+        </select>-->
+        <label class="text-white" for="titre">Titres</label>
+        <input id="titre-checkbox" name="titre" type="checkbox">
+        <label class="text-white" for="artiste">Artiste</label>
+        <input id="artist-checkbox" name="artiste" type="checkbox">
+        <label class="text-white" for="album">Album</label>
+        <input id="album-checkbox" name="album" type="checkbox">
         <button class="btn btn-outline-success my-2 my-sm-0 m-2" type="submit">Search</button>
       </form>
       <ul class="navbar-nav mr-auto" style="margin-left: 2rem;">
@@ -370,6 +376,7 @@
       </ul>
     </div>  
     </div>
+    <!--Page des morceaux-->
     <div id="track_page">
       <!-- Track info -->
       <div style="border-radius: 25px;" class="container bg-gradient text-white d-flex align-items-center list-group-item">
@@ -415,6 +422,9 @@
             </div>
         </li>
     </ul>
+    </div>
+    <div id="research-div">
+      
     </div>
   <br><br><br><br><br><br><br>
   </section>

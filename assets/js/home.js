@@ -122,6 +122,7 @@ function hideEverything(){
     document.getElementById("album_page").style.display = "none";
     document.getElementById("artist_page").style.display = "none";
     document.getElementById("track_page").style.display = "none";
+    document.getElementById("research-div").style.display = "none";
     hideHeaderFooter();
 }
 
@@ -129,6 +130,48 @@ function displayFavs(){
     hideEverything();
     displayHeaderFooter();
     ajaxRequest("GET", "php/request.php/favorites", displayLikedTracks);
+}
+
+function researchTrack(allTracks){
+    for(var i=0;i<allTracks.length;i++){
+        if (myResearch == allTracks[i]["name_tracks"]){
+            document.getElementById("research-div").innerHTML += '\
+            <li onclick="displayPageTrack('+allTracks[i]["id_tracks"]+')" onmouseover="this.style.cursor=\'pointer\'" value="'+myAlbum["album-tracks"][i]["id_tracks"]+'" class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white"> \
+            <img class="img-small" src="'+myAlbum["album-infos"][0]["img_path"]+'" alt="album_img"> \
+            <div class="text-center title p-1 text-white"> \
+                <ul class="m-0  list-inline" style="list-style: none;"> \
+                    <li class="list-inline-item">'+myAlbum["album-tracks"][i]["name_tracks"]+'</li> \
+                    <i class="bi bi-dot"></i> \
+                    <li class="list-inline-item">'+myAlbum["album-infos"][0]["name_artist"]+'</li> \
+                    <i class="bi bi-dot"></i> \
+                    <li class="list-inline-item">'+sec2min(myAlbum["album-tracks"][0]["duration"])+'</li> \
+                </ul> \
+            </div> \
+            <button class="btn"> \
+                <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
+            </button> \
+            <button class="btn"> \
+                <i class="bi bi-three-dots-vertical three-dot"></i> \
+            </button> \
+          </li>';
+        }
+    }
+}
+
+function researchArtist(allArtists){
+    for(var i=0;i<allArtists.length;i++){
+        if (myResearch == allArtists[i]["artist-infos"][0]["name_artist"]){
+            displayPageArtist(allArtists[i]["artist-infos"][0]["id_artist"], false);
+        }
+    }
+}
+
+function researchAlbum(allAlbums){
+    for(var i=0;i<allArtists.length;i++){
+        if (myResearch == allArtists[i]["album-infos"][0]["name_album"]){
+            displayPageTrack(allArtists[i]["artist-infos"][0]["id_album"], false);
+        }
+    }
 }
 
 /* Creation nouvelle playlist */
@@ -163,4 +206,28 @@ document.getElementById("favs-btn").onclick = ()=>{
 
 document.getElementById("home-btn").onclick = ()=>{
     displayPageHome();
+}
+
+/*Barre de recherche du header*/
+document.getElementById("search-form").onsubmit = (event)=>{
+    event.preventDefault();
+    hideEverything();
+    displayHeaderFooter();
+    document.getElementById("research-div").innerHTML = "";
+    document.getElementById("research-div").style.display = "block";
+    titreCheck = document.getElementById("titre-checkbox").checked;
+    artistCheck = document.getElementById("artist-checkbox").checked;
+    albumCheck = document.getElementById("album-checkbox").checked;
+    myResearch = document.getElementById("header-research-input").value;
+    if(titreCheck){
+        ajaxRequest("GET", "php/request.php/track", researchTrack);
+    }
+    if (artistCheck){
+        ajaxRequest("GET", "php/request.php/artist", researchArtist);
+    }
+    if (albumCheck){
+        ajaxRequest("GET", "php/request.php/album", researchAlbum);
+    }
+
+
 }
