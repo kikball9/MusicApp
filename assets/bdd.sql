@@ -14,7 +14,7 @@ CREATE TABLE users(
         name_user  Varchar (50) NOT NULL ,
         date_birth Datetime NOT NULL ,
         img_path   Varchar (250) NOT NULL ,
-        token      Varchar (250)
+        token      Varchar (50)
 	,CONSTRAINT users_PK PRIMARY KEY (email)
 )ENGINE=InnoDB;
 
@@ -75,13 +75,12 @@ CREATE TABLE album_style(
 #------------------------------------------------------------
 
 CREATE TABLE tracks(
-        id_tracks     Int  Auto_increment  NOT NULL ,
-        name_tracks   Varchar (250) NOT NULL ,
-        date_listened Date ,
-        duration      Int NOT NULL ,
-        track_path    Varchar (250) NOT NULL ,
-        id_album      Int ,
-        id_artist     Int NOT NULL
+        id_tracks   Int  Auto_increment  NOT NULL ,
+        name_tracks Varchar (50) NOT NULL ,
+        duration    Int NOT NULL ,
+        track_path  Varchar (250) NOT NULL ,
+        id_album    Int ,
+        id_artist   Int NOT NULL
 	,CONSTRAINT tracks_PK PRIMARY KEY (id_tracks)
 
 	,CONSTRAINT tracks_album_FK FOREIGN KEY (id_album) REFERENCES album(id_album)
@@ -135,14 +134,17 @@ CREATE TABLE playlist_tracks(
 
 
 #------------------------------------------------------------
-# Table: favorites_tracks
+# Table: users_tracks
 #------------------------------------------------------------
 
-CREATE TABLE favorites_tracks(
-        email     Varchar (250) NOT NULL ,
-        id_tracks Int NOT NULL
-	,CONSTRAINT favorites_tracks_PK PRIMARY KEY (email,id_tracks)
+CREATE TABLE users_tracks(
+        email         Varchar (250) NOT NULL ,
+        id_tracks     Int NOT NULL ,
+        is_favorite   Bool ,
+        date_listened Date
+	,CONSTRAINT users_tracks_PK PRIMARY KEY (email,id_tracks)
 
-	,CONSTRAINT favorites_tracks_users_FK FOREIGN KEY (email) REFERENCES users(email)
-	,CONSTRAINT favorites_tracks_tracks0_FK FOREIGN KEY (id_tracks) REFERENCES tracks(id_tracks)
+	,CONSTRAINT users_tracks_users_FK FOREIGN KEY (email) REFERENCES users(email)
+	,CONSTRAINT users_tracks_tracks0_FK FOREIGN KEY (id_tracks) REFERENCES tracks(id_tracks)
 )ENGINE=InnoDB;
+
