@@ -24,7 +24,7 @@ function displayAlbum(myAlbum){
     document.getElementById("album-page-track-container").innerHTML = "";
     for (var i=0;i<myAlbum["album-tracks"].length;i++){
         document.getElementById("album-page-track-container").innerHTML += '\
-        <li value="'+myAlbum["album-tracks"][i]["id_tracks"]+'" class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white"> \
+        <li onclick="displayPageTrack('+myAlbum["album-tracks"][i]["id_tracks"]+')" onmouseover="this.style.cursor=\'pointer\'" value="'+myAlbum["album-tracks"][i]["id_tracks"]+'" class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white"> \
         <img class="img-small" src="'+myAlbum["album-infos"][0]["img_path"]+'" alt="album_img"> \
         <div class="text-center title p-1 text-white"> \
             <ul class="m-0  list-inline" style="list-style: none;"> \
@@ -43,10 +43,26 @@ function displayAlbum(myAlbum){
         </button> \
       </li>';
     }
-      document.getElementById("album-artist-name").innerHTML = myAlbum["album-infos"][0]["name_artist"];
-      document.getElementById("album-page-artist-image").setAttribute("src", myAlbum["album-infos"][0]["artist_img"])
+    document.getElementById("album-artist-name").innerHTML = myAlbum["album-infos"][0]["name_artist"];
+    document.getElementById("album-page-artist-image").setAttribute("src", myAlbum["album-infos"][0]["artist_img"])
+    document.getElementById("album-artist-name").onmouseover = ()=>{
+        document.getElementById("album-artist-name").style.cursor = "pointer";
+    }
+    document.getElementById("album-artist-name").onclick = ()=>{
+        displayPageArtist(myAlbum["album-infos"][0]["id_artist"])
+    }
+    document.getElementById("album-page-artist-image").onmouseover = ()=>{
+        document.getElementById("album-page-artist-image").style.cursor = "pointer";
+    }
+    document.getElementById("album-page-artist-image").onclick = ()=>{
+        displayPageArtist(myAlbum["album-infos"][0]["id_artist"])
+    }
+
+
 }
 
 function displayPageAlbum(id_album){
+    hideEverything();
+    document.getElementById("album_page").style.display = "block";
     ajaxRequest("GET", "php/request.php/album?id_album="+id_album, displayAlbum);
 }

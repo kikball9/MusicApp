@@ -82,24 +82,21 @@ function hideHome(){
     document.getElementById("last_listen_page").style.display = "none";
     document.getElementById("liked_titles_page").style.display = "none";
     document.getElementById("add_playlist_page").style.display = "none";
-    document.getElementById("account_page").style.display = "none";
 }
 
 function hideEverything(){
     document.getElementById("login_page").style.display = "none";
     document.getElementById("signin_page").style.display = "none";
     hideHome();
+    document.getElementById("account_page").style.display = "none";
+    document.getElementById("album_page").style.display = "none";
+    document.getElementById("artist_page").style.display = "none";
+    document.getElementById("track_page").style.display = "none";
 }
 
 function displayFavs(){
     hideEverything();
     ajaxRequest("GET", "php/request.php/favorites", displayLikedTracks);
-}
-
-function displayAccount(){
-    hideEverything()
-    document.getElementById("account_page").style.display = "block";
-    ajaxRequest("GET", "php/request.php/user", fetchUserInfos);
 }
 
 /* Creation nouvelle playlist */
