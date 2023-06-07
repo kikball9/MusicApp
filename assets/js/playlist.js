@@ -7,6 +7,7 @@ function sec2min(sec){
 function displayTrack(myTrack){
     // console.log(myTrack["name_tracks"]);
     
+<<<<<<< HEAD
     document.getElementById("track-container").innerHTML += '\
             <li onclick="displayPageTrack('+myTrack["id_tracks"]+')" onmouseover="this.style.cursor=\'pointer\'" value="'+myTrack["id_tracks"]+'" class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white" style="border: none;"> \
                 <div id="A" onclick="handleAClick()" class="m-auto w-100 d-flex"> \
@@ -43,6 +44,16 @@ function displayTrack(myTrack){
         console.log(myArtist["artist-infos"][0]["name_artist"]);
         document.getElementById("artist-name"+myTrack["id_tracks"]).innerHTML = myArtist["artist-infos"][0]["name_artist"];
     });
+=======
+    displayOneTrack(document.getElementById("track-container"), myTrack);
+
+    /*ajaxRequest("GET", "php/request.php/album?id_album="+myTrack["id_album"], (myAlbum) => {
+        document.getElementById("album-img"+myTrack["id_tracks"]).setAttribute("src", myAlbum["album-infos"][0]["img_path"]); 
+    });
+    ajaxRequest("GET", "php/request.php/artist?id_artist="+myTrack["id_artist"], (myArtist) => {
+        document.getElementById("artist-name"+myTrack["id_tracks"]).innerHTML =  myArtist["artist-infos"][0]["name_artist"];
+    });*/
+>>>>>>> e6f26eea039ef818bacc1c1cbe7a5c5cc1fbe534
 }
 
 function displayPlaylist(myPlaylist){

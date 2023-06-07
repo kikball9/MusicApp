@@ -26,7 +26,6 @@ document.getElementById("create-form").onsubmit = (event) => {
                 //Cacher l'auth et afficher le reste
                 console.log("login success !");
 
-                displayPageHome();
 
                 
                 break;
@@ -42,6 +41,7 @@ document.getElementById("create-form").onsubmit = (event) => {
         //Récupérer les données du site
         Cookies.set("email", mail_user);
         Cookies.set("token", xhr.responseText);
+        displayPageHome();
     };
     xhr.send("first_name="+prenom_user+"&name_user="+nom_user+"&date_birth="+age_user);
     document.getElementById("login-input").value = "";
