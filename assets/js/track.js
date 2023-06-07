@@ -140,28 +140,6 @@ function displayPageTrack(id_track){
     ajaxRequest("GET", "php/request.php/track?id_tracks="+id_track, displayTrackInfos)
 }
 
-<<<<<<< HEAD
-function handleAClick() {
-    console.log("Clic sur titre");
-}
-
-function handleLikedClick(event) {
-    event.stopPropagation();
-    console.log("Titre aimé !");
-}
-
-function handleOptionsClick(event) {
-    event.stopPropagation();
-    console.log("Options cliqué");
-}
-
-function handleDeleteClick(event) {
-    event.stopPropagation();
-    console.log("Delete cliqué");
-}
-
-=======
->>>>>>> e6f26eea039ef818bacc1c1cbe7a5c5cc1fbe534
 // Bouton play track
 // function handleDivHover() {
 //     var targetIcon = document.getElementsByClassName("play-btn");
