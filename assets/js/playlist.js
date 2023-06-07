@@ -4,19 +4,6 @@ function sec2min(sec){
     return Math.trunc(sec/60)+":"+sec%60;
 }
 
-function displayTrack(myTrack){
-    // console.log(myTrack["name_tracks"]);
-    
-    displayOneTrack(document.getElementById("track-container"), myTrack, true, );
-
-    /*ajaxRequest("GET", "php/request.php/album?id_album="+myTrack["id_album"], (myAlbum) => {
-        document.getElementById("album-img"+myTrack["id_tracks"]).setAttribute("src", myAlbum["album-infos"][0]["img_path"]); 
-    });
-    ajaxRequest("GET", "php/request.php/artist?id_artist="+myTrack["id_artist"], (myArtist) => {
-        document.getElementById("artist-name"+myTrack["id_tracks"]).innerHTML =  myArtist["artist-infos"][0]["name_artist"];
-    });*/
-}
-
 function displayPlaylist(myPlaylist){
 
     // console.log(myPlaylist["playlist-info"]["img_path"]);
