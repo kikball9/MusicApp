@@ -55,9 +55,13 @@ function handleLikedClick(event, idTrack, idButton, fromHome = false) {
     });
 }
 
+<<<<<<< HEAD
 // Gestion évènement sur le bouton "ajouter à une playlist" d'un morceau
 function handleAddPlaylistClick(event, idTrack, idPlaylist = null){
 
+=======
+function handleAddPlaylistClick(event, containerId, idTrack, idPlaylist = null){
+>>>>>>> 5a1c1d3cc1b6398fdd471c0275268672ff01d4c6
     event.stopPropagation();
     
     // si un morceau est retiré de la playlist
@@ -67,6 +71,7 @@ function handleAddPlaylistClick(event, idTrack, idPlaylist = null){
         // affichage section Playlist
         displayPagePlaylist(idPlaylist);
     }
+<<<<<<< HEAD
     // si le scroll options du bouton "ajouter à playlist" ne sont pas affichées 
     else if (document.getElementById("playlistAddSelect-"+idTrack).style.display == "none"){
         // affichage des noms de playlist dans le scroll option du bouton
@@ -76,9 +81,18 @@ function handleAddPlaylistClick(event, idTrack, idPlaylist = null){
             document.getElementById("labelAddPlaylist-"+idTrack).style.display = "block";
             document.getElementById("playlistAddSelect-"+idTrack).innerHTML += "<option value='0'>--Séléctionner une playlist--</option>";
             // affichage des noms de playlist pour chaque playlist de l'utilisateur
+=======
+    else if (document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).style.display == "none"){
+        ajaxRequest("GET", "php/request.php/playlist", (playlist)=>{
+            document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).innerHTML = "";
+            document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).style.display = "block";
+            document.getElementById("labelAddPlaylist-"+idTrack+'-'+containerId).style.display = "block";
+            document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).innerHTML += "<option value='0'>--Séléctionner une playlist--</option>";
+>>>>>>> 5a1c1d3cc1b6398fdd471c0275268672ff01d4c6
             for (var i=0;i<playlist.length;i++){
-                document.getElementById("playlistAddSelect-"+idTrack).innerHTML += "<option value='"+playlist[i]["playlist-info"]["id_playlist"]+"'>"+playlist[i]["playlist-info"]["name_playlist"]+"</option>";
+                document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).innerHTML += "<option value='"+playlist[i]["playlist-info"]["id_playlist"]+"'>"+playlist[i]["playlist-info"]["name_playlist"]+"</option>";
             }
+<<<<<<< HEAD
             // évite de déclencher l'évènement du bouton parent
             document.getElementById("playlistAddSelect-"+idTrack).onclick = (event)=>{
                 event.stopPropagation();
@@ -89,13 +103,27 @@ function handleAddPlaylistClick(event, idTrack, idPlaylist = null){
                 // masque le scroll option lorsqu'on clique en dehors de celui-ci
                 document.getElementById("playlistAddSelect-"+idTrack).style.display = "none";
                 document.getElementById("labelAddPlaylist-"+idTrack).style.display = "none";
+=======
+            document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).onclick = (event)=>{
+                event.stopPropagation();
+            }
+            document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).onchange = ()=>{
+                ajaxRequest("POST", "php/request.php/playlist", ()=>{return;}, "id_tracks="+idTrack+"&id_playlist="+document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).value);
+                document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).style.display = "none";
+                document.getElementById("labelAddPlaylist-"+idTrack+'-'+containerId).style.display = "none";
+>>>>>>> 5a1c1d3cc1b6398fdd471c0275268672ff01d4c6
             }
         })
     }
     else {
+<<<<<<< HEAD
         // masque le scroll option lorsqu'on clique en dehors de celui-ci
         document.getElementById("playlistAddSelect-"+idTrack).style.display = "none";
         document.getElementById("labelAddPlaylist-"+idTrack).style.display = "none";
+=======
+        document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).style.display = "none";
+        document.getElementById("labelAddPlaylist-"+idTrack+'-'+containerId).style.display = "none";
+>>>>>>> 5a1c1d3cc1b6398fdd471c0275268672ff01d4c6
     }
 }
 
@@ -113,6 +141,7 @@ function displayOneTrack(containerElem, jsonTrack, fromPlaylistDisplay = false, 
 
     // si le morceau n'est pas dans la playlist
     if (!fromPlaylistDisplay){
+<<<<<<< HEAD
         selectAndLabel = '\
             <label class="text-white" id="labelAddPlaylist-'+jsonTrack["id_tracks"]+'" style="display: none;" for="addPlaylistForm-'+jsonTrack["id_tracks"]+'">Ajouter à une playlist:</label>\
             <select name="addPlaylistForm-'+jsonTrack["id_tracks"]+'" style="position: relative;display: none;left:20vw;" id="playlistAddSelect-'+jsonTrack["id_tracks"]+'"></select>';
@@ -127,6 +156,21 @@ function displayOneTrack(containerElem, jsonTrack, fromPlaylistDisplay = false, 
             <button class="btn" onclick="handleAddPlaylistClick(event, '+jsonTrack["id_tracks"]+', '+playlistId+')"> \
                 <i class="bi bi-dash heart icon-btn"></i> \
             </button>';
+=======
+        selectAndLabel = '<label class="text-white" id="labelAddPlaylist-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'" style="display: none;" for="addPlaylistForm-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'">Ajouter à une playlist:</label>\
+        <select name="addPlaylistForm-'+jsonTrack["id_tracks"]+'" style="position: relative;display: none;left:20vw;" id="playlistAddSelect-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'">\
+                      \
+          </select>';
+          addOrRemoveButton = '<button class="btn" onclick="handleAddPlaylistClick(event, \''+containerElem.id+'\','+jsonTrack["id_tracks"]+');"> \
+          <i class="bi bi-plus heart icon-btn"></i> \
+      </button>';
+    }
+    else {
+        selectAndLabel = "";
+        addOrRemoveButton = '<button class="btn" onclick="handleAddPlaylistClick(event, \''+containerElem.id+'\', '+jsonTrack["id_tracks"]+', '+playlistId+');"> \
+          <i class="bi bi-dash heart icon-btn"></i> \
+      </button>';
+>>>>>>> 5a1c1d3cc1b6398fdd471c0275268672ff01d4c6
     }
 
     if (typeof jsonTrack["is_favorite"] !== 'undefined'){

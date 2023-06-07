@@ -1,6 +1,7 @@
 <?php
   require_once('constants.php');
 
+  //Classe de gestion de la base de données
   class myDatabase{
     //Attribut
     private $myPDO;
@@ -57,7 +58,7 @@
     return true;
   }
 
-  //Vérifie que le token corresponde bien à un utilisateur
+  //Vérifie que le token corresponde bien à un utilisateur et renvoie l'email de l'utilisateur correspondant
   public function verifyToken($token)
   {
     try
@@ -117,7 +118,6 @@
   }
 
   //Modifier un utilisateur (sauf l'email)
-  //NOT DONE
   public function modifyUser($email, $password, $first_name, $name_user, $date_birth, $img){
     try{
       $request = "UPDATE users SET password=SHA1(:password), first_name=:first_name, name_user=:name_user, date_birth=:date_birth, img_path=:img_path WHERE email=:email";
@@ -192,7 +192,7 @@
 
   //Ajouter une musique aux favoris d'un utilisateur
   public function addFavorite($email, $id_tracks){
-    //$currentFavorites = $this->requestFavorites($email);
+    //Vérifie que la table users_tracks a bien une entrée avec comme clé primaire $email et $id_tracks
     try{
       $request = "SELECT id_tracks, is_favorite FROM users_tracks WHERE email=:email AND id_tracks=:id_tracks";
       $statement = $this->myPDO->prepare($request);
@@ -206,6 +206,7 @@
       error_log('Request error: '.$exception->getMessage());
       return false;
     }
+    //Mets à jour l'entrée de données si c'est le cas
     if($result != ""){
       try{
         $request = "UPDATE users_tracks SET is_favorite=TRUE WHERE email=:email AND id_tracks=:id_tracks";
@@ -221,6 +222,7 @@
       }
       return true;
     }
+    //Créert une nouvelle entrée de données si elle n'existe pas
     else {
       try{
         $request = "INSERT INTO users_tracks(email, id_tracks, is_favorite) VALUES(:email, :id_tracks, TRUE)";
@@ -241,6 +243,7 @@
 
   //Supprime une musique des favories d'un utilisateur
   public function delFavorite($email, $id_tracks){
+    //Vérifie que la musique est bien une des musiques favories de l'utilisateur
     $favs = $this->requestFavorites($email);
     $myBool = false;
     if (!$favs){
@@ -256,6 +259,7 @@
         return false;
       }
     }
+    //Met à jour la table si l'entrée existe
     try
     {
       $request = 'UPDATE users_tracks SET is_favorite=FALSE WHERE id_tracks=:id_tracks AND email=:email';
@@ -274,6 +278,7 @@
   }
   //Récupere un morceau
   public function requestTrack($id_tracks, $email){
+    //récupère les entrées correspondant à $id_tracks et $email de la table users_tracks si elles existent et celle de tracks
     try{
       $request = "SELECT tracks.id_tracks, name_tracks, duration, track_path, date_listened, is_favorite, tracks.id_album, tracks.id_artist, album.img_path AS img_album, name_artist FROM tracks, users_tracks, album, artist WHERE tracks.id_tracks=:id_tracks AND tracks.id_tracks=users_tracks.id_tracks AND email=:email AND album.id_album = tracks.id_album AND artist.id_artist=tracks.id_artist";//"SELECT id_tracks, name_tracks, date_listened, duration, track_path, name_album, name_artist FROM tracks, album, artist WHERE tracks.id_artist=artist.id_artist AND tracks.id_album=album.id_album AND id_tracks=:id_tracks";
       $statement = $this->myPDO->prepare($request);
@@ -288,6 +293,7 @@
       return false;
     }
     if ($result == ""){
+      //Si il ny a pas d'entrée dans users_tracks correspondant à $email et $id_tracks, récupération des informations de tracks
       try{
         $request = "SELECT tracks.id_tracks, name_tracks, duration, track_path, tracks.id_album, tracks.id_artist, album.img_path AS img_album, name_artist FROM tracks, album, artist WHERE tracks.id_tracks=:id_tracks AND tracks.id_album=album.id_album AND tracks.id_artist=artist.id_artist";//"SELECT id_tracks, name_tracks, date_listened, duration, track_path, name_album, name_artist FROM tracks, album, artist WHERE tracks.id_artist=artist.id_artist AND tracks.id_album=album.id_album AND id_tracks=:id_tracks";
         $statement = $this->myPDO->prepare($request);
@@ -306,7 +312,7 @@
   //Récupère toutes les musiques
   public function requestTracks($email){
     try{
-      $request = "SELECT tracks.id_tracks FROM tracks";//"SELECT id_tracks, name_tracks, date_listened, duration, track_path, name_album, name_artist FROM tracks, album, artist WHERE tracks.id_artist=artist.id_artist AND tracks.id_album=album.id_album";
+      $request = "SELECT tracks.id_tracks FROM tracks";
       $statement = $this->myPDO->prepare($request);
       $statement->execute();
       $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -344,7 +350,7 @@
 
   //Récupère une playlist d'un utilisateur
   public function requestPlaylist($email, $id_playlist){
-    
+    //Récupère les informations de la playlist
     try{
       $request = "SELECT id_playlist, name_playlist, date_creation FROM playlist WHERE id_playlist=:id_playlist AND email=:email";
       $statement = $this->myPDO->prepare($request);
@@ -363,6 +369,7 @@
     }
 
     $myReturn["playlist-info"] = $result;
+    //Récupère une image de l'album d'une track contenue dans la playlist
     try{
       $request = "SELECT img_path FROM album, tracks, playlist_tracks WHERE album.id_album=tracks.id_album AND tracks.id_tracks=playlist_tracks.id_tracks AND playlist_tracks.id_playlist=:id_playlist";
       $statement = $this->myPDO->prepare($request);
@@ -376,6 +383,7 @@
       error_log('Request error: '.$exception->getMessage());
       return false;
     }
+    //Image par défaut s'il n'y a pas de musiques dans la playlist
     if ($result == ""){
       $myReturn["playlist-info"]["img_path"] = "assets/img/album.jpeg";
     }
@@ -383,6 +391,7 @@
       $myReturn["playlist-info"]["img_path"] = $result["img_path"];
 
     }
+    //Récupère les informations des tracks et leurs date d'ajout dans la playlist
     try{
       $request = "SELECT id_tracks, date_add FROM playlist_tracks WHERE id_playlist=:id_playlist";
       $statement = $this->myPDO->prepare($request);
@@ -396,7 +405,6 @@
       return false;
     }
     $tracksInPlaylist = array();
-    //echo var_dump($result);
     for ($i=0;$i<sizeof($result);$i++){
       array_push($tracksInPlaylist, $this->requestTrack($result[$i]["id_tracks"], $email));
       $tracksInPlaylist[$i]["date_add"] = $result[$i]["date_add"];
@@ -439,6 +447,7 @@
     if (!$playlists){
       return false;
     }
+    //Supprime les tracks de la playlist
     try
       {
       $request = 'DELETE FROM playlist_tracks WHERE id_playlist=:id_playlist';
@@ -452,6 +461,7 @@
       error_log('Request error: '.$exception->getMessage());
       return false;
     }
+    //Supprime la playlist
     try
       {
       $request = 'DELETE FROM playlist WHERE id_playlist=:id_playlist';
@@ -483,6 +493,7 @@
     return true;
   }
 
+  //Supprime une track de la playlist
   public function delTrackFromPlaylist($email, $id_playlist, $id_tracks){    
     try{
       $request = "DELETE FROM playlist_tracks WHERE id_tracks=:id_tracks AND id_playlist=:id_playlist AND id_playlist IN (SELECT id_playlist FROM playlist WHERE email=:email)";
@@ -500,7 +511,10 @@
     }
     return true;
   }
+
+  //Récupère les informations concernant un artiste
   public function requestArtist($email, $id_artist){
+    //Récupère les information de $id_artist
     try{
       $request = "SELECT * FROM artist WHERE id_artist=:id_artist";
       $statement = $this->myPDO->prepare($request);
@@ -516,6 +530,7 @@
     if ($result == ""){
       return $result;
     }
+    //Récupère les albums d'un artiste
     $myReturn["artist-infos"] = $result;
     $albums = $this->requestAlbums($email);
     $albumsOfArtist = array();
@@ -528,6 +543,7 @@
     return $myReturn;
   }
 
+  //Récupère tous les artistes
   public function requestArtists($email){
     try{
       $request = "SELECT id_artist FROM artist";
@@ -550,7 +566,9 @@
     return $myReturn;
   }
 
+  //Récupère un album
   public function requestAlbum($id_album, $email){
+    //Récupère les informations d'un album
     try{
       $request = "SELECT album.id_album, name_album, date_published, album.img_path, album.id_artist, artist.img_path AS artist_img, name_artist, style FROM album, is_style, artist WHERE album.id_album=:id_album AND album.id_album = is_style.id_album AND album.id_artist=artist.id_artist";//"SELECT album.id_album, name_album, date_published, album.img_path, name_artist, style FROM album, artist, is_style WHERE album.id_album = is_style.id_album AND album.id_artist = artist.id_artist AND  album.id_album = :id_album";
       $statement = $this->myPDO->prepare($request);
@@ -563,6 +581,7 @@
       error_log('Request error: '.$exception->getMessage());
       return false;
     }
+    //Récupère les tracks d'un album
     $myReturn["album-infos"] = $result;
     $allTracks = $this->requestTracks($email);
     $tracksInAlbum = array();
@@ -576,6 +595,7 @@
     return $myReturn;
   }
 
+  //Récupère tous les albums
   public function requestAlbums($email){
     try{
       $request = "SELECT id_album FROM album";//"SELECT album.id_album, name_album, date_published, album.img_path, name_artist, style FROM album, artist, is_style WHERE album.id_album = is_style.id_album AND album.id_artist=artist.id_artist";
@@ -597,6 +617,7 @@
 
   //Mets à jour la date d'écoute d'un morceau
   public function updateListeningDate($email, $id_tracks){
+    //Vérifie que la table users_tracks a bien une entrée avec comme clé primaire $email et $id_tracks
     try{
       $request = "SELECT id_tracks FROM users_tracks WHERE email=:email AND id_tracks=:id_tracks";
       $statement = $this->myPDO->prepare($request);
@@ -610,6 +631,7 @@
       error_log('Request error: '.$exception->getMessage());
       return false;
     }
+    //Mets à jour l'entrée de données si c'est le cas
     if($result != ""){
       try{
         $request = "UPDATE users_tracks SET date_listened=now() WHERE email=:email AND id_tracks=:id_tracks";
@@ -624,6 +646,7 @@
         return false;
       }
     }
+    //Créert une nouvelle entrée de données si elle n'existe pas
     else {
       try{
         $request = "INSERT INTO users_tracks(email, id_tracks, date_listened) VALUES(:email, :id_tracks, now())";
@@ -641,6 +664,7 @@
     return true;
   }
 
+  //Récupère les dernières écoutes rangés par date de la plus récentes à la plus ancienne
   public function requestLastListened($email){
     try{
       $request = "SELECT tracks.id_tracks, name_tracks, duration, track_path, tracks.id_album, tracks.id_artist, date_listened, album.img_path AS img_album, name_artist, is_favorite  FROM tracks, users_tracks, album, artist WHERE tracks.id_tracks=users_tracks.id_tracks AND email=:email AND tracks.id_album=album.id_album AND tracks.id_artist=artist.id_artist ORDER BY date_listened DESC";

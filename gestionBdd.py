@@ -24,7 +24,6 @@ class myDatabase:
             self.cursor.execute(query)
         except mariadb.Error as e:
              return e
-        # self.conn.commit()
         return self.cursor
 
     def dbCommit(self):
