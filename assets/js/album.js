@@ -46,6 +46,7 @@ function handleAddPlaylistClick(event, idTrack, idPlaylist = null){
             document.getElementById("playlistAddSelect-"+idTrack).innerHTML = "";
             document.getElementById("playlistAddSelect-"+idTrack).style.display = "block";
             document.getElementById("labelAddPlaylist-"+idTrack).style.display = "block";
+            document.getElementById("playlistAddSelect-"+idTrack).innerHTML += "<option value='0'>--Séléctionner une playlist--</option>";
             for (var i=0;i<playlist.length;i++){
                 document.getElementById("playlistAddSelect-"+idTrack).innerHTML += "<option value='"+playlist[i]["playlist-info"]["id_playlist"]+"'>"+playlist[i]["playlist-info"]["name_playlist"]+"</option>";
             }

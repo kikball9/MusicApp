@@ -182,10 +182,10 @@ function researchAlbum(allAlbums){
 document.getElementById("create-playlist-form").onsubmit = (event)=>{
     event.preventDefault();
     ajaxRequest("POST", "php/request.php/playlist", ()=>{
-        ajaxRequest("GET", "php/request.php/playlist", displayAddPlaylist);
+        displayPageHome();
     }, "name_playlist="+document.getElementById("playlist-input").value);
     document.getElementById("home-page-album-container").innerHTML = "";
-    displayPageHome();
+    
 }
 
 document.getElementById("btn-create-playlist").addEventListener("click", () => {

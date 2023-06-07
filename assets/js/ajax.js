@@ -29,7 +29,7 @@ function ajaxRequest(type, url, callback, data = null)
   xhr.setRequestHeader("Authorization", "Bearer " + Cookies.get("token"));
 
   // Add the onload function.
-  xhr.onload = () =>
+  xhr.onloadend = () =>
   {
     switch (xhr.status)
     {
