@@ -13,6 +13,8 @@
         `$ sudo mariadb -u root`
     - Créer un nouvel utilisateur:
     `MariaDB [(none)]> CREATE USER 'isen'@'localhost' IDENTIFIED BY 'isen29';`
+    
+    `MariaDB [(none)]> create database music DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;`
 
     `MariaDB [(none)]> GRANT ALL PRIVILEGES ON music.* TO 'isen'@'localhost'  WITH GRANT OPTION;`
     
