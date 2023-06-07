@@ -253,6 +253,7 @@ document.getElementById("create-playlist-form").onsubmit = (event)=>{
 document.getElementById("btn-create-playlist").addEventListener("click", () => {
     document.getElementById("create-playlist-form").style.display = "block";
     document.getElementById("create-playlist").style.display = "none";
+    displayPageHome()
 });
 
 document.getElementById("playlist-created-btn").addEventListener("click", () => {

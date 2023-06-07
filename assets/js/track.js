@@ -103,7 +103,10 @@ function displayAlbumInfos(myAlbum){
                                 <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
                             </button> \
                             <button class="btn"> \
-                                <i class="bi bi-three-dots-vertical three-dot"></i> \
+                                <i class="bi bi-plus-lg three-dot icon-btn"></i> \
+                            </button> \
+                            <button class="btn"> \
+                                <i class="bi bi-info-circle three-dot icon-btn"></i> \
                             </button> \
                         </div> \
                     </li>';
@@ -149,6 +152,11 @@ function handleLikedClick(event) {
 function handleOptionsClick(event) {
     event.stopPropagation();
     console.log("Options cliqué");
+}
+
+function handleDeleteClick(event) {
+    event.stopPropagation();
+    console.log("Delete cliqué");
 }
 
 // Bouton play track
