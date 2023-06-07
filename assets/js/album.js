@@ -60,8 +60,11 @@ function handleInfoClick(event, idTrack){
     displayPageTrack(idTrack);
 }
 
-function displayOneTrack(containerElem, jsonTrack){
+function displayOneTrack(containerElem, jsonTrack, fromPlaylistDisplay = false){
     var likeBtn, buffer;
+    if (fromPlaylistDisplay){
+        
+    }
     if (typeof jsonTrack["is_favorite"] !== 'undefined'){
         if (jsonTrack["is_favorite"] == 1){
             buffer = '<i class=\"bi bi-heart heart icon-btn\" aria-hidden=\"true\">'
@@ -81,7 +84,6 @@ function displayOneTrack(containerElem, jsonTrack){
                 <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
               </button>'
     }
-    console.log('likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id);
     //<i class=\"bi bi-suit-heart-fill filled-heart icon-btn\" aria-hidden=\"true\">        
     containerElem.innerHTML += '\
       <li class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white" style="border: none;"> \

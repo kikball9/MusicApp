@@ -110,25 +110,7 @@ function researchTrack(allTracks){
     document.getElementById("research-div").innerHTML += "<h1 class='text-white'>Titres:</h1>"
     for(var i=0;i<allTracks.length;i++){
         if (myResearch == allTracks[i]["name_tracks"]){
-            document.getElementById("research-div").innerHTML += '\
-            <li onclick="displayPageTrack('+allTracks[i]["id_tracks"]+')" onmouseover="this.style.cursor=\'pointer\'" value="'+allTracks[i]["id_tracks"]+'" class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white"> \
-            <img class="img-small" src="'+allTracks[i]["img_album"]+'" alt="album_img"> \
-            <div class="text-center title p-1 text-white"> \
-                <ul class="m-0  list-inline" style="list-style: none;"> \
-                    <li class="list-inline-item">'+allTracks[i]["name_tracks"]+'</li> \
-                    <i class="bi bi-dot"></i> \
-                    <li class="list-inline-item">'+allTracks[i]["name_artist"]+'</li> \
-                    <i class="bi bi-dot"></i> \
-                    <li class="list-inline-item">'+sec2min(allTracks[i]["duration"])+'</li> \
-                </ul> \
-            </div> \
-            <button class="btn"> \
-                <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
-            </button> \
-            <button class="btn"> \
-                <i class="bi bi-three-dots-vertical three-dot"></i> \
-            </button> \
-          </li>';
+            displayOneTrack(document.getElementById("research-div"), allTracks[i]);
           trackFind = true
         }
     }
