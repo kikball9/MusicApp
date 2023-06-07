@@ -49,7 +49,7 @@ function displayPagePlaylist(id_playlist){
     idPlaylist = id_playlist;
     hideEverything();
     displayHeaderFooter();
-    
+
     document.getElementById("playlist_page").style.display = "block";
     document.getElementById("track-container").innerHTML = "";
 
