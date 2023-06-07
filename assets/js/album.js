@@ -7,9 +7,11 @@ function sec2min(sec){
 function handlePlayClick(event, idTrack) {
     event.stopPropagation();
     ajaxRequest("GET", "php/request.php/track?id_tracks="+idTrack, (track)=>{
-        document.getElementById("footerSource").setAttribute("source", track["track_path"]);
+        document.getElementById("footerSource").setAttribute("src", track["track_path"]);
+        document.getElementById("audioSource").load();
         document.getElementById("audioSource").play();
     })
+
     ajaxRequest("PUT", "php/request.php/play", ()=>{return;}, "id_tracks="+idTrack);
 }
 
