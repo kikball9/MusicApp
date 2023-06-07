@@ -38,34 +38,34 @@ function handleLikedClick(event, idTrack, idButton, fromHome = false) {
     });
 }
 
-function handleAddPlaylistClick(event, idTrack, idPlaylist = null){
+function handleAddPlaylistClick(event, containerId, idTrack, idPlaylist = null){
     event.stopPropagation();
     if (idPlaylist != null){
         ajaxRequest("DELETE", "php/request.php/playlist/"+idPlaylist+"/"+idTrack);
         displayPagePlaylist(idPlaylist);
     }
-    else if (document.getElementById("playlistAddSelect-"+idTrack).style.display == "none"){
+    else if (document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).style.display == "none"){
         ajaxRequest("GET", "php/request.php/playlist", (playlist)=>{
-            document.getElementById("playlistAddSelect-"+idTrack).innerHTML = "";
-            document.getElementById("playlistAddSelect-"+idTrack).style.display = "block";
-            document.getElementById("labelAddPlaylist-"+idTrack).style.display = "block";
-            document.getElementById("playlistAddSelect-"+idTrack).innerHTML += "<option value='0'>--Séléctionner une playlist--</option>";
+            document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).innerHTML = "";
+            document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).style.display = "block";
+            document.getElementById("labelAddPlaylist-"+idTrack+'-'+containerId).style.display = "block";
+            document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).innerHTML += "<option value='0'>--Séléctionner une playlist--</option>";
             for (var i=0;i<playlist.length;i++){
-                document.getElementById("playlistAddSelect-"+idTrack).innerHTML += "<option value='"+playlist[i]["playlist-info"]["id_playlist"]+"'>"+playlist[i]["playlist-info"]["name_playlist"]+"</option>";
+                document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).innerHTML += "<option value='"+playlist[i]["playlist-info"]["id_playlist"]+"'>"+playlist[i]["playlist-info"]["name_playlist"]+"</option>";
             }
-            document.getElementById("playlistAddSelect-"+idTrack).onclick = (event)=>{
+            document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).onclick = (event)=>{
                 event.stopPropagation();
             }
-            document.getElementById("playlistAddSelect-"+idTrack).onchange = ()=>{
-                ajaxRequest("POST", "php/request.php/playlist", ()=>{return;}, "id_tracks="+idTrack+"&id_playlist="+document.getElementById("playlistAddSelect-"+idTrack).value);
-                document.getElementById("playlistAddSelect-"+idTrack).style.display = "none";
-                document.getElementById("labelAddPlaylist-"+idTrack).style.display = "none";
+            document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).onchange = ()=>{
+                ajaxRequest("POST", "php/request.php/playlist", ()=>{return;}, "id_tracks="+idTrack+"&id_playlist="+document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).value);
+                document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).style.display = "none";
+                document.getElementById("labelAddPlaylist-"+idTrack+'-'+containerId).style.display = "none";
             }
         })
     }
     else {
-        document.getElementById("playlistAddSelect-"+idTrack).style.display = "none";
-        document.getElementById("labelAddPlaylist-"+idTrack).style.display = "none";
+        document.getElementById("playlistAddSelect-"+idTrack+'-'+containerId).style.display = "none";
+        document.getElementById("labelAddPlaylist-"+idTrack+'-'+containerId).style.display = "none";
     }
 }
 
@@ -77,17 +77,17 @@ function handleInfoClick(event, idTrack){
 function displayOneTrack(containerElem, jsonTrack, fromPlaylistDisplay = false, playlistId, fromHome = false){
     var likeBtn, buffer, selectAndLabel, addOrRemoveButton;
     if (!fromPlaylistDisplay){
-        selectAndLabel = '<label class="text-white" id="labelAddPlaylist-'+jsonTrack["id_tracks"]+'" style="display: none;" for="addPlaylistForm-'+jsonTrack["id_tracks"]+'">Ajouter à une playlist:</label>\
-        <select name="addPlaylistForm-'+jsonTrack["id_tracks"]+'" style="position: relative;display: none;left:20vw;" id="playlistAddSelect-'+jsonTrack["id_tracks"]+'">\
+        selectAndLabel = '<label class="text-white" id="labelAddPlaylist-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'" style="display: none;" for="addPlaylistForm-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'">Ajouter à une playlist:</label>\
+        <select name="addPlaylistForm-'+jsonTrack["id_tracks"]+'" style="position: relative;display: none;left:20vw;" id="playlistAddSelect-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'">\
                       \
           </select>';
-          addOrRemoveButton = '<button class="btn" onclick="handleAddPlaylistClick(event, '+jsonTrack["id_tracks"]+');"> \
+          addOrRemoveButton = '<button class="btn" onclick="handleAddPlaylistClick(event, \''+containerElem.id+'\','+jsonTrack["id_tracks"]+');"> \
           <i class="bi bi-plus heart icon-btn"></i> \
       </button>';
     }
     else {
         selectAndLabel = "";
-        addOrRemoveButton = '<button class="btn" onclick="handleAddPlaylistClick(event, '+jsonTrack["id_tracks"]+', '+playlistId+');"> \
+        addOrRemoveButton = '<button class="btn" onclick="handleAddPlaylistClick(event, \''+containerElem.id+'\', '+jsonTrack["id_tracks"]+', '+playlistId+');"> \
           <i class="bi bi-dash heart icon-btn"></i> \
       </button>';
     }
