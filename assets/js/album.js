@@ -60,19 +60,27 @@ function handleInfoClick(event, idTrack){
 
 function displayOneTrack(containerElem, jsonTrack){
     var likeBtn, buffer;
-    if (jsonTrack["is_favorite"] == 1){
-        buffer = '<i class=\"bi bi-heart heart icon-btn\" aria-hidden=\"true\">'
-        likeBtn = '<button id="A_liked" onclick="handleLikedClick(event, '+jsonTrack["id_tracks"]+');" class="btn"> \
-        <i class="bi bi-suit-heart-fill filled-heart icon-btn" aria-hidden="true"></i> \
-      </button>';
+    if (typeof jsonTrack["is_favorite"] !== 'undefined'){
+        if (jsonTrack["is_favorite"] == 1){
+            buffer = '<i class=\"bi bi-heart heart icon-btn\" aria-hidden=\"true\">'
+            likeBtn = '<button id="A_liked-" onclick="handleLikedClick(event, '+jsonTrack["id_tracks"]+');" class="btn"> \
+            <i class="bi bi-suit-heart-fill filled-heart icon-btn" aria-hidden="true"></i> \
+          </button>';
+          console.log("b");
+        }
+        else{
+            likeBtn = '<button id="A_liked" onclick="handleLikedClick(event,'+jsonTrack['id_tracks']+');" class="btn"> \
+                    <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
+                  </button>'
+        }
     }
-    //<i class=\"bi bi-suit-heart-fill filled-heart icon-btn\" aria-hidden=\"true\">
-    
     else{
         likeBtn = '<button id="A_liked" onclick="handleLikedClick(event,'+jsonTrack['id_tracks']+');" class="btn"> \
                 <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
               </button>'
-    }        
+    }
+    
+    //<i class=\"bi bi-suit-heart-fill filled-heart icon-btn\" aria-hidden=\"true\">        
     containerElem.innerHTML += '\
       <li class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white" style="border: none;"> \
             <div id="A" onclick="handlePlayClick(event, '+jsonTrack["id_tracks"]+')" class="m-auto w-100 d-flex"> \
