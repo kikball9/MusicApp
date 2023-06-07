@@ -13,7 +13,9 @@
         `$ sudo mariadb -u root`
     - Créer un nouvel utilisateur:
     `MariaDB [(none)]> CREATE USER 'isen'@'localhost' IDENTIFIED BY 'isen29';`
+
     `MariaDB [(none)]> GRANT ALL PRIVILEGES ON music.* TO 'isen'@'localhost'  WITH GRANT OPTION;`
+    
     `MariaDB [(none)]> exit`
     - Se placer dans le terminal à la racine du projet puis executer la commandes suivantes pour créer la structure de la base de donnée:
     `$ mariadb -u isen -p music < bdd.sql`
@@ -26,6 +28,7 @@
 - Il faut désormais configure apache2:
     - Exécuter les commandes suivante en remplaçant NOM_DOMAINE_SERVER par le nom de domaine du server et CHEMIN_RACINE_ARCHIVE par le résultat de la commande 'pwd' lorsque l'on de place dans la racine de l'archive :
     `$ sudo -i`
+
          ```
         $ echo '<VirtualHost *:80>
             ServerName NOM_DOMAINE_SERVER
@@ -35,7 +38,9 @@
             </Directory>
         </VirtualHost>' > /etc/apache2/sites-enabled/projetCIR2.conf
         ```
+        
         `$ sudo a2ensite projetCIR2.conf`
+        
         `$ sudo service apache2 reload`
 
 ### Version des logiciels utillisés:
