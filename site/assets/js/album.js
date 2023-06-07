@@ -4,15 +4,18 @@ function sec2min(sec){
     return Math.trunc(sec/60)+":"+sec%60;
 }
 
-function handlePlayClick(event, idTrack) {
+function handlePlayClick(event, idTrack, fromHome = false) {
     event.stopPropagation();
     ajaxRequest("GET", "php/request.php/track?id_tracks="+idTrack, (track)=>{
         document.getElementById("footerSource").setAttribute("src", track["track_path"]);
         document.getElementById("audioSource").load();
         document.getElementById("audioSource").play();
     })
-
-    ajaxRequest("PUT", "php/request.php/play", ()=>{return;}, "id_tracks="+idTrack);
+    ajaxRequest("PUT", "php/request.php/play", ()=>{
+        if (fromHome){
+            displayPageHome();
+        }
+    }, "id_tracks="+idTrack);
 }
 
 function handleLikedClick(event, idTrack, idButton, fromHome = false) {
@@ -109,7 +112,7 @@ function displayOneTrack(containerElem, jsonTrack, fromPlaylistDisplay = false, 
     }
     containerElem.innerHTML += '\
       <li class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white" style="border: none;"> \
-            <div id="A" onclick="handlePlayClick(event, '+jsonTrack["id_tracks"]+')" class="m-auto w-100 d-flex"> \
+            <div id="A" onclick="handlePlayClick(event, '+jsonTrack["id_tracks"]+', '+fromHome+');)" class="m-auto w-100 d-flex"> \
               <img class="img-small" src="'+jsonTrack["img_album"]+'" alt="album_img"> \
               <div class="btn play-btn"> \
                 <i id="target" class="bi bi-play-fill heart"></i> \

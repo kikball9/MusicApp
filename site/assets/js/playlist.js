@@ -4,12 +4,6 @@ function sec2min(sec){
     return Math.trunc(sec/60)+":"+sec%60;
 }
 
-function displayTrack(myTrack){
-    
-    displayOneTrack(document.getElementById("track-container"), myTrack, true, );
-
-}
-
 function displayPlaylist(myPlaylist){
 
     document.getElementById("playlist-img").setAttribute("src", myPlaylist["playlist-info"]["img_path"]);
@@ -23,6 +17,7 @@ function displayPlaylist(myPlaylist){
         displayOneTrack(document.getElementById("track-container"), myPlaylist["playlist-tracks"][i], true, myPlaylist["playlist-info"]["id_playlist"]);
     }
 }
+
 
 function displayUser(myUser){
     
