@@ -1,10 +1,12 @@
 var idAlbum;
 var idTrack;
 
+// Converti des secondes en minutes
 function sec2min(sec){
     return Math.trunc(sec/60)+":"+sec%60;
 }
 
+// Affichage dynamique des dernières écoutes dans la section Home
 function displayLastListened(last_listened){
     document.getElementById("last_listen_page").style.display = "block";
     if (last_listened.length == 0){
@@ -19,9 +21,9 @@ function displayLastListened(last_listened){
           displayOneTrack(document.getElementById("home-page-last-listened-container"), last_listened[i], false, null, true);
         }
     }
-    
 }
 
+// Affichage dynamique des morceaux aimés dans la section Home
 function displayLikedTracks(likedTracks){
     document.getElementById("liked_titles_page").style.display = "block";
     if (likedTracks.length == 0){
@@ -37,6 +39,7 @@ function displayLikedTracks(likedTracks){
 
 }
 
+// Affichage dynamique des playlist dans la section Home 
 function displayAddPlaylist(myPlaylists){
     document.getElementById("add_playlist_page").style.display = "block";
     document.getElementById("home-page-album-container").innerHTML = "";
@@ -56,6 +59,7 @@ function displayAddPlaylist(myPlaylists){
     }
 }
 
+// Affichage de la section Home
 function displayPageHome(){
     hideEverything();
     displayHeaderFooter();
@@ -65,6 +69,7 @@ function displayPageHome(){
     ajaxRequest("GET", "php/request.php/playlist", displayAddPlaylist);
 }
 
+// Cache la section Home
 function hideHome(){
     document.getElementById("last_listen_page").style.display = "none";
     document.getElementById("liked_titles_page").style.display = "none";
@@ -73,16 +78,19 @@ function hideHome(){
     document.getElementById("home-page-liked-container").innerHTML = "";
 }
 
+// Cache le Header et le Footer
 function hideHeaderFooter(){
     document.getElementsByTagName("header")[0].style.display = "none";
     document.getElementsByTagName("footer")[0].style.display = "none";
 }
 
+// Affiche le Header et le Footer
 function displayHeaderFooter(){
     document.getElementsByTagName("header")[0].style.display = "block";
     document.getElementsByTagName("footer")[0].style.display = "block";
 }
 
+// Cache tout le contenu de la page
 function hideEverything(){
     document.getElementById("login_page").style.display = "none";
     document.getElementById("signin_page").style.display = "none";
@@ -100,12 +108,14 @@ function hideEverything(){
     hideHeaderFooter();
 }
 
+// Affiche uniquement les morceaux aimés
 function displayFavs(){
     hideEverything();
     displayHeaderFooter();
     ajaxRequest("GET", "php/request.php/favorites", displayLikedTracks);
 }
 
+// Affichage de la recherche des morceaux
 function researchTrack(allTracks){
     var trackFind = false;
     document.getElementById("research-div").innerHTML += "<h1 class='text-white'>Titres:</h1>"
@@ -120,6 +130,7 @@ function researchTrack(allTracks){
     }
 }
 
+// Affichage de la recherche des artistes
 function researchArtist(allArtists){
     var artistFind = false;
     document.getElementById("research-div").innerHTML += "<h1 class='text-white'>Artistes:</h1>"
@@ -144,6 +155,7 @@ function researchArtist(allArtists){
     }
 }
 
+// Affichage de la recherche des albums
 function researchAlbum(allAlbums){
     var date, newDate;
     var albumFind = false;
@@ -178,7 +190,7 @@ function researchAlbum(allAlbums){
     }
 }
 
-/* Creation nouvelle playlist */
+/* CREATION NOUVELLE PLAYLIST */
 document.getElementById("create-playlist-form").onsubmit = (event)=>{
     event.preventDefault();
     ajaxRequest("POST", "php/request.php/playlist", ()=>{
@@ -203,7 +215,7 @@ document.getElementById("playlist-cancel-btn").addEventListener("click", () => {
     document.getElementById("create-playlist").style.display = "block";
 });
 
-/*Bouttons du header*/
+/* NAVIGATION DANS LE HEADER */
 document.getElementById("account-btn").onclick = ()=>{
     displayAccount();
 }
@@ -223,7 +235,7 @@ document.getElementById("playlist-btn").onclick = ()=>{
 
 }
 
-/*Barre de recherche du header*/
+// Barre de recherche dans la navigation
 document.getElementById("search-form").onsubmit = (event)=>{
     event.preventDefault();
     hideEverything();
@@ -243,6 +255,4 @@ document.getElementById("search-form").onsubmit = (event)=>{
     if (albumCheck){
         ajaxRequest("GET", "php/request.php/album", researchAlbum);
     }
-
-
 }

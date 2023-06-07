@@ -4,7 +4,6 @@ document.getElementById("auth-form").onsubmit = (event) => {
     userLogin = document.getElementById("login-input").value;
     userPassword = document.getElementById("password-input").value;
 
-    //Cookies.set("login", userLogin);
     xhr = new XMLHttpRequest();
     xhr.open("GET", "php/request.php/authenticate");
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -14,17 +13,14 @@ document.getElementById("auth-form").onsubmit = (event) => {
             case 200:
             case 201:
                 Cookies.set("token", xhr.responseText);
-                //Cacher l'auth et afficher le reste
-                console.log("login success !");
+                // affiche la section Home
                 displayPageHome();
-                
                 break;
             default:
-
+                // si mdp incorrect
                 document.getElementById("bad_pwd").style.display = "block";
 
                 httpErrors(xhr.status);
-                console.log("login fail");
         }
     };
     xhr.onloadend = () => {
@@ -39,18 +35,17 @@ document.getElementById("auth-form").onsubmit = (event) => {
 }
 
 if (typeof Cookies.get("token") !== 'undefined'){
-    //ajaxRequest("GET", "php/request")
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "php/request.php");
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.setRequestHeader("Authorization", "Bearer " + Cookies.get("token"));
     xhr.onloadend = () => {
         if (xhr.status == 200){
-            //Cacher l'auth et afficher le reste
+            // affiche la section Home
             displayPageHome();
-
         }
         else {
+            // masque le Header/Footer
             hideHeaderFooter();
         }
     }

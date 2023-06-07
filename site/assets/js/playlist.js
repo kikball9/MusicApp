@@ -1,9 +1,11 @@
 var idPlaylist;
 
+// Converti des secondes en minutes
 function sec2min(sec){
     return Math.trunc(sec/60)+":"+sec%60;
 }
 
+// Affichage dynamique de la playlist dans la section Playlist
 function displayPlaylist(myPlaylist){
 
     document.getElementById("playlist-img").setAttribute("src", myPlaylist["playlist-info"]["img_path"]);
@@ -18,7 +20,7 @@ function displayPlaylist(myPlaylist){
     }
 }
 
-
+// Affichage dynamique des informations utilisateur dans la section Playlist
 function displayUser(myUser){
     
     console.log(myUser[0]);
@@ -30,19 +32,21 @@ function displayUser(myUser){
 }
 
 
-
+// Affichage de la section Playlist
 function displayPagePlaylist(id_playlist){
     idPlaylist = id_playlist;
+
     hideEverything();
     displayHeaderFooter();
 
+    // Rend la section Playlist visible
     document.getElementById("playlist_page").style.display = "block";
     document.getElementById("track-container").innerHTML = "";
 
     ajaxRequest("GET", "php/request.php/user", displayUser);
     ajaxRequest("GET", "php/request.php/playlist?id_playlist="+id_playlist, displayPlaylist);
 
-    // Delete playlist
+    // Bouton suppression de la playlist
     document.getElementById("del-playlist-btn").addEventListener("click", () => {
         ajaxRequest("DELETE", "php/request.php/playlist/"+idPlaylist, ()=> {});
         displayPageHome();

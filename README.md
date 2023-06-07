@@ -77,8 +77,7 @@
     │   │       └── bootstrap.min.js.map
     │   ├── css
     │   │   ├── bootstrap.min.css
-    │   │   ├── style.css
-    │   │   └── styleguide.css
+    │   │   └── style.css
     │   ├── img
     │   │   ├── album.jpeg
     │   │   ├── detail-icon.png
@@ -92,7 +91,7 @@
     │   │   ├── ajax.js
     │   │   ├── album.js
     │   │   ├── artist.js
-    │   │   ├── authentificationOLD.js
+    │   │   ├── authentification.js
     │   │   ├── bootstrap.min.js
     │   │   ├── createAccount.js
     │   │   ├── home.js
