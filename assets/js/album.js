@@ -21,15 +21,18 @@ function handleLikedClick(event, idTrack, idButton, fromHome = false) {
         if (track["is_favorite"] != 1){
             ajaxRequest("PUT", "php/request.php/favorites", ()=>{return;}, "id_tracks="+track["id_tracks"]);
             document.getElementById(idButton) .innerHTML = '<i class="bi bi-suit-heart-fill filled-heart icon-btn" aria-hidden="true">';
+            if (fromHome){
+                displayPageHome();
+            }
         }
         else {
             ajaxRequest("DELETE", "php/request.php/favorites/"+track["id_tracks"], ()=>{return;})
             document.getElementById(idButton).innerHTML = '<i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>';
+            if (fromHome){
+                displayPageHome();
+            }
         }
     });
-    if (fromHome){
-        displayPageHome();
-    }
 }
 
 function handleAddPlaylistClick(event, idTrack, idPlaylist = null){

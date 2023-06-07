@@ -111,7 +111,7 @@ function researchTrack(allTracks){
     document.getElementById("research-div").innerHTML += "<h1 class='text-white'>Titres:</h1>"
     for(var i=0;i<allTracks.length;i++){
         if (myResearch == allTracks[i]["name_tracks"]){
-            displayOneTrack(document.getElementById("research-div"), allTracks[i], false, null, true);
+            displayOneTrack(document.getElementById("research-div"), allTracks[i]);
           trackFind = true
         }
     }
@@ -185,12 +185,12 @@ document.getElementById("create-playlist-form").onsubmit = (event)=>{
         ajaxRequest("GET", "php/request.php/playlist", displayAddPlaylist);
     }, "name_playlist="+document.getElementById("playlist-input").value);
     document.getElementById("home-page-album-container").innerHTML = "";
+    displayPageHome();
 }
 
 document.getElementById("btn-create-playlist").addEventListener("click", () => {
     document.getElementById("create-playlist-form").style.display = "block";
     document.getElementById("create-playlist").style.display = "none";
-    displayPageHome()
 });
 
 document.getElementById("playlist-created-btn").addEventListener("click", () => {
