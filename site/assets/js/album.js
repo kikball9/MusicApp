@@ -117,14 +117,14 @@ function displayOneTrack(containerElem, jsonTrack, fromPlaylistDisplay = false, 
             <label class="text-white" id="labelAddPlaylist-'+jsonTrack["id_tracks"]+'" style="display: none;" for="addPlaylistForm-'+jsonTrack["id_tracks"]+'">Ajouter à une playlist:</label>\
             <select name="addPlaylistForm-'+jsonTrack["id_tracks"]+'" style="position: relative;display: none;left:20vw;" id="playlistAddSelect-'+jsonTrack["id_tracks"]+'"></select>';
             addOrRemoveButton = '\
-            <button class="btn" onclick="handleAddPlaylistClick(event, '+jsonTrack["id_tracks"]+');"> \
+            <button class="btn" onclick="handleAddPlaylistClick(event, '+jsonTrack["id_tracks"]+')"> \
                 <i class="bi bi-plus heart icon-btn"></i> \
             </button>';
     // si le morceau est dans la playlist
     }else{
         selectAndLabel = "";
         addOrRemoveButton = '\
-            <button class="btn" onclick="handleAddPlaylistClick(event, '+jsonTrack["id_tracks"]+', '+playlistId+');"> \
+            <button class="btn" onclick="handleAddPlaylistClick(event, '+jsonTrack["id_tracks"]+', '+playlistId+')"> \
                 <i class="bi bi-dash heart icon-btn"></i> \
             </button>';
     }
