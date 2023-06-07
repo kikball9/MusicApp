@@ -15,7 +15,7 @@ function handlePlayClick(event, idTrack) {
     ajaxRequest("PUT", "php/request.php/play", ()=>{return;}, "id_tracks="+idTrack);
 }
 
-function handleLikedClick(event, idTrack, idButton) {
+function handleLikedClick(event, idTrack, idButton, fromHome = false) {
     event.stopPropagation();
     ajaxRequest("GET", "php/request.php/track?id_tracks="+idTrack, (track)=>{
         if (track["is_favorite"] != 1){
@@ -27,13 +27,18 @@ function handleLikedClick(event, idTrack, idButton) {
             document.getElementById(idButton).innerHTML = '<i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>';
         }
     });
-    
-    
+    if (fromHome){
+        displayPageHome();
+    }
 }
 
-function handleAddPlaylistClick(event, idTrack){
+function handleAddPlaylistClick(event, idTrack, idPlaylist = null){
     event.stopPropagation();
-    if (document.getElementById("playlistAddSelect-"+idTrack).style.display == "none"){
+    if (idPlaylist != null){
+        ajaxRequest("DELETE", "php/request.php/playlist/"+idPlaylist+"/"+idTrack);
+        displayPagePlaylist(idPlaylist);
+    }
+    else if (document.getElementById("playlistAddSelect-"+idTrack).style.display == "none"){
         ajaxRequest("GET", "php/request.php/playlist", (playlist)=>{
             document.getElementById("playlistAddSelect-"+idTrack).innerHTML = "";
             document.getElementById("playlistAddSelect-"+idTrack).style.display = "block";
@@ -62,31 +67,42 @@ function handleInfoClick(event, idTrack){
     displayPageTrack(idTrack);
 }
 
-function displayOneTrack(containerElem, jsonTrack, fromPlaylistDisplay = false){
-    var likeBtn, buffer;
-    if (fromPlaylistDisplay){
-        
+function displayOneTrack(containerElem, jsonTrack, fromPlaylistDisplay = false, playlistId, fromHome = false){
+    var likeBtn, buffer, selectAndLabel, addOrRemoveButton;
+    if (!fromPlaylistDisplay){
+        selectAndLabel = '<label class="text-white" id="labelAddPlaylist-'+jsonTrack["id_tracks"]+'" style="display: none;" for="addPlaylistForm-'+jsonTrack["id_tracks"]+'">Ajouter à une playlist:</label>\
+        <select name="addPlaylistForm-'+jsonTrack["id_tracks"]+'" style="position: relative;display: none;left:20vw;" id="playlistAddSelect-'+jsonTrack["id_tracks"]+'">\
+                      \
+          </select>';
+          addOrRemoveButton = '<button class="btn" onclick="handleAddPlaylistClick(event, '+jsonTrack["id_tracks"]+');"> \
+          <i class="bi bi-plus heart icon-btn"></i> \
+      </button>';
+    }
+    else {
+        selectAndLabel = "";
+        addOrRemoveButton = '<button class="btn" onclick="handleAddPlaylistClick(event, '+jsonTrack["id_tracks"]+', '+playlistId+');"> \
+          <i class="bi bi-dash heart icon-btn"></i> \
+      </button>';
     }
     if (typeof jsonTrack["is_favorite"] !== 'undefined'){
         if (jsonTrack["is_favorite"] == 1){
             buffer = '<i class=\"bi bi-heart heart icon-btn\" aria-hidden=\"true\">'
-            likeBtn = '<button id="likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'" onclick="handleLikedClick(event, '+jsonTrack["id_tracks"]+', \'likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'\');" class="btn"> \
+            likeBtn = '<button id="likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'" onclick="handleLikedClick(event, '+jsonTrack["id_tracks"]+', \'likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'\', '+fromHome+');" class="btn"> \
             <i class="bi bi-suit-heart-fill filled-heart icon-btn" aria-hidden="true"></i> \
           </button>';
           console.log("b");
         }
         else{
-            likeBtn = '<button id="likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'" onclick="handleLikedClick(event,'+jsonTrack['id_tracks']+', \'likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'\');" class="btn"> \
+            likeBtn = '<button id="likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'" onclick="handleLikedClick(event,'+jsonTrack['id_tracks']+', \'likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'\', '+fromHome+');" class="btn"> \
                     <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
                   </button>'
         }
     }
     else{
-        likeBtn = '<button id="likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'" onclick="handleLikedClick(event,'+jsonTrack['id_tracks']+', \'likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'\');" class="btn"> \
+        likeBtn = '<button id="likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'" onclick="handleLikedClick(event,'+jsonTrack['id_tracks']+', \'likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'\', '+fromHome+');" class="btn"> \
                 <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
               </button>'
     }
-    //<i class=\"bi bi-suit-heart-fill filled-heart icon-btn\" aria-hidden=\"true\">        
     containerElem.innerHTML += '\
       <li class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white" style="border: none;"> \
             <div id="A" onclick="handlePlayClick(event, '+jsonTrack["id_tracks"]+')" class="m-auto w-100 d-flex"> \
@@ -104,20 +120,15 @@ function displayOneTrack(containerElem, jsonTrack, fromPlaylistDisplay = false){
                 </ul> \
               </div> \
               '+likeBtn+' \
-                <button class="btn" onclick="handleAddPlaylistClick(event, '+jsonTrack["id_tracks"]+');"> \
-                    <i class="bi bi-plus heart icon-btn"></i> \
-                </button> \
+                '+addOrRemoveButton+' \
                     \
                 </div> \
                 <button class="btn" onclick="handleInfoClick(event, '+jsonTrack["id_tracks"]+')"> \
                   <i class="bi bi-info-circle heart icon-btn"></i> \
                 </button> \
             </div> \
-          </li>\
-          <label class="text-white" id="labelAddPlaylist-'+jsonTrack["id_tracks"]+'" style="display: none;" for="addPlaylistForm-'+jsonTrack["id_tracks"]+'">Ajouter à une playlist:</label>\
-          <select name="addPlaylistForm-'+jsonTrack["id_tracks"]+'" style="position: relative;display: none;left:20vw;" id="playlistAddSelect-'+jsonTrack["id_tracks"]+'">\
-                        \
-            </select>';
+          </li> \
+          '+selectAndLabel;
 }
 
 function displayAlbum(myAlbum){

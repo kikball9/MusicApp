@@ -7,7 +7,7 @@ function sec2min(sec){
 function displayTrack(myTrack){
     // console.log(myTrack["name_tracks"]);
     
-    displayOneTrack(document.getElementById("track-container"), myTrack);
+    displayOneTrack(document.getElementById("track-container"), myTrack, true, );
 
     /*ajaxRequest("GET", "php/request.php/album?id_album="+myTrack["id_album"], (myAlbum) => {
         document.getElementById("album-img"+myTrack["id_tracks"]).setAttribute("src", myAlbum["album-infos"][0]["img_path"]); 
@@ -29,7 +29,8 @@ function displayPlaylist(myPlaylist){
     document.getElementById("playlist-date-published").innerHTML = newDate;
 
     for(var i=0; i<myPlaylist["playlist-tracks"].length; i++){
-        ajaxRequest("GET", "php/request.php/track?id_tracks="+myPlaylist["playlist-tracks"][i]["id_tracks"], displayTrack);
+        displayOneTrack(document.getElementById("track-container"), myPlaylist["playlist-tracks"][i], true, myPlaylist["playlist-info"]["id_playlist"]);
+        //ajaxRequest("GET", "php/request.php/track?id_tracks="+myPlaylist["playlist-tracks"][i]["id_tracks"], displayTrack);
     }
 }
 

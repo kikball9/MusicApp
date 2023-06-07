@@ -16,9 +16,10 @@ function displayLastListened(last_listened){
     }
     for (var i=0;i<last_listened.length;i++){
         if (i <= 9){
-          displayOneTrack(document.getElementById("home-page-last-listened-container"), last_listened[i]);
+          displayOneTrack(document.getElementById("home-page-last-listened-container"), last_listened[i], false, null, true);
         }
     }
+    
 }
 
 function displayLikedTracks(likedTracks){
@@ -30,7 +31,7 @@ function displayLikedTracks(likedTracks){
         document.getElementById("home-page-liked-container").innerHTML = ""
     }
     for (var i=0;i<likedTracks.length;i++){
-        displayOneTrack(document.getElementById("home-page-liked-container"), likedTracks[i]);
+        displayOneTrack(document.getElementById("home-page-liked-container"), likedTracks[i], false, null, true);
 
     }
 
@@ -110,7 +111,7 @@ function researchTrack(allTracks){
     document.getElementById("research-div").innerHTML += "<h1 class='text-white'>Titres:</h1>"
     for(var i=0;i<allTracks.length;i++){
         if (myResearch == allTracks[i]["name_tracks"]){
-            displayOneTrack(document.getElementById("research-div"), allTracks[i]);
+            displayOneTrack(document.getElementById("research-div"), allTracks[i], false, null, true);
           trackFind = true
         }
     }
