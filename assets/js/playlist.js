@@ -5,21 +5,12 @@ function sec2min(sec){
 }
 
 function displayTrack(myTrack){
-    // console.log(myTrack["name_tracks"]);
     
     displayOneTrack(document.getElementById("track-container"), myTrack, true, );
 
-    /*ajaxRequest("GET", "php/request.php/album?id_album="+myTrack["id_album"], (myAlbum) => {
-        document.getElementById("album-img"+myTrack["id_tracks"]).setAttribute("src", myAlbum["album-infos"][0]["img_path"]); 
-    });
-    ajaxRequest("GET", "php/request.php/artist?id_artist="+myTrack["id_artist"], (myArtist) => {
-        document.getElementById("artist-name"+myTrack["id_tracks"]).innerHTML =  myArtist["artist-infos"][0]["name_artist"];
-    });*/
 }
 
 function displayPlaylist(myPlaylist){
-
-    // console.log(myPlaylist["playlist-info"]["img_path"]);
 
     document.getElementById("playlist-img").setAttribute("src", myPlaylist["playlist-info"]["img_path"]);
     document.getElementById("playlist-name").innerHTML = myPlaylist["playlist-info"]["name_playlist"];
@@ -30,7 +21,6 @@ function displayPlaylist(myPlaylist){
 
     for(var i=0; i<myPlaylist["playlist-tracks"].length; i++){
         displayOneTrack(document.getElementById("track-container"), myPlaylist["playlist-tracks"][i], true, myPlaylist["playlist-info"]["id_playlist"]);
-        //ajaxRequest("GET", "php/request.php/track?id_tracks="+myPlaylist["playlist-tracks"][i]["id_tracks"], displayTrack);
     }
 }
 
