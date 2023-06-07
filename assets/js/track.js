@@ -83,33 +83,7 @@ function displayAlbumInfos(myAlbum){
 
             // Si l'id d'album d'un morceau correspond à celui de l'album voulu 
             if(myAlbum["artist-albums"][i]["album-tracks"][j]["id_album"] == idAlbum){
-                console.log(myAlbum["artist-albums"][i]["album-tracks"][j]["name_tracks"]);
-
-                
-                document.getElementById("track-album-page-container").innerHTML += '\
-                    <li onmouseover="this.style.cursor = \'pointer\';" onclick="displayPageTrack('+myAlbum["artist-albums"][i]["album-tracks"][j]["id_tracks"]+');" value="'+myAlbum["artist-albums"][i]["album-tracks"][j]["id_tracks"]+'" class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white"> \
-                        <div class="m-auto w-100 d-flex">\
-                            <img class="img-small" src="'+myAlbum["artist-albums"][i]["album-infos"][0]["img_path"]+'" alt="album_img"> \
-                            <div class="text-center title p-1 text-white"> \
-                                <ul class="m-0  list-inline" style="list-style: none;"> \
-                                    <li class="list-inline-item">'+myAlbum["artist-albums"][i]["album-tracks"][j]["name_tracks"]+'</li> \
-                                    <i class="bi bi-dot"></i> \
-                                    <li class="list-inline-item">'+myAlbum["artist-infos"][0]["name_artist"]+'</li> \
-                                    <i class="bi bi-dot"></i> \
-                                    <li class="list-inline-item">'+sec2min(myAlbum["artist-albums"][i]["album-tracks"][j]["duration"])+'</li> \
-                                </ul> \
-                            </div> \
-                            <button class="btn"> \
-                                <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
-                            </button> \
-                            <button class="btn"> \
-                                <i class="bi bi-plus-lg three-dot icon-btn"></i> \
-                            </button> \
-                            <button class="btn"> \
-                                <i class="bi bi-info-circle three-dot icon-btn"></i> \
-                            </button> \
-                        </div> \
-                    </li>';
+                displayOneTrack(document.getElementById("track-album-page-container"), myAlbum["artist-albums"][i]["album-tracks"][j]);
             }
         }
     }
@@ -140,28 +114,6 @@ function displayPageTrack(id_track){
     ajaxRequest("GET", "php/request.php/track?id_tracks="+id_track, displayTrackInfos)
 }
 
-<<<<<<< HEAD
-function handleAClick() {
-    console.log("Clic sur titre");
-}
-
-function handleLikedClick(event) {
-    event.stopPropagation();
-    console.log("Titre aimé !");
-}
-
-function handleOptionsClick(event) {
-    event.stopPropagation();
-    console.log("Options cliqué");
-}
-
-function handleDeleteClick(event) {
-    event.stopPropagation();
-    console.log("Delete cliqué");
-}
-
-=======
->>>>>>> e6f26eea039ef818bacc1c1cbe7a5c5cc1fbe534
 // Bouton play track
 // function handleDivHover() {
 //     var targetIcon = document.getElementsByClassName("play-btn");

@@ -68,6 +68,8 @@ function hideHome(){
     document.getElementById("last_listen_page").style.display = "none";
     document.getElementById("liked_titles_page").style.display = "none";
     document.getElementById("add_playlist_page").style.display = "none";
+    document.getElementById("home-page-last-listened-container").innerHTML = "";
+    document.getElementById("home-page-liked-container").innerHTML = "";
 }
 
 function hideHeaderFooter(){
@@ -86,10 +88,14 @@ function hideEverything(){
     hideHome();
     document.getElementById("account_page").style.display = "none";
     document.getElementById("album_page").style.display = "none";
+    document.getElementById("album-page-track-container").innerHTML = "";
     document.getElementById("artist_page").style.display = "none";
     document.getElementById("track_page").style.display = "none";
     document.getElementById("research-div").style.display = "none";
+    document.getElementById("research-div").innerHTML = "";
     document.getElementById("playlist_page").style.display = "none"
+    document.getElementById("track-container").innerHTML = ""
+
     hideHeaderFooter();
 }
 
