@@ -8,7 +8,7 @@ function sec2min(sec){
 function displayLastListened(last_listened){
     document.getElementById("last_listen_page").style.display = "block";
     if (last_listened.length == 0){
-        document.getElementById("home-page-last-listened-container").innerHTML = "<h3 class='text-white'>Aucun titres écouté</h3>";
+        document.getElementById("home-page-last-listened-container").innerHTML = "<h3 class='text-white'>Aucun titres écoutés</h3>";
 
     }
     else {
@@ -24,7 +24,7 @@ function displayLastListened(last_listened){
 function displayLikedTracks(likedTracks){
     document.getElementById("liked_titles_page").style.display = "block";
     if (likedTracks.length == 0){
-        document.getElementById("home-page-liked-container").innerHTML = "<h3 class='text-white'>Aucun titres aimé</h3>";
+        document.getElementById("home-page-liked-container").innerHTML = "<h3 class='text-white'>Aucun titres aimés</h3>";
     } 
     else {
         document.getElementById("home-page-liked-container").innerHTML = ""
@@ -133,7 +133,7 @@ function researchTrack(allTracks){
         }
     }
     if (!trackFind){
-        document.getElementById("research-div").innerHTML += "<h3 class='text-white'>Aucun titre trouvé</h3>"
+        document.getElementById("research-div").innerHTML += "<h3 class='text-white'>Aucun titres trouvés</h3>"
     }
 }
 
@@ -157,7 +157,7 @@ function researchArtist(allArtists){
         }
     }
     if (!artistFind){
-        document.getElementById("research-div").innerHTML += "<h3 class='text-white'>Aucun artiste trouvé</h3>"
+        document.getElementById("research-div").innerHTML += "<h3 class='text-white'>Aucun artistes trouvés</h3>"
     }
 }
 
@@ -191,7 +191,7 @@ function researchAlbum(allAlbums){
         }
     }
     if (!albumFind){
-        document.getElementById("research-div").innerHTML += "<h3 class='text-white'>Aucun album trouvé</h3>"
+        document.getElementById("research-div").innerHTML += "<h3 class='text-white'>Aucun albums trouvés</h3>"
     }
 }
 

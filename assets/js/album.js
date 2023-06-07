@@ -13,14 +13,16 @@ function handlePlayClick(event, idTrack) {
     ajaxRequest("PUT", "php/request.php/play", ()=>{return;}, "id_tracks="+idTrack);
 }
 
-function handleLikedClick(event, idTrack) {
+function handleLikedClick(event, idTrack, idButton) {
     event.stopPropagation();
     ajaxRequest("GET", "php/request.php/track?id_tracks="+idTrack, (track)=>{
         if (track["is_favorite"] != 1){
             ajaxRequest("PUT", "php/request.php/favorites", ()=>{return;}, "id_tracks="+track["id_tracks"]);
+            document.getElementById(idButton) .innerHTML = '<i class="bi bi-suit-heart-fill filled-heart icon-btn" aria-hidden="true">';
         }
         else {
             ajaxRequest("DELETE", "php/request.php/favorites/"+track["id_tracks"], ()=>{return;})
+            document.getElementById(idButton).innerHTML = '<i class="bi bi-heart heart icon-btn" aria-hidden="true"></i>';
         }
     });
     
@@ -63,23 +65,23 @@ function displayOneTrack(containerElem, jsonTrack){
     if (typeof jsonTrack["is_favorite"] !== 'undefined'){
         if (jsonTrack["is_favorite"] == 1){
             buffer = '<i class=\"bi bi-heart heart icon-btn\" aria-hidden=\"true\">'
-            likeBtn = '<button id="A_liked-" onclick="handleLikedClick(event, '+jsonTrack["id_tracks"]+');" class="btn"> \
+            likeBtn = '<button id="likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'" onclick="handleLikedClick(event, '+jsonTrack["id_tracks"]+', \'likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'\');" class="btn"> \
             <i class="bi bi-suit-heart-fill filled-heart icon-btn" aria-hidden="true"></i> \
           </button>';
           console.log("b");
         }
         else{
-            likeBtn = '<button id="A_liked" onclick="handleLikedClick(event,'+jsonTrack['id_tracks']+');" class="btn"> \
+            likeBtn = '<button id="likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'" onclick="handleLikedClick(event,'+jsonTrack['id_tracks']+', \'likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'\');" class="btn"> \
                     <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
                   </button>'
         }
     }
     else{
-        likeBtn = '<button id="A_liked" onclick="handleLikedClick(event,'+jsonTrack['id_tracks']+');" class="btn"> \
+        likeBtn = '<button id="likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'" onclick="handleLikedClick(event,'+jsonTrack['id_tracks']+', \'likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id+'\');" class="btn"> \
                 <i class="bi bi-heart heart icon-btn" aria-hidden="true"></i> \
               </button>'
     }
-    
+    console.log('likeBtn-'+jsonTrack["id_tracks"]+'-'+containerElem.id);
     //<i class=\"bi bi-suit-heart-fill filled-heart icon-btn\" aria-hidden=\"true\">        
     containerElem.innerHTML += '\
       <li class="track-bar list-group-item m-2 w-50 p-0 d-flex p-0 m-0 text-white" style="border: none;"> \
